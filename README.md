@@ -1,1 +1,3 @@
 # T-Pago
+
+O "Tá Pago" é um site criado para ajudar as pessoas a organizarem suas rotinas de forma prática e eficiente. Inspirado na ideia de simplificar o dia a dia, a plataforma permite aos usuários gerenciar compromissos, tarefas e despesas em um único lugar. Com uma interface intuitiva, o site oferece ferramentas como criação de listas de tarefas, calendários integrados e notificações personalizáveis. Seja para organizar o trabalho, estudos ou vida pessoal, o "Tá Pago" foi pensado para otimizar o tempo dos usuários e tornar a rotina mais produtiva.
