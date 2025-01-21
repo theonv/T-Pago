@@ -38,3 +38,14 @@ input{
     border: 1px, #757575 ,solid;
     background-color: #5768FF;
 }
+body {
+    min-height: 95vh;
+    max-height: 100vh;
+    position: relative;
+}
+main{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: 20%;
+}
