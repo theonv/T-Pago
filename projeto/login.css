@@ -27,6 +27,14 @@ img {
 }
 input{
     border-radius: 8px;
-    height: 25px;
+    height: 27.5px;
     width: 200px;
+    border: 1px, #757575 ,solid;
+}
+.btn{
+    border-radius: 8px;
+    height: 30px;
+    width: 200px;
+    border: 1px, #757575 ,solid;
+    background-color: #5768FF;
 }
