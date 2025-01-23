@@ -22,12 +22,12 @@
             <div class="formulario">
                 <form action="">
                     <div class="ipt">
-                        <input type="email" name="" id="" placeholder="Email" >
+                        <input type="email" name="" id="email" placeholder="Email" >
                     </div>
                     <div class="ipt">
-                        <input type="password" name="" id="" placeholder="Senha">
+                        <input type="password" name="" id="senha" placeholder="Senha">
                     </div>
-                    <button type="submit" class="btn">Acesse</button>
+                    <button onclick="logar()" type="submit" class="btn">Acesse</button>
                 </form>
             </div>
             <label>
@@ -35,6 +35,32 @@
             </label>
         </div>
     </main>
+
+    <script>
+        function logar(){
+            alert("adouhfdsuhgdsujgfdj")
+    
+            const ema = document.getElementById('email')
+            const email = ema.value
+
+            const sen = document.getElementById('senha')
+            const senha = sen.value
+
+            if(email == 'admin@gmail.com'){
+                if(senha == 'admin'){
+                    window.location="Z:/20231780003.IFPB/Documents/T-Pago/projeto/home.html"
+                }
+                else if(senha != 'admin'){
+                    alert('senha errada fdp')
+                }
+            }
+            else{
+                alert('email errado')
+            }
+            
+            alert(window.location)
+            }  
+    </script>
 </body>
 
 </html>
