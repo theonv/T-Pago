@@ -38,7 +38,6 @@
 
     <script>
         function logar(){
-            alert("adouhfdsuhgdsujgfdj")
     
             const ema = document.getElementById('email')
             const email = ema.value
@@ -48,7 +47,8 @@
 
             if(email == 'admin@gmail.com'){
                 if(senha == 'admin'){
-                    window.location="Z:/20231780003.IFPB/Documents/T-Pago/projeto/home.html"
+                    alert('entrou no admin');
+                    window.location.href = "./home.html"
                 }
                 else if(senha != 'admin'){
                     alert('senha errada fdp')
@@ -58,7 +58,7 @@
                 alert('email errado')
             }
             
-            alert(window.location)
+            alert(window.location.href)
             }  
     </script>
 </body>
