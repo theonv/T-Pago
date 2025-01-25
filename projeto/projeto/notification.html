@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONFIGURAÇÕES - TÁ PAGO</title>
+    <title>NOTIFICAÇÕES - TÁ PAGO</title>
     <link rel="stylesheet" href="global.css">
     <link rel="shortcut icon" href="img/Logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="config.css">
+    <link rel="stylesheet" href="notification.css">
     <script src="footer.js"></script>
-    <script src="editarperfil.js"></script>
+    <script src="notification.js"></script>
 </head>
 
 <body>
@@ -22,22 +22,34 @@
     </header>
     <div class="corpo">
         <h1 class="titulo">
-            CONFIGURAÇÕES
+            NOTIFICAÇÕES
         </h1>
     </div>
     <main>
         <div>
-            <div class="box" onclick="editarperfil()">
+            <div class="box">
                 <p class="conf">
-                    EDITAR PERFIL
+                    LEMBRETE DE ATIVIDADE
                 </p>
-                <img src="img/lapis.png" alt="" id="lapis">
+                <img src="img/toggleon.png" alt="" id="toggle1" onclick="toggle1()">
             </div><br>
-            <div class="box" onclick="notificacoes()">
+            <div class="box">
                 <p class="conf">
-                    NOTIFICAÇÕES
+                    LEMBRETE DE DATA
                 </p>
-                <img src="img/sino.png" alt="">
+                <img src="img/toggleon.png" alt="" id="toggle2" onclick="toggle2()">
+            </div><br>
+            <div class="box">
+                <p class="conf">
+                    SOM DO LEMBRETE
+                </p>
+                <img src="img/toggleon.png" alt="" id="toggle3" onclick="toggle3()">
+            </div><br>
+            <div class="box">
+                <p class="conf">
+                    VIBRAÇÃO
+                </p>
+                <img src="img/toggleon.png" alt="" id="toggle4" onclick="toggle4()">
             </div>
         </div>
     </main>

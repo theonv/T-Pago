@@ -1,11 +1,17 @@
 function home() {
-    window.location.href="home.html"
+    window.location.href="home.html";
 }
 
 function listas() {
-    window.location.href="listas.html"
+    window.location.href="listas.html";
 }
 
 function config() {
-    window.location.href = "config.html"
+    window.location.href = "config.html";
 }
+
+
+
+
+
+
