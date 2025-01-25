@@ -1,0 +1,51 @@
+.titulo{
+    text-align: center;
+}
+.container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 1fr; 
+    height: 200px; 
+  }
+  
+img {
+    max-width: 100%; 
+    max-height: 100%; 
+    display: block; 
+}
+.formulario{
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 1fr; 
+    height: 200px; 
+ 
+}
+.ipt{
+    padding-bottom: 20px;
+}
+input{
+    border-radius: 8px;
+    height: 27.5px;
+    width: 200px;
+    border: 1px, #757575 ,solid;
+}
+.btn{
+    border-radius: 8px;
+    height: 30px;
+    width: 200px;
+    border: 1px, #757575 ,solid;
+    background-color: #5768FF;
+}
+body {
+    min-height: 95vh;
+    max-height: 100vh;
+    position: relative;
+}
+main{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: 20%;
+}
