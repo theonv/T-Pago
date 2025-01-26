@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
+require('dotenv').config(); // Carrega as variáveis de ambiente do arquivo .env
 const app = express();
 const port = process.env.PORT || 3000; // Usa a porta definida no ambiente ou 3000
 
