@@ -1,41 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGIN - TÁ PAGO</title>
     <link rel="stylesheet" href="../Estilos/login.css">
     <link rel="stylesheet" href="../Estilos/global.css">
-    <link rel="shortcut icon" href="img/Logo.png" type="image/x-icon">
-    <script src="../JS/index.js"></script>
+    <script src="../JS/footer.js"></script>
 </head>
-
 <body>
-    <header>
-        <h1 class="titulo">Bem-Vindo ao Tá Pago</h1>
-    </header>
-    <main>
-        <picture class="container">
-            <img src="img/Logo.png" alt="Logo do Tá pago">
-        </picture>
-        <div>
-            <div class="formulario">
-                <form action="">
-                    <div class="ipt">
-                        <input type="email" name="" id="email" placeholder="Email" >
-                    </div>
-                    <div class="ipt">
-                        <input type="password" name="" id="senha" placeholder="Senha">
-                    </div>
-                    <button onclick="logar()" type="submit" class="btn">Acesse</button>
-                </form>
+    <main class="container">
+        <form>
+            <h1 id="titulo">LOGIN <span class="titulo-color">TÁ PAGO</span></h1>
+            <picture class="logo">
+                <img src="../img/Logo.png" alt="Logo Tá Pago">
+            </picture>
+            <div class="input"> 
+                <input type="email" name="" id="email" placeholder="Email" required>
             </div>
-            <label>
-                <a href="#">Esqueci a Senha</a>
-            </label>
-        </div>
+            <div class="input">
+                <input type="password" name="" id="senha" placeholder="Senha" required>
+            </div>
+            <div class="recuperar">
+                <a href="#">Esqueci minha senha</a>
+            </div>
+            <button onclick="logar()" type="submit">Acesse</button>
+            <div class="cadastro">
+                <p>Não tem uma conta? <a href="#">Registre-se</a></p>
+            </div>
+        </form>
     </main>
 </body>
-
 </html>
