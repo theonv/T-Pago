@@ -20,7 +20,7 @@ header{
     background-color: #5768FF;
     border-radius: 15px;
     display: flex; 
-    justify-content: left;
+    align-items: center;
 }
 main{
     height: 40vh;
@@ -60,4 +60,22 @@ img{
     height: 24px;
     width: 24px;
     margin-left: 95px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 500px; 
+        height: 500px; 
+        border: 2px solid black;
+        border-radius: 10px; 
+        background-color: rgba(127, 255, 238, 0.534); 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+    .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
