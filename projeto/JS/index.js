@@ -34,3 +34,14 @@ function novasenha() {
         alert('As senhas não são iguais')
     }
 } 
+function novouser() {
+
+    const ema = document.getElementById('email')
+    const nsenha = ema.value
+
+    const sen = document.getElementById('senha')
+    const senha = sen.value
+    
+    alert('Conta criada mas não salva no banco de Dados')
+    window.location.href = "./index.html"
+} 
