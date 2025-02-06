@@ -8,11 +8,10 @@ function logar() {
 
     if (email == 'admin@gmail.com') {
         if (senha == 'admin') {
-            alert('entrou no admin');
             window.location.href = "./home.html"
         }
         else if (senha != 'admin') {
-            alert('senha errada fdp')
+            alert('senha errada ')
         }
     }
     else {
