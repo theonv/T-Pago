@@ -5,7 +5,7 @@ function logar() {
 
     const sen = document.getElementById('senha')
     const senha = sen.value
-
+    console.log("email:", ema, "senha:",senha)
     if (email == 'admin@gmail.com') {
         if (senha == 'admin') {
             window.location.href = "./home.html"

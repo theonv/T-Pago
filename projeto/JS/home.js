@@ -1,10 +1,17 @@
-function checkbox(){
-    const imagem = document.getElementById("checkbox");
 
-    if (imagem.src.endsWith("checkbox1.png")) {
-        imagem.src = "img/checkbox0.png";
+const checkbox = document.getElementsByClassName("checkbox");
 
-    } else if (imagem.src.endsWith("checkbox0.png")) {
-        imagem.src = "img/checkbox1.png";
+checkbox.addEventListener("change", () => {
+    alert("cahca")
+    if (checkbox.checked) {
+        console.log("Status: Marcado") 
+    } else {
+        console.log("Status: Não Marcado") 
     }
+});
+function criar() {
+    const novaDiv = document.createElement('div');
+    novaDiv.classList.add('nova-div');
+    document.getElementById('container').appendChild(novaDiv);
 }
+document.getElementById('cria').addEventListener('click', criarNovaDiv);
