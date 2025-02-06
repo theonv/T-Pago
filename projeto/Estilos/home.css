@@ -1,81 +1,114 @@
-body{
+body {
     min-height: 95vh;
     max-height: 100vh;
     position: relative;
 }
-header{
+
+header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
-.corpo{
+
+.corpo {
     height: 10vh;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.box{
+
+.box {
     width: 300px;
     height: 50px;
     background-color: #5768FF;
     border-radius: 15px;
-    display: flex; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+main {
+    height: 40vh;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
-main{
-    height: 40vh;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-}
-footer{
+
+footer {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
 }
-.cliente{
+
+.cliente {
     padding-right: 10px;
 }
-img{
+
+img {
     height: 50px;
     width: 50px;
     justify-self: center;
     align-self: center;
 }
-.options{
+
+.options {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 10px; 
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
 }
 
-.task{
-    margin-left: 50px;
-}
-#check{
-    margin-left: 100px;
+.task {
+    margin-left: 10px;
 }
 
-#checkbox{
+#checkbox {
     height: 24px;
     width: 24px;
-    margin-left: 95px;
+    margin-left: 10px;
 }
 
-@media (min-width: 768px) {
-    .container {
-        width: 500px; 
-        height: 500px; 
-        border: 2px solid black;
-        border-radius: 10px; 
-        background-color: rgba(127, 255, 238, 0.534); 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        }
+/* Botão de Criar Tarefas */
+.criar-tarefa {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.criar-tarefa:hover {
+    background-color: #45a049;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .corpo {
+        display: none; /* Esconde o título fora da caixa */
+    }
+
     .box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .box .task {
+        margin: 0;
+        text-align: center;
+    }
+
+    .box .titulo {
+        display: block; /* Exibe o título dentro da caixa */
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .criar-tarefa {
+        width: 100%;
+        margin-top: 10px;
     }
 }
