@@ -59,4 +59,6 @@ img {
 
 .task {
     margin-left: 35px;
+    display: flex;
+    align-items: center;
 }

@@ -1,4 +1,6 @@
-function logar() {
+function logar(event) {
+
+    event.preventDefault();
 
     const ema = document.getElementById('email')
     const email = ema.value

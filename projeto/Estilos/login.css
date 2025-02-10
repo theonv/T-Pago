@@ -70,11 +70,11 @@ button {
     background-color: rgb(0, 89, 255);
     cursor: pointer;
     transition: transform 0.3s ease, background-color 0.3s ease;
-  }
+}
 
 button:hover {
     transform: scale(1.1);
-    background-color: #0400ff; 
+    background-color: #0400ff;
 }
 
 .cadastro {

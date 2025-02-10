@@ -59,4 +59,11 @@ img {
 
 .conf {
     margin-left: 35px;
+    display: flex;
+    align-items: center;
+}
+
+.img-config {
+    margin-left: auto;
+    margin-right: 13px;
 }

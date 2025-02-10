@@ -10,8 +10,10 @@ function config() {
     window.location.href = "config.html";
 }
 
-
-
+/*function calendario() {
+    window.location.href = "";
+    FUNÇÃO PRONTA PARA QUANDO ADICIONAR O API DO CALENDÁRIO!!!!!
+} */
 
 
 
