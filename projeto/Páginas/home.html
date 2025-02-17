@@ -24,14 +24,17 @@
         </h1>
     </div>
     <main>
-        <div class="container">
-                <label class="botao">
-                    EXERCÍCIOS
-                    <input type="checkbox" class="checkbox" id="meuCheckbox">
+        <div class="qdd">
+            <label class="botao">
+                EXERCÍCIOS
+                <input type="checkbox" class="checkbox" id="meuCheckbox">
+            </label>
+            <div class="container">
+                <textarea id="put" type="text"></textarea>
+                <label id="criar-trf">
+                    <button id="criar-tarefa" onclick="criar()">Criar Tarefa</button>
                 </label>
-                <div id="container"></div>
-            <!-- Botão de Criar Tarefas -->
-            <button onclick="criar()">Criar Tarefa</button>
+            </div>
         </div>
     </main>
     <footer>
