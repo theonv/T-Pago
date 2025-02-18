@@ -25,14 +25,14 @@
     </div>
     <main>
         <div class="qdd">
-            <label class="botao">
-                EXERCÍCIOS
-                <input type="checkbox" class="checkbox" id="meuCheckbox">
-            </label>
+            <div class="content-box" id="contentBox">
+                <input type="checkbox" id="myCheckbox"></input>            
+                <p id="displayText">Tarefa</p>
+            </div>
             <div class="container">
-                <textarea id="put" type="text"></textarea>
+                <textarea id="put" type="text" placeholder="Digite sua tarefa:"></textarea>
                 <label id="criar-trf">
-                    <button id="criar-tarefa" onclick="criar()">Criar Tarefa</button>
+                    <button class="button" id="createButton">Criar</button>
                 </label>
             </div>
         </div>
