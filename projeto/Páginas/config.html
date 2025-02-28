@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +9,6 @@
     <link rel="shortcut icon" href="../img/Logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../Estilos/config.css">
     <script src="../JS/footer.js"></script>
-    <script src="../JS/editarperfil.js"></script>
 </head>
 
 <body>
@@ -27,17 +25,17 @@
     </div>
     <main>
         <div>
-            <div class="box" onclick="editarperfil()">
+            <div class="box" id="editarPerfil">
                 <p class="conf">
                     EDITAR PERFIL
                 </p>
-                <img src="../img/lapis.png" alt="" class="img-config">
-            </div><br>
-            <div class="box" onclick="notificacoes()">
+                <div class="icon pencil-icon"></div>
+            </div>
+            <div class="box" id="notificacoes">
                 <p class="conf">
                     NOTIFICAÇÕES
                 </p>
-                <img src="../img/sino.png" alt="" class="img-config">
+                <div class="icon bell-icon"></div>
             </div>
         </div>
     </main>
@@ -49,6 +47,15 @@
             <img src="../img/engrenagem.png" alt="" onclick="config()">
         </picture>
     </footer>
-</body>
 
+    <script>
+        document.getElementById('editarPerfil').addEventListener('click', function() {
+            window.location.href = "editarperfil.html";
+        });
+        
+        document.getElementById('notificacoes').addEventListener('click', function() {
+            window.location.href = "notification.html";
+        });
+    </script>
+</body>
 </html>

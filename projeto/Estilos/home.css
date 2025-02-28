@@ -126,6 +126,9 @@ img {
     top: -1px;
     left: 2px;
 }
+footer{
+    padding-bottom: 34px;
+}
 
 .container {
     position: relative; /* Define o contexto de referência */
