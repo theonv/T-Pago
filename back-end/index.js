@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000; // Usa a porta definida no ambiente ou 30
 
 // Configuração da conexão com o banco de dados (use variáveis de ambiente para segurança!)
 const pool = mysql.createPool({
+    port: process.env.DB_PORT || 3002,
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || 'admin',
