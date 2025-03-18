@@ -2,10 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const { sequelize } = require('./projeto/backend/config/database');
+const { sequelize } = require('../backend/config/database');
 
 // Importar rotas
-const authRoutes = require('./projeto/backend/routes/authRoutes');
+const authRoutes = require('../backend/routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;

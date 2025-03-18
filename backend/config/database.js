@@ -1,12 +1,13 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME || 'ta_pago',
+  process.env.DB_NAME || 'ta-pago',
   process.env.DB_USER || 'root',
-  process.env.DB_PASSWORD || '',
+  process.env.DB_PASSWORD || 'admin',
   {
     host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 3306,
+    port: process.env.DB_PORT || 3002,
     dialect: 'mariadb',
     dialectOptions: {
       timezone: 'Etc/GMT-3',
