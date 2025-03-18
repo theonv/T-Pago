@@ -44,6 +44,7 @@ exports.cadastro = async (req, res) => {
 
 // Login de usuário
 exports.login = async (req, res) => {
+  console.log("vaca")
   try {
     const { email, senha } = req.body;
 

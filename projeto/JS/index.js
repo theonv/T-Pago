@@ -1,49 +1,38 @@
-function logar(event) {
+document.addEventListener(
+    'DOMContentLoaded',() =>{
+        const lf = document.getElementById('formLogin')
 
-    event.preventDefault();
+        if (lf) {
+            lf.addEventListener('submit',async(e) =>{
+                e.preventDefault();
 
-    const ema = document.getElementById('email')
-    const email = ema.value
+                const ema = document.getElementById('email').value
+                const sen = document.getElementById('senha').value
 
-    const sen = document.getElementById('senha')
-    const senha = sen.value
-    console.log("email:", ema, "senha:",senha)
-    if (email == 'admin@gmail.com') {
-        if (senha == 'admin') {
-            window.location.href = "./home.html"
+                try {
+                    console.log(JSON.stringify({ema,sen}))
+                    const response = await fetch('http://127.0.0.1:3001/api/auth/login',{ //como o front ta rodando no live server porta 5500 (padrão) e o back na 3001 estava dando erro ao acessar a rota
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body:JSON.stringify({ema,sen}),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        localStorage.setItem('token',data.token)
+                        localStorage.setItem('user',data.user)
+                        window.location.href = "./home.html"
+                    }
+                    else{
+                        console.error('error ao fazer login nego')
+                    }
+                } catch (er) {
+                    console.error('error ao fazer login negão',er)
+                }
+            })
         }
-        else if (senha != 'admin') {
-            alert('senha errada ')
-        }
     }
-    else {
-        alert('email errado')
-    }
-} 
-function novasenha() {
-
-    const ema = document.getElementById('email')
-    const nsenha = ema.value
-
-    const sen = document.getElementById('senha')
-    const senha = sen.value
-    
-    if (nsenha == senha) {
-        alert('Senha alterada mas não salva no banco de Dados')
-        window.location.href = "./index.html"
-    }
-    else{
-        alert('As senhas não são iguais')
-    }
-} 
-function novouser() {
-
-    const ema = document.getElementById('email')
-    const nsenha = ema.value
-
-    const sen = document.getElementById('senha')
-    const senha = sen.value
-    
-    alert('Conta criada mas não salva no banco de Dados')
-    window.location.href = "./index.html"
-} 
+)
