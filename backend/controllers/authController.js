@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // Registrar novo usuário
-exports.register = async (req, res) => {
+exports.cadastro = async (req, res) => {
   try {
-    const { nome, email, senha, telefone, dataNascimento } = req.body;
+    const { nome, email, senha, data_cadastro } = req.body;
 
     // Verificar se o usuário já existe
     const userExists = await User.findOne({ where: { email } });
@@ -17,13 +17,12 @@ exports.register = async (req, res) => {
       nome,
       email,
       senha,
-      telefone,
-      dataNascimento,
+      data_cadastro,
     });
 
     // Gerar token JWT
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id_usuario, email: user.email },
       process.env.JWT_SECRET || 'sua_chave_secreta_jwt',
       { expiresIn: process.env.JWT_EXPIRATION || '1d' }
     );
@@ -32,7 +31,7 @@ exports.register = async (req, res) => {
       message: 'Usuário registrado com sucesso',
       token,
       user: {
-        id: user.id,
+        id: user.id_usuario,
         nome: user.nome,
         email: user.email,
       },
@@ -62,7 +61,7 @@ exports.login = async (req, res) => {
 
     // Gerar token JWT
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id_usuario, email: user.email },
       process.env.JWT_SECRET || 'sua_chave_secreta_jwt',
       { expiresIn: process.env.JWT_EXPIRATION || '1d' }
     );
@@ -71,7 +70,7 @@ exports.login = async (req, res) => {
       message: 'Login realizado com sucesso',
       token,
       user: {
-        id: user.id,
+        id: user.id_usuario,
         nome: user.nome,
         email: user.email,
       },

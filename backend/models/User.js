@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const User = sequelize.define(
   'User',
   {
-    id: {
+    id_usuario: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -26,21 +26,13 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    telefone: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    dataNascimento: {
+    data_cadastro: {
       type: DataTypes.DATEONLY,
       allowNull: true,
     },
-    ativo: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-    },
   },
   {
-    tableName: 'usuarios',
+    tableName: 'usuario',
     timestamps: true,
     hooks: {
       beforeCreate: async (user) => {

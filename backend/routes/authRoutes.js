@@ -4,10 +4,10 @@ const authController = require('../controllers/authController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 // Rotas públicas
-router.post('/register', authController.register);
+router.post('/cadastro', authController.cadastro);
 router.post('/login', authController.login);
-
+/*
 // Rotas protegidas
 router.get('/profile', authMiddleware, authController.getProfile);
-
+*/
 module.exports = router;
