@@ -6,17 +6,17 @@ document.addEventListener(
             lf.addEventListener('submit',async(e) =>{
                 e.preventDefault();
 
-                const ema = document.getElementById('email').value
-                const sen = document.getElementById('senha').value
+                const email = document.getElementById('email').value
+                const senha = document.getElementById('senha').value
 
                 try {
-                    console.log(JSON.stringify({ema,sen}))
+                    console.log(JSON.stringify({email,senha}))
                     const response = await fetch('http://127.0.0.1:3001/api/auth/login',{ //como o front ta rodando no live server porta 5500 (padrão) e o back na 3001 estava dando erro ao acessar a rota
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body:JSON.stringify({ema,sen}),
+                        body:JSON.stringify({email,senha}),
                     });
 
                     const data = await response.json();

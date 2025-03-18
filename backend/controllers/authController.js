@@ -47,7 +47,8 @@ exports.login = async (req, res) => {
   console.log("vaca")
   try {
     const { email, senha } = req.body;
-
+    console.log(email,senha)
+    console.log(req.body)
     // Verificar se o usuário existe
     const user = await User.findOne({ where: { email } });
     if (!user) {
