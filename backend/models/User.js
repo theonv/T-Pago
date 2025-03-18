@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
-const bcrypt = require('bcryptjs');
 
 const User = sequelize.define(
   'User',
@@ -31,29 +30,7 @@ const User = sequelize.define(
       allowNull: true,
     },
   },
-  {
-    tableName: 'usuario',
-    timestamps: true,
-    hooks: {
-      beforeCreate: async (user) => {
-        if (user.senha) {
-          const salt = await bcrypt.genSalt(10);
-          user.senha = await bcrypt.hash(user.senha, salt);
-        }
-      },
-      beforeUpdate: async (user) => {
-        if (user.changed('senha')) {
-          const salt = await bcrypt.genSalt(10);
-          user.senha = await bcrypt.hash(user.senha, salt);
-        }
-      },
-    },
-  }
 );
 
-// Método para verificar senha
-User.prototype.checkPassword = async function (password) {
-  return await bcrypt.compare(password, this.senha);
-};
 
 module.exports = User;

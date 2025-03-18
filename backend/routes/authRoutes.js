@@ -4,7 +4,7 @@ const authController = require('../controllers/authController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 // Rotas públicas
-router.post('/cadastro', authController.cadastro);
+//router.post('/cadastro', authController.cadastro);
 router.post('/login', authController.login);
 /*
 // Rotas protegidas
