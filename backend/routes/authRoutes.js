@@ -6,6 +6,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 // Rotas públicas
 //router.post('/cadastro', authController.cadastro);
 router.post('/login', authController.login);
+router.post('/cru', authController.cru);
 /*
 // Rotas protegidas
 router.get('/profile', authMiddleware, authController.getProfile);

@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const { sequelize } = require('../backend/config/database');
+const { db } = require('../backend/config/database');
 
 // Importar rotas
 const authRoutes = require('../backend/routes/authRoutes');
@@ -13,7 +13,6 @@ const PORT = process.env.PORT || 3001;
 // Middlewares
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'projeto')));
@@ -35,13 +34,9 @@ app.get('/:page', (req, res) => {
 // Iniciar o servidor
 async function startServer() {
   try {
-    await sequelize.authenticate();
-    console.log('Conexão com o banco de dados estabelecida com sucesso.');
-    
-    // Sincronizar modelos com o banco de dados
-    await sequelize.sync();
-    console.log('Modelos sincronizados com o banco de dados.');
-    
+    await db.sync({force: false});
+    await db.authenticate();
+    console.debug('Conexão com o banco de dados estabelecida com sucesso.');
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
     });
