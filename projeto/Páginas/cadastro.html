@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="../Estilos/login.css">
     <link rel="stylesheet" href="../Estilos/global.css">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/x-icon">
-    <script src="../JS/index.js"></script>
+    <script src="../JS/cds.js"></script>
 
 </head>
 <body>
     <main class="container">
-        <form>
+        <form id="formLogin">
             <h1 id="titulo">CADASTRE - <span class="titulo-color">SE</span></h1>
             <picture class="logo">
                 <img src="../img/Logo.png" alt="Logo Tá Pago">
@@ -21,12 +21,12 @@
                 <input type="email" name="" id="email" placeholder="Email" required>
             </div>
             <div class="input">
-                <input type="email" name="" id="senha" placeholder="Crie uma senha" required>
+                <input type="password" name="" id="senha" placeholder="Crie uma senha" required>
             </div>
             <div class="recuperar">
                 <a href="index.html">Já Tenho uma conta</a>
             </div>
-            <button onclick="novouser()" type="submit">Crie</button>
+            <button type="submit">Crie</button>
         </form>
     </main>
 </body>
