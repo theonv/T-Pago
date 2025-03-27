@@ -40,7 +40,7 @@ exports.recs = async (req,res) => {
     const email = req.body.email
     const user = await User.findOne({ email: email })
     console.debug(req.body.email,user)
-    const link = "#"
+    const link = "http://127.0.0.1:5500/projeto/P%C3%A1ginas/rec.html"
     if (!user) {
       throw 'Usuário não encontrado'
     }
@@ -53,6 +53,45 @@ exports.recs = async (req,res) => {
         <a href='${link}'>Clica aqui</a>
     `
     )
+    return Response.json({
+      mensagem: "O usuário receberá um e-mail com as instruções de login"
+    })
+  } catch (error) {
+    console.log("Erro não deu pai", error)
+    return Response.json({
+      error: error
+    },
+      { status: 400 }
+    )
+  }
+
+}
+exports.nvsh = async (req,res) => {
+  try {
+    const senha = req.body.senha
+    const email = "admin@gmail.com"
+    const user =  await User.findOne({ email: email })
+    console.debug(senha)
+    const link = "http://127.0.0.1:5500/projeto/P%C3%A1ginas/index.html"
+    if (!user) {
+      throw 'Usuário não encontrado'
+    }
+    await enviar(
+      "lucasfrancelinopontes@gmail.com",
+      "Recuperar senha",
+      `Deu Green voce mudou sua senha acesse para fazer login: ${link}`,
+      `
+        <h1>Deu green Acesse!</h1>
+        <a href='${link}'>Clica aqui</a>
+    `
+    )
+    const userData = {
+      email: email,
+      senha: senha,
+    }
+    console.log(userData)
+    user.save(userData)
+    console.log("cade?")
     return Response.json({
       mensagem: "O usuário receberá um e-mail com as instruções de login"
     })
