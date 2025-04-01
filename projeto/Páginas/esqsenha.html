@@ -7,23 +7,26 @@
     <link rel="stylesheet" href="../Estilos/login.css">
     <link rel="stylesheet" href="../Estilos/global.css">
     <link rel="shortcut icon" href="../img/Logo.png" type="image/x-icon">
-    <script src="../JS/rec.js"></script>
+    <script src="../JS/index.js"></script>
 
 </head>
 <body>
     <main class="container">
-        <form id="formLogin">
+        <form>
             <h1 id="titulo">MUDAR <span class="titulo-color">SENHA</span></h1>
             <picture class="logo">
                 <img src="../img/Logo.png" alt="Logo Tá Pago">
             </picture>
             <div class="input"> 
-                <input type="text" name="" id="email" placeholder="Digite Seu Email" required>
+                <input type="text" name="" id="email" placeholder="Nova senha" required>
+            </div>
+            <div class="input">
+                <input type="text" name="" id="senha" placeholder="Digite Novamente" required>
             </div>
             <div class="recuperar">
                 <a href="index.html">Lembrei minha senha</a>
             </div>
-            <button class="button" type="submit">Altere</button>
+            <button onclick="novasenha()" type="submit">Altere</button>
         </form>
     </main>
 </body>
