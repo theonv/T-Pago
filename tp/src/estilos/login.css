@@ -1,0 +1,88 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+* {
+    font-family: "Roboto", sans-serif;
+}
+
+.container {
+    width: 420px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+
+#titulo {
+    text-align: center;
+    font-size: 36px;
+}
+
+.titulo-color {
+    color: blue;
+}
+
+img {
+    display: block;
+    margin: auto;
+    width: 200px;
+    height: auto;
+    transform: scale(0.8);
+    transform-origin: center;
+}
+
+.input {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input input{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 40px;
+    outline: none;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    padding: 20px 45px 20px 20px;
+
+}
+
+.input input::placeholder{
+    color: rgba(0, 89, 255, 0.562);
+}
+
+.cadastro {
+    text-align: center;
+}
+
+img:hover {
+    cursor: pointer;
+}
+
+.button {
+    width: 100%;
+    height: 100%;
+    min-width: 10vh;
+    min-height: auto;
+    margin: 30px 0px;
+    padding: 10px 0px;
+    border: 1px solid black;
+    border-radius: 40px;
+    font-size: 16px;
+    color: white;
+    background-color: rgb(0, 89, 255);
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.button:hover {
+    transform: scale(1.1);
+    background-color: #0400ff;
+}
