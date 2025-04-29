@@ -1,4 +1,4 @@
-import '../estilos/login.css'
+/*import '../estilos/login.css'
 
 export default function Login() {
   return (
@@ -26,4 +26,32 @@ export default function Login() {
     </main>
     </>
   )
+}
+*/
+// pages/index.js
+'use client'
+import { useEffect, useState } from 'react';
+
+export default function Home() {
+  const [info, setInfo] = useState(null);
+
+  useEffect(() => {
+    fetch('../api/v1/user')
+      .then(res => res.json())
+      .then(data => setInfo(data));
+  }, []);
+
+  return (
+    <div>
+      <h1>Dados da API</h1>
+      {info ? (
+        <ul>
+          <li>Nome: {info.email}</li>
+          <li>Idade: {info.senha}</li>
+        </ul>
+      ) : (
+        <p>Carregando...</p>
+      )}
+    </div>
+  );
 }
