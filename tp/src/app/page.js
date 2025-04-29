@@ -28,26 +28,32 @@ export default function Login() {
   )
 }
 */
-// pages/index.js
+
 'use client'
 import { useEffect, useState } from 'react';
+
+// Importe o arquivo JSON diretamente
+// Você precisará criar este arquivo na raiz do projeto
+import dadosJson from '../dados.json';
 
 export default function Home() {
   const [info, setInfo] = useState(null);
 
   useEffect(() => {
-    fetch('../api/v1/user')
-      .then(res => res.json())
-      .then(data => setInfo(data));
+    // Simula uma chamada API com um pequeno atraso
+    setTimeout(() => {
+      setInfo(dadosJson);
+      console.log("Dados carregados:", dadosJson);
+    }, 500);
   }, []);
-
+  
   return (
     <div>
       <h1>Dados da API</h1>
       {info ? (
         <ul>
-          <li>Nome: {info.email}</li>
-          <li>Idade: {info.senha}</li>
+          <li>Email: {info.email}</li>
+          <li>Senha: {info.senha}</li>
         </ul>
       ) : (
         <p>Carregando...</p>
