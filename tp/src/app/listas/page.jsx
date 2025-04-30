@@ -1,4 +1,5 @@
 import '../../estilos/listas.css'
+import Footer from '../../componentes/footer/footer.jsx'
 
 export default function Listas() {
     return (
@@ -21,14 +22,7 @@ export default function Listas() {
                     </p>
                 </div>
             </main>
-            <footer>
-                <picture class="options">
-                    <img src="../img/home.png" alt="" onclick="home()"/>
-                    <img src="../img/3s.png" alt="" onclick="listas()"/>
-                    <img src="../img/calendario.png" alt=""/>
-                    <img src="../img/engrenagem.png" alt="" onclick="config()"/>
-                </picture>
-            </footer>
+            <Footer/>
             </>
 )
 }

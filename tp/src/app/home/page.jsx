@@ -1,4 +1,5 @@
 import '../../estilos/home.css'
+import Footer from '../../componentes/footer/footer.jsx'
 
 const dadosJson = require('../../funcao/dados.json');
 const email = dadosJson.email;
@@ -33,14 +34,7 @@ export default function Home() {
             </div>
         </div>
     </main>
-    <footer>
-        <picture class="options">
-            <img src="../img/home.png" alt="" onclick="home()"/>
-            <img src="../img/3s.png" alt="" onclick="listas()"/>
-            <img src="../img/calendario.png" alt="" onclick="calendario()"/>
-            <img src="../img/engrenagem.png" alt="" onclick="config()"/>
-        </picture>
-    </footer>
+    <Footer/>
     </>
   );
 }

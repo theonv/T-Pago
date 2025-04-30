@@ -1,4 +1,5 @@
 import '../../estilos/config.css'
+import Footer from '../../componentes/footer/footer.jsx'
 
 export default function Config() {
     return (
@@ -30,14 +31,7 @@ export default function Config() {
             </div>
         </div>
     </main>
-    <footer>
-        <picture class="options">
-            <img src="../img/home.png" alt="" onclick="home()"/>
-            <img src="../img/3s.png" alt="" onclick="listas()"/>
-            <img src="../img/calendario.png" alt=""/>
-            <img src="../img/engrenagem.png" alt="" onclick="config()"/>
-        </picture>
-    </footer>
+    <Footer/>
 
     <script>
         document.getElementById('editarPerfil').addEventListener('click', function() {

@@ -1,4 +1,5 @@
 import '../../estilos/editarperfil.css'
+import Footer from '../../components/Footer'
 
 export default function EditarPerfil() {
     return (
@@ -33,14 +34,7 @@ export default function EditarPerfil() {
             </div>
         </div>
     </main>
-    <footer>
-        <picture class="options">
-            <img src="../img/home.png" alt="" onclick="home()"/>
-            <img src="../img/3s.png" alt="" onclick="listas()"/>
-            <img src="../img/calendario.png" alt=""/>
-            <img src="../img/engrenagem.png" alt="" onclick="config()"/>
-        </picture>
-    </footer>
+    <Footer/>
         </>
     )
 }
