@@ -7,7 +7,7 @@ export function verify(event) {
 
     if (dadosJson.email === email && dadosJson.senha === senha) {
         alert("Login bem-sucedido!");
-        window.location.href = "./login"
+        window.location.href = "./home"
         // Redirecionar ou realizar outra ação após o login bem-sucedido
     }
 
