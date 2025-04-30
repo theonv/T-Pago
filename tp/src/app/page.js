@@ -18,11 +18,11 @@ export default function Login() {
                 <input type="password" name="" id="senha" placeholder="Senha" required/>
             </div>
             <div className='recuperar'>
-                <a href="esqsenha.html">Esqueci minha senha</a>
+                <a href="esqsenha">Esqueci minha senha</a>
             </div>
             <button className='button' onClick={verify} type="button">Acesse</button>
             <div className='cadastro'>
-                <p>Não tem uma conta? <a href="cadastro.html">Registre-se</a></p>
+                <p>Não tem uma conta? <a href="cadastro">Registre-se</a></p>
             </div>
         </form>
     </main>
