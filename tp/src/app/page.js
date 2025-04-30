@@ -1,4 +1,6 @@
-/*import '../estilos/login.css'
+'use client'
+import { verify } from '../funcao/verify';
+import '../estilos/login.css'
 
 export default function Login() {
   return (
@@ -18,7 +20,7 @@ export default function Login() {
             <div className='recuperar'>
                 <a href="esqsenha.html">Esqueci minha senha</a>
             </div>
-            <button className='button' onclick="logar(event)" type="submit">Acesse</button>
+            <button className='button' onClick={verify} type="button">Acesse</button>
             <div className='cadastro'>
                 <p>Não tem uma conta? <a href="cadastro.html">Registre-se</a></p>
             </div>
@@ -26,38 +28,4 @@ export default function Login() {
     </main>
     </>
   )
-}
-*/
-
-'use client'
-import { useEffect, useState } from 'react';
-
-// Importe o arquivo JSON diretamente
-// Você precisará criar este arquivo na raiz do projeto
-import dadosJson from '../dados.json';
-
-export default function Home() {
-  const [info, setInfo] = useState(null);
-
-  useEffect(() => {
-    // Simula uma chamada API com um pequeno atraso
-    setTimeout(() => {
-      setInfo(dadosJson);
-      console.log("Dados carregados:", dadosJson);
-    }, 500);
-  }, []);
-  
-  return (
-    <div>
-      <h1>Dados da API</h1>
-      {info ? (
-        <ul>
-          <li>Email: {info.email}</li>
-          <li>Senha: {info.senha}</li>
-        </ul>
-      ) : (
-        <p>Carregando...</p>
-      )}
-    </div>
-  );
 }
