@@ -1,5 +1,6 @@
 import '../../estilos/home.css'
 import Footer from '../../componentes/footer/footer.jsx'
+import { createTask } from '@/funcao/task';
 
 const dadosJson = require('../../funcao/dados.json');
 const email = dadosJson.email;
@@ -10,26 +11,26 @@ export default function Home() {
   return (
     <>
         <header>
-        <div class="cliente">{nome}</div>
+        <div className="cliente">{nome}</div>
         <picture>
             <img src="../img/icon.png" alt="símbolo de ícone de perfil"/>
         </picture>
     </header>
-    <div class="corpo">
-        <h1 class="titulo">
+    <div className="corpo">
+        <h1 className="titulo">
             ROTINA
         </h1>
     </div>
     <main>
         <div class="qdd">
-            <div class="content-box" id="contentBox">
+            <div className="content-box" id="contentBox">
                 <input type="checkbox" id="myCheckbox"></input>            
-                <p id="displayText" class="p-style">Tarefa</p>
+                <p id="displayText" className="p-style">Tarefa</p>
             </div>
             <div class="container">
                 <textarea id="put" type="text" placeholder="Digite sua tarefa:"></textarea>
                 <label id="criar-trf">
-                    <button class="button" id="createButton">Criar</button>
+                    <button className="button" id="createButton" onClick={createTask}>Criar</button>
                 </label>
             </div>
         </div>
