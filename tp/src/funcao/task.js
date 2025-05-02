@@ -1,14 +1,35 @@
-export function createTask() {
-    const novaDiv = document.createElement("div");
-    const taskInput = document.getElementById("put").value;
+'use client'
 
-    novaDiv.textContent = taskInput;
-    novaDiv.className = "content-box";
+import { useState } from 'react';
 
-    const elementoPai = document.getElementsByClassName('qdd').value;
-    elementoPai.appendChild(novaDiv);
+export function CreateTask() {
+    const [tasks, setTasks] = useState([]);
+    const [inputValue, setInputValue] = useState('');
 
-    return novaDiv;
+    const handleCreateTask = () => {
+        if (inputValue.trim()) {
+            setTasks([...tasks, inputValue]);
+            setInputValue('');
+        }
+    };
+
+    return (
+        <div>
+            <div className="qdd">
+                {tasks.map((task, index) => (
+                    <div key={index} className="content-box">
+                        {task}
+                    </div>
+                ))}
+            </div>
+            <input
+                id="put"
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+            />
+            <button onClick={handleCreateTask}>Adicionar Tarefa</button>
+        </div>
+    );
 }
-
 //TÁ ERRADO - ONCLICK DO PAGE HOME NÃO ESTÁ FUNCIONANDO
