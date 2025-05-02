@@ -46,7 +46,7 @@ export default function Home() {
                             onChange={(e) => setInputValue(e.target.value)}
                             placeholder="Digite sua tarefa"
                         />
-                        <button onClick={handleCreateTask}>Adicionar Tarefa</button>
+                        <button className="criar-tarefa" onClick={handleCreateTask}>Adicionar Tarefa</button>
                     </div>
                 </div>
             </main>
