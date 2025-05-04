@@ -1,3 +1,6 @@
 footer{
     background-color: var(--background)
 }
+svg{
+    stroke: var(--foreground);
+}

@@ -1,144 +1,45 @@
-body {
-    min-height: 95vh;
-    max-height: 100vh;
-    position: relative;
-}
-svg{
-    stroke: var(--corSecundaria);
-}
-
 header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
-
 .titulo {
     font-size: 24px;
     font-weight: bold;
-    color: var(--corSecundaria);
+    color: var(--foreground);
 }
-
 .corpo {
     height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-.box {
-    width: 300px;
-    height: 50px;
-    background-color: #5768FF;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-}
-
 main {
     height: 40vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .qdd {
-    background-color: rgba(0, 89, 255, 0.25);
+    background-color: var(--corPrimaria);
     padding: 10px;
     min-width: 40vh;
     min-height: 20vh;
     border-radius: 5px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.493);
 }
-
-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.cliente {
-    padding-right: 10px;
-}
-
-img {
-    height: 50px;
-    width: 50px;
-    justify-self: center;
-    align-self: center;
-}
-
-.options {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
-
-.task {
-    margin-left: 10px;
-}
-
-#checkbox {
-    height: 24px;
-    width: 24px;
-    margin-left: 10px;
-}
-
-/* Botão de Criar Tarefas */
 .criar-tarefa {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: var(--corSecundaria);
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
-
 .criar-tarefa:hover {
     background-color: #45a049;
 }
-.exercicio {
-    display: flex;
-    align-items: center;
-    background-color: #5A5AFF;
-    color: black;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    gap: 10px;
-    width: fit-content;
-
-}
-
-.checkbox {
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid black;
-    border-radius: 4px;
-    position: relative;
-    cursor: pointer;
-}
-
-.checkbox:checked::after {
-    content: '✔';
-    font-size: 14px;
-    color: black;
-    position: absolute;
-    top: -1px;
-    left: 2px;
-}
-footer{
-    padding-bottom: 34px;
-}
-
 .container {
     position: relative; /* Define o contexto de referência */
     width: 100%;
@@ -169,7 +70,6 @@ footer{
     border-color: rgba(0, 187, 255, 0.5);
     box-shadow: rgba(0, 0, 0, 0.493);
 }
-
 .content-box {
     width: 300px;
     padding: 15px;
@@ -186,17 +86,6 @@ footer{
     white-space: nowrap;
     display: inline-block; 
 }
-
-
-.p-style {
-    /*border: black solid 2px;
-    border-radius: 5px;*/
-    padding-bottom: 10px;
-    margin-left: 10px;
-}
-
-
-/* Estilo do item de tarefa */
 .task-item {
     display: flex;
     align-items: center;
@@ -206,38 +95,6 @@ footer{
     padding: 10px;
     box-shadow: 2.5px 2.5px 5px rgba(0, 0, 0, 0.493);
 }
-
-.task-item input[type="checkbox"] {
-    margin-right: 10px;
-    min-width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.task-item .p-style {
-    margin: 0;
-    padding: 10px;
-    flex-grow: 1;
-    word-break: break-word;
-    background: transparent;
-    border: none;
-}
-
-.delete-btn {
-    margin-left: 8px;
-    background: #ff5555;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-}
-
 /* Melhorias no estilo do contêiner */
 .qdd {
     display: flex;
@@ -248,13 +105,11 @@ footer{
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
 #contentBox {
     overflow-y: auto;
     max-height: 50vh; /* Aumentado para mostrar mais tarefas */
     padding-bottom: 10px;
 }
-
 .container {
     position: relative;
     width: 100%;
@@ -262,7 +117,6 @@ footer{
     margin-top: 15px;
     padding-bottom: 50px; /* Espaço para o botão abaixo da textarea */
 }
-
 #put {
     resize: vertical;
     min-height: 60px;
@@ -270,7 +124,6 @@ footer{
     max-width: 100%;
     box-sizing: border-box;
 }
-
 #criar-trf {
     position: absolute;
     right: 10px;
@@ -278,21 +131,6 @@ footer{
     margin: 0;
     z-index: 10;
 }
-
-.button {
-    padding: 8px 16px;
-    background-color: #5768FF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.button:hover {
-    background-color: #4456ee;
-}
-
 /* Ajustes para o main para permitir mais conteúdo */
 main {
     height: auto;
@@ -302,14 +140,4 @@ main {
     justify-content: center;
     align-items: flex-start; /* Alinhado ao topo para melhor uso do espaço */
     padding-bottom: 100px; /* Espaço adicional na parte inferior para o footer */
-}
-
-/* Garantir que o footer fique no lugar correto */
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: white; /* Fundo para evitar sobreposição */
-    z-index: 100;
 }
