@@ -2,9 +2,9 @@
 
 
 :root {
-  --corPrimaria: #1A23EB;
-  --corSecundaria: #EBA71A;
-  --background: #ffffff;
+  --corPrimaria: #0044ff;
+  --corSecundaria: #0a65ccea;
+  --background: rgb(247, 241, 241);
   --foreground: #000000;
 }
 
@@ -12,7 +12,6 @@
   :root {
     --background: #000000;
     --foreground: #ffffff;
-
   }
 }
 
