@@ -21,7 +21,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // takos.tarefas já é um array de objetos com 'conteudo'
     setTasks(prev => [...prev, ...takos.tarefas]);
   }, []);
 
@@ -46,7 +45,7 @@ export default function Home() {
         <div className="qdd">
           <ul>
             {tasks.map((task, index) => (
-              <li key={index}>{task.conteudo}</li>
+              <li className='task-item' key={index}>{task.conteudo}</li>
             ))}
           </ul>
 

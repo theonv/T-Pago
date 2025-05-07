@@ -94,6 +94,7 @@ main {
     border-radius: 5px;
     padding: 10px;
     box-shadow: 2.5px 2.5px 5px rgba(0, 0, 0, 0.493);
+    color: white;
 }
 /* Melhorias no estilo do contêiner */
 .qdd {
