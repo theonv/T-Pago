@@ -1,15 +1,11 @@
 import Footer from '@/componentes/footer/footer'
 import '../../estilos/notification.css'
+import Header from '@/componentes/header/page'
 
 export default function Notification() {
     return (
         <>
-            <header>
-                <div class="cliente">EU</div>
-                <picture>
-                    <img src="../img/icon.png" alt="simbolo de icone de perfil" />
-                </picture>
-            </header>
+            <Header />
             <div class="corpo">
                 <h1 class="titulo">
                     NOTIFICAÇÕES

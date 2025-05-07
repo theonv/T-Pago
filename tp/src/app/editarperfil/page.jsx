@@ -1,15 +1,11 @@
 import '../../estilos/editarperfil.css'
 import Footer from '../../components/Footer'
+import Header from '@/componentes/header/page'
 
 export default function EditarPerfil() {
     return (
         <>
-            <header>
-        <div class="cliente">EU</div>
-        <picture>
-            <img src="../img/icon.png" alt="simbolo de icone de perfil"/>
-        </picture>
-    </header>
+            <Header />
     <div class="corpo">
         <h1 class="titulo">
             EDITAR PERFIL

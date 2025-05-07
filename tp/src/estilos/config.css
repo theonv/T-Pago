@@ -47,14 +47,6 @@ main {
     justify-content: center;
     align-items: center;
 }
-
-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
 .cliente {
     padding-right: 10px;
 }

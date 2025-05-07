@@ -1,15 +1,11 @@
 import '../../estilos/config.css'
 import Footer from '../../componentes/footer/footer.jsx'
+import Header from '@/componentes/header/page'
 
 export default function Config() {
     return (
         <>
-            <header>
-                <div class="cliente">EU</div>
-                <picture>
-                    <img src="../img/icon.png" alt="simbolo de icone de perfil" />
-                </picture>
-            </header>
+            <Header />
             <div class="corpo">
                 <h1 class="titulo">
                     CONFIGURAÇÕES
@@ -32,7 +28,6 @@ export default function Config() {
                 </div>
             </main>
             <Footer />
-
         </>
     )
 }
