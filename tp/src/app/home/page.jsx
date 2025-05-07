@@ -2,10 +2,10 @@
 import '../../estilos/home.css';
 import Footer from '../../componentes/footer/footer.jsx';
 import { useEffect, useState } from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const dadosJson = require('../../funcao/dados.json');
 const { email, senha, nome } = dadosJson;
-
 const takos = require('../../funcao/tasks.json');
 
 export default function Home() {
@@ -14,9 +14,11 @@ export default function Home() {
 
   const handleCreateTask = () => {
     if (inputValue.trim()) {
-      // Adiciona como objeto padronizado
       setTasks([...tasks, { conteudo: inputValue.trim() }]);
       setInputValue('');
+      toast.success('Tarefa adicionada com sucesso!'); 
+    } else {
+      toast.error('Por favor, digite uma tarefa válida!');
     }
   };
 
@@ -62,6 +64,12 @@ export default function Home() {
       </main>
 
       <Footer />
+      <ToastContainer 
+        position='top-center'
+        toastStyle={{ 
+          backgroundColor: 'white',
+        }}
+      />
     </>
   );
 }
