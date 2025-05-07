@@ -1,0 +1,31 @@
+{
+    "tarefas": [
+      {
+        "conteudo": "Estudo"
+      },
+
+      {
+        "conteudo": "Almoço"
+      },
+
+      {
+        "conteudo": "Academia"
+      },
+
+      {
+        "conteudo": "Lanche"
+      },
+
+      {
+        "conteudo": "Janta"
+      },
+
+      {
+        "conteudo": "Horário para dormir"
+      },
+
+      {
+        "conteudo": "Horário para acordar"
+      }
+    ]
+  }

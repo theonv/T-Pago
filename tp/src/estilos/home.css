@@ -67,6 +67,7 @@ main {
     background-color: rgb(4, 0, 255);
 }
 
+
 #put:focus {
     outline: none;
     border-color: rgba(0, 187, 255, 0.5);
@@ -84,10 +85,7 @@ main {
     box-shadow: 2.5px 2.5px 5px rgba(0, 0, 0, 0.493);
     margin-left: 10px;
 }
-.content-box > * {
-    white-space: nowrap;
-    display: inline-block; 
-}
+
 .task-item {
     display: flex;
     align-items: center;
