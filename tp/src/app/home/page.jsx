@@ -28,28 +28,25 @@ export default function Home() {
   return (
     <>
       <Header />
-
-      <div className="corpo">
-        <h1 className="titulo">ROTINA</h1>
-      </div>
-
-      <main>
+      <h1 className="titulo">ROTINA</h1>
+      <main className='flex flex-col items-center justify-center'>
         <div className="qdd">
           <ul>
             {tasks.map((task, index) => (
               <li className='task-item' key={index}>{task.conteudo}</li>
             ))}
           </ul>
-
-          <div className="container">
-            <textarea
-              id="put"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Digite sua tarefa"
-            />
-            <button className="criar-tarefa" onClick={handleCreateTask}>Adicionar Tarefa</button>
-          </div>
+        </div>
+        <div className="container">
+          <input
+            id="put"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Digite sua tarefa"
+          />
+        </div>
+        <div id="fe" className='flex justify-end'>
+          <button className="criar-tarefa" onClick={handleCreateTask}>Adicionar Tarefa</button>
         </div>
       </main>
 

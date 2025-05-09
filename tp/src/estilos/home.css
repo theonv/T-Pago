@@ -1,3 +1,4 @@
+/*mudar para o componente do header*/
 header {
     display: flex;
     justify-content: flex-end;
@@ -7,54 +8,49 @@ header {
     font-size: 24px;
     font-weight: bold;
     color: var(--foreground);
-}
-.corpo {
     height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-main {
-    height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 .qdd {
-    background-color: rgba(red, green, blue, alpha);
-    /*background-color: var(--corPrimaria);*/
+    background-color: transparent;
     padding: 10px;
     min-width: 80vh;
     min-height: 20vh;
-    border-radius: 5px;
-    /*box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.493);*/
+    max-height: 40vh; 
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+}
+.qdd::-webkit-scrollbar {
+    width: 0px;
 }
 .criar-tarefa {
-    margin-top: 20px;
     padding: 10px 20px;
-    background-color:rgb(38, 0, 255);
+    background-color:var(--corPrimaria);
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    justify-content: end;
+}
+#fe{
+    width: 80vh;
+    padding: 0px 10px;
 }
 .criar-tarefa:hover {
     background-color: #0026ff;
 }
 .container {
     position: relative; /* Define o contexto de referência */
-    width: 100%;
-    height: 100%;
-    min-height: 20vh;
+    max-width: 80vh;
+    max-height: 18vh;
+    min-height: 15vh;
     padding: 10px;
 }
-
-#criar-trf {
-    position: absolute; /* O filho vai se posicionar em relação ao pai */
-    bottom: 0; /* Alinha ao fundo */
-    right: 0; /* Alinha à direita */
-}
-
 #put {
     height: 100px;
     width: 100%;
@@ -67,26 +63,11 @@ main {
     color: rgb(236, 226, 226);
     background-color: rgb(4, 0, 255);
 }
-
-
 #put:focus {
     outline: none;
     border-color: rgba(0, 187, 255, 0.5);
     box-shadow: rgba(0, 0, 0, 0.493);
 }
-.content-box {
-    width: 300px;
-    padding: 15px;
-    margin-top: 20px;
-    background-color: rgba(173, 216, 230, 0.5);
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    position: relative;
-    box-shadow: 2.5px 2.5px 5px rgba(0, 0, 0, 0.493);
-    margin-left: 10px;
-}
-
 .task-item {
     display: flex;
     align-items: center;
@@ -97,27 +78,10 @@ main {
     box-shadow: 2.5px 2.5px 5px rgba(0, 0, 0, 0.493);
     color: white;
 }
-/* Melhorias no estilo do contêiner */
-.qdd {
-    display: flex;
-    flex-direction: column;
-    max-height: 60vh; /* Altura aumentada para acomodar mais tarefas */
-    overflow-y: auto;
-    position: relative;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
 #contentBox {
     overflow-y: auto;
     max-height: 50vh; /* Aumentado para mostrar mais tarefas */
     padding-bottom: 10px;
-}
-.container {
-    position: relative;
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    padding-bottom: 50px; /* Espaço para o botão abaixo da textarea */
 }
 #put {
     resize: vertical;
@@ -132,14 +96,4 @@ main {
     bottom: 0; /* Posicionado bem abaixo da textarea */
     margin: 0;
     z-index: 10;
-}
-/* Ajustes para o main para permitir mais conteúdo */
-main {
-    height: auto;
-    min-height: 40vh;
-    max-height: 70vh; /* Altura aumentada para o container principal */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Alinhado ao topo para melhor uso do espaço */
-    padding-bottom: 100px; /* Espaço adicional na parte inferior para o footer */
 }
