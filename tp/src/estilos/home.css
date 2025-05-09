@@ -21,24 +21,25 @@ main {
     align-items: center;
 }
 .qdd {
-    background-color: var(--corPrimaria);
+    background-color: rgba(red, green, blue, alpha);
+    /*background-color: var(--corPrimaria);*/
     padding: 10px;
-    min-width: 40vh;
+    min-width: 80vh;
     min-height: 20vh;
     border-radius: 5px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.493);
+    /*box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.493);*/
 }
 .criar-tarefa {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color:rgb(0, 119, 255);
+    background-color:rgb(38, 0, 255);
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 .criar-tarefa:hover {
-    background-color: #0099ff;
+    background-color: #0026ff;
 }
 .container {
     position: relative; /* Define o contexto de referência */
@@ -90,7 +91,7 @@ main {
     display: flex;
     align-items: center;
     margin-bottom: 12px;
-    background-color: rgba(173, 216, 230, 0.5);
+    background-color: rgba(25, 68, 207, 0.938);
     border-radius: 5px;
     padding: 10px;
     box-shadow: 2.5px 2.5px 5px rgba(0, 0, 0, 0.493);
