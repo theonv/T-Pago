@@ -1,16 +1,7 @@
-body {
-    min-height: 95vh;
-    max-height: 100vh;
-    position: relative;
-}
-
-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.corpo {
+.titulo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--foreground);
     height: 10vh;
     display: flex;
     justify-content: center;
@@ -35,14 +26,6 @@ main {
 .cliente {
     padding-right: 10px;
 }
-
-img {
-    height: 50px;
-    width: 50px;
-    justify-self: center;
-    align-self: center;
-}
-
 .options {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

@@ -1,9 +1,3 @@
-/*mudar para o componente do header*/
-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
 .titulo {
     font-size: 24px;
     font-weight: bold;

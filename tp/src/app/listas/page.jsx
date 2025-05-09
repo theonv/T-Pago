@@ -6,11 +6,9 @@ export default function Listas() {
     return (
         <>
             <Header />
-            <div class="corpo">
-                <h1 class="titulo">
+                <h1 className="titulo">
                     LISTAS
                 </h1>
-            </div>
             <main>
                 <div class="box">
                     <p class="task">
@@ -18,7 +16,7 @@ export default function Listas() {
                     </p>
                 </div>
             </main>
-            <Footer/>
-            </>
-)
+            <Footer />
+        </>
+    )
 }

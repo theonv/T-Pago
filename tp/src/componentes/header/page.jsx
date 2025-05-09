@@ -1,4 +1,5 @@
 'use client';
+import '../../estilos/header.css'
 
 const dadosJson = require('../../funcao/dados.json');
 const { email, senha, nome } = dadosJson;
