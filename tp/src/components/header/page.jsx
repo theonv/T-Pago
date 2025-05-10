@@ -1,7 +1,7 @@
 'use client';
-import '../../estilos/header.css'
+import '../../styles/header.css'
 
-const dadosJson = require('../../funcao/dados.json');
+const dadosJson = require('../../functions/dados.json');
 const { email, senha, nome } = dadosJson;
 
 export default function Header() {

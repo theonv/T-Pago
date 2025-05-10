@@ -31,10 +31,7 @@
     cursor: pointer;
     justify-content: end;
 }
-#fe{
-    width: 80vh;
-    padding: 0px 10px;
-}
+
 .criar-tarefa:hover {
     background-color: #0026ff;
 }

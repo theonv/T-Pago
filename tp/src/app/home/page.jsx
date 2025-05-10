@@ -1,11 +1,11 @@
 'use client';
-import '../../estilos/home.css';
-import Footer from '../../componentes/footer/footer.jsx';
+import './home.css';
+import Footer from '../../components/footer/footer.jsx';
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from '@/componentes/header/page';
-const takos = require('../../funcao/tasks.json');
+import Header from '@/components/header/page';
+const takos = require('../../functions/tasks.json');
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
@@ -45,7 +45,8 @@ export default function Home() {
             placeholder="Digite sua tarefa"
           />
         </div>
-        <div id="fe" className='flex justify-end'>
+        {/*Removido o uso do id redundante e reestruturada a div com apenas classes do Tailwind para simplificação e melhor consistência. */}
+        <div className='flex justify-end w-[80vh] px-[10px]'>
           <button className="criar-tarefa" onClick={handleCreateTask}>Adicionar Tarefa</button>
         </div>
       </main>

@@ -1,29 +1,29 @@
-import '../../estilos/config.css'
-import Footer from '../../componentes/footer/footer.jsx'
-import Header from '@/componentes/header/page'
+import './config.css'
+import Footer from '../../components/footer/footer.jsx'
+import Header from '@/components/header/page'
 
 export default function Config() {
     return (
         <>
             <Header />
-            <div class="corpo">
-                <h1 class="titulo">
+            <div className="corpo">
+                <h1 className="titulo">
                     CONFIGURAÇÕES
                 </h1>
             </div>
             <main>
                 <div>
-                    <div class="box" id="editarPerfil">
-                        <p class="conf">
+                    <div className="box" id="editarPerfil">
+                        <p className="conf">
                             EDITAR PERFIL
                         </p>
-                        <div class="icon pencil-icon"></div>
+                        <div className="icon pencil-icon"></div>
                     </div>
-                    <div class="box" id="notificacoes">
-                        <p class="conf">
+                    <div className="box" id="notificacoes">
+                        <p className="conf">
                             NOTIFICAÇÕES
                         </p>
-                        <div class="icon bell-icon"></div>
+                        <div className="icon bell-icon"></div>
                     </div>
                 </div>
             </main>

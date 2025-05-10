@@ -1,6 +1,6 @@
-import Footer from '@/componentes/footer/footer'
-import '../../estilos/notification.css'
-import Header from '@/componentes/header/page'
+import Footer from '@/components/footer/footer'
+import './notification.css'
+import Header from '@/components/header/page'
 
 export default function Notification() {
     return (

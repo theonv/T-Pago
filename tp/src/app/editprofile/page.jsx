@@ -1,30 +1,30 @@
-import '../../estilos/editarperfil.css'
+import './editprofile.css'
 import Footer from '../../components/Footer'
-import Header from '@/componentes/header/page'
+import Header from '@/components/header/page'
 
 export default function EditarPerfil() {
     return (
         <>
             <Header />
-    <div class="corpo">
-        <h1 class="titulo">
+    <div className="corpo">
+        <h1 className="titulo">
             EDITAR PERFIL
         </h1>
     </div>
     <main>
         <div>
-            <div class="box">
-                <p class="conf">
+            <div className="box">
+                <p className="conf">
                     NOME DE USUÁRIO
                 </p>
             </div><br/>
-            <div class="box">
-                <p class="conf">
+            <div className="box">
+                <p className="conf">
                     FOTO DE PERFIL
                 </p>
             </div><br/>
-            <div class="box">
-                <p class="conf">
+            <div className="box">
+                <p className="conf">
                     FOTO DE PERFIL
                 </p>
             </div>

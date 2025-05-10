@@ -1,4 +1,4 @@
-import '../../estilos/footer.css'
+import '../../styles/footer.css'
 
 export default function Footer() {
     return (
@@ -12,7 +12,7 @@ export default function Footer() {
                     </svg>
                 </a>
                 {/*Listas*/}
-                <a href="/listas">
+                <a href="/lists">
                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="8" x2="21" y1="6" y2="6"></line>
                     <line x1="8" x2="21" y1="12" y2="12"></line>

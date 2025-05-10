@@ -1,6 +1,6 @@
-import '../../estilos/listas.css'
-import Footer from '../../componentes/footer/footer.jsx'
-import Header from '@/componentes/header/page'
+import './lists.css'
+import Footer from '../../components/footer/footer.jsx'
+import Header from '@/components/header/page'
 
 export default function Listas() {
     return (
@@ -10,8 +10,8 @@ export default function Listas() {
                     LISTAS
                 </h1>
             <main>
-                <div class="box">
-                    <p class="task">
+                <div className="box">
+                    <p className="task">
                         Comprar
                     </p>
                 </div>
