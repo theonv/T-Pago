@@ -1,4 +1,6 @@
 import '../../styles/login.css';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ForgotPassword() {
   return (
@@ -11,9 +13,16 @@ export default function ForgotPassword() {
         ainda não foi finalizada. */}
         <form>
             <h1 id="titulo">MUDAR <span className="titulo-color">SENHA</span></h1>
-            <picture className="logo">
-                <img src="../img/Logo.png" alt="Logo Tá Pago"/>
-            </picture>
+            <div className="logo">
+              <Image
+                src="/img/Logo.png"
+                alt="Logo Tá Pago"
+                width={400}
+                height={400}
+                placeholder="empty"
+                quality={100}
+              />
+            </div>
             <div className="input"> 
                 <input type="text" id="email" placeholder="Nova senha" required/>
             </div>
@@ -21,7 +30,7 @@ export default function ForgotPassword() {
                 <input type="text" id="senha" placeholder="Digite Novamente" required/>
             </div>
             <div className="recuperar">
-                <a href="/">Lembrei minha senha</a>
+                <Link href="/">Lembrei minha senha</Link>
             </div>
             <button type="submit">Altere</button>
         </form>

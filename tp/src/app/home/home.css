@@ -53,6 +53,11 @@
     max-height: 40vh;
     color: rgb(236, 226, 226);
     background-color: rgb(4, 0, 255);
+    resize: vertical;
+    min-height: 60px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 #put:focus {
     outline: none;
@@ -68,23 +73,4 @@
     padding: 10px;
     box-shadow: 2.5px 2.5px 5px rgba(0, 0, 0, 0.493);
     color: white;
-}
-#contentBox {
-    overflow-y: auto;
-    max-height: 50vh; /* Aumentado para mostrar mais tarefas */
-    padding-bottom: 10px;
-}
-#put {
-    resize: vertical;
-    min-height: 60px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-#criar-trf {
-    position: absolute;
-    right: 10px;
-    bottom: 0; /* Posicionado bem abaixo da textarea */
-    margin: 0;
-    z-index: 10;
 }

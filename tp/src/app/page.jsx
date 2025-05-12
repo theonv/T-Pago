@@ -2,6 +2,7 @@
 import '../styles/login.css';
 import { verify } from '../functions/verify.js';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Login() {
   return (
@@ -20,8 +21,8 @@ export default function Login() {
                     <Image
                         src="/img/Logo.png"
                         alt="Logo Tá Pago"
-                        width={120}
-                        height={120}
+                        width={400}
+                        height={400}
                         placeholder="empty"
                         quality={100}
                     />
@@ -33,15 +34,15 @@ export default function Login() {
                     <input type="password" id="senha" placeholder="Senha" required />
                 </div>
                 <div className="recuperar">
-                    <a href="forgotpwd">Esqueci minha senha</a>
+                    <Link href="forgotpwd">Esqueci minha senha</Link>
                 </div>
                 {/* Botão agora tem type="submit", o que vai automaticamente disparar o envio do formulário */}
                 <button className="button" type="submit">
-                Acesse
+                    Acesse
                 </button>
                 <div className="cadastro">
                     <p>
-                        Não tem uma conta? <a href="register">Registre-se</a>
+                        Não tem uma conta? <Link href="register">Registre-se</Link>
                     </p>
                 </div>
             </form>

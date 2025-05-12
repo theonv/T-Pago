@@ -1,5 +1,6 @@
 import '../../styles/login.css';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Register() {
     return (
@@ -18,8 +19,8 @@ export default function Register() {
                         <Image
                             src="/img/Logo.png"
                             alt="Logo Tá Pago"
-                            width={120}
-                            height={120}
+                            width={400}
+                            height={400}
                             placeholder="empty"
                             quality={100}
                         />
@@ -31,7 +32,7 @@ export default function Register() {
                         <input type="password" name="" id="senha" placeholder="Crie uma senha" required/>
                     </div>
                     <div className = "recuperar">
-                        <a href="/">Já Tenho uma conta</a>
+                        <Link href="/">Já Tenho uma conta</Link>
                     </div>
                     {/* O evento onClick foi removido do botão e agora o evento onSubmit é tratado 
                     diretamente pelo formulário, garantindo que o envio do formulário seja semântico e 
