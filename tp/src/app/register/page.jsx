@@ -32,12 +32,12 @@ export default function Register() {
                         <input type="password" name="" id="senha" placeholder="Crie uma senha" required/>
                     </div>
                     <div className = "recuperar">
-                        <Link href="/">Já Tenho uma conta</Link>
+                        <Link href="/" className="underline text-blue-600 hover:text-blue-900">Já Tenho uma conta</Link>
                     </div>
                     {/* O evento onClick foi removido do botão e agora o evento onSubmit é tratado 
                     diretamente pelo formulário, garantindo que o envio do formulário seja semântico e 
                     funcione ao pressionar "Enter" ou clicar no botão. */}
-                    <button type="submit">Crie</button>
+                    <button className="button" type="submit">Crie</button>
                 </form>
             </main>
         </>

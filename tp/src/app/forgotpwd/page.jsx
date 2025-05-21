@@ -24,15 +24,12 @@ export default function ForgotPassword() {
               />
             </div>
             <div className="input"> 
-                <input type="text" id="email" placeholder="Nova senha" required/>
-            </div>
-            <div className="input">
-                <input type="text" id="senha" placeholder="Digite Novamente" required/>
+                <input type="text" id="email" placeholder="Digite seu email" required/>
             </div>
             <div className="recuperar">
-                <Link href="/">Lembrei minha senha</Link>
+                <Link href="/" className="underline text-blue-600 hover:text-blue-900">Lembrei minha senha</Link>
             </div>
-            <button type="submit">Altere</button>
+            <button className="button" type="submit">Altere</button>
         </form>
       </main>
     </>
