@@ -1,6 +1,6 @@
 import { Router } from 'express'
 const router = Router()
-import { login, cru, nvsh, recs } from '../functions/funcoes.js'
+import { login, cru} from '../functions/funcoes.js'
 
 //router.post('/cadastro', authController.cadastro);
 router.post('/login', login)

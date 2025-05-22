@@ -2,12 +2,14 @@ import express, { json } from 'express';
 import morgan from 'morgan';
 import sequelize from './db.js';
 import dotenv from 'dotenv';
+import router from './routes/routercontroller.js';
 
 dotenv.config();
 
 const app = express();
 
 app.use(json());
+app.use('/api/auth', router);
 app.use(morgan('dev'));
 
 // Realiza a conexão com o banco de dados
