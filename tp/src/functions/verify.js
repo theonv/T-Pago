@@ -6,7 +6,7 @@ export async function verify(event) {
 
     try {
         console.log(JSON.stringify({ email, senha }))
-        const response = await fetch('http://localhost:3001/api/auth/login', { //como o front ta rodando no live server porta 5500 (padrão) e o back na 3001 estava dando erro ao acessar a rota
+        const response = await fetch('https://scaling-robot-q7p4j4j46j9w344j4-3001.app.github.dev/api/auth/login', { //como o front ta rodando no live server porta 5500 (padrão) e o back na 3001 estava dando erro ao acessar a rota
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
