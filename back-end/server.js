@@ -2,11 +2,13 @@ import express, { json } from 'express';
 import morgan from 'morgan';
 import sequelize from './db.js';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import router from './routes/routercontroller.js';
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
 
 app.use(json());
 app.use('/api/auth', router);
