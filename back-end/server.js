@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.get('/', (req, res) => {
+app.get('/teste', (res) => {
     res.send('Servidor Express rodando!');
 });
 
