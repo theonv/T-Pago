@@ -1,21 +1,16 @@
+'use client';
 import '../../styles/login.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import { create } from '../../functions/create.js';
 
 export default function Register() {
     return (
         <>
             <main className="container">
-                {/* Alterado de onClick para onSubmit, pois o envio de formulário deve ser tratado pelo 
-                evento onSubmit para melhor semântica e funcionamento. 
-                <form onSubmit="novouser()"> -> Só para lembrar como deve ser feito, já que a página 
-                ainda não foi finalizada. */}
-                <form>
+                <form onSubmit={create}>
                     <h1 id="titulo">CADASTRE - <span className="titulo-color">SE</span></h1>
                     <div className="logo">
-                        {/* O <img> foi substituído por <Image> do Next.js para aproveitar os benefícios 
-                        de otimização automática de imagens, como carregamento preguiçoso (lazy loading), 
-                        suporte a formatos modernos (como WebP) e melhoria no SEO. */}
                         <Image
                             src="/img/Logo.png"
                             alt="Logo Tá Pago"
@@ -25,18 +20,15 @@ export default function Register() {
                             quality={100}
                         />
                     </div>
-                    <div className = "input">
-                        <input type="email" name="" id="email" placeholder="Email" required/>
+                    <div className="input">
+                        <input type="email" id="email" placeholder="Email" required />
                     </div>
-                    <div className = "input">
-                        <input type="password" name="" id="senha" placeholder="Crie uma senha" required/>
+                    <div className="input">
+                        <input type="password" id="senha" placeholder="Crie uma senha" required />
                     </div>
-                    <div className = "recuperar">
+                    <div className="recuperar">
                         <Link href="/" className="underline text-blue-600 hover:text-blue-900">Já Tenho uma conta</Link>
                     </div>
-                    {/* O evento onClick foi removido do botão e agora o evento onSubmit é tratado 
-                    diretamente pelo formulário, garantindo que o envio do formulário seja semântico e 
-                    funcione ao pressionar "Enter" ou clicar no botão. */}
                     <button className="button" type="submit">Crie</button>
                 </form>
             </main>
