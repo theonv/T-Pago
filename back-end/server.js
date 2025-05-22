@@ -1,11 +1,13 @@
-const express = require('express');
-const morgan = require('morgan');
-const sequelize = require('./db');
-require('dotenv').config();
+import express, { json } from 'express';
+import morgan from 'morgan';
+import sequelize from './db.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
-app.use(express.json());
+app.use(json());
 app.use(morgan('dev'));
 
 // Realiza a conexão com o banco de dados
