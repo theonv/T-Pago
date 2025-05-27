@@ -47,7 +47,7 @@ export const createtask = async (req,res) => {
   try {
     console.log("req.body:", req.body);
     const taskData = {
-      texto: req.body.conteudo
+      texto: req.body.texto
     };
     const task = await Task.create(taskData);
     res.send(task);
@@ -66,3 +66,18 @@ export const gettasks = async (req, res) => {
     res.status(500).json({ message: 'Erro ao buscar tarefas', error: error.message });
   }
 };
+export const deleteTask = async (req, res) => {
+  try {
+    const taskName = req.params.texto;
+    console.log("Nome da tarefa a ser deletada:", taskName);
+    const deletedTask = await Task.destroy({ where: { texto: taskName } });
+    
+    if (deletedTask) {
+      res.status(200).json({ message: 'Tarefa deletada com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Tarefa não encontrada' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao deletar tarefa', error: error.message });
+  }
+}

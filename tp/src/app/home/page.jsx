@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/header/page';
-const takos = require('../../functions/tasks.json');
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
@@ -22,6 +21,7 @@ export default function Home() {
         body: JSON.stringify({ texto: inputValue.trim() }),
       })
       .then(response => {
+        console.log('Response status:', response.status);
         if (!response.ok) throw new Error('Erro ao salvar tarefa');
         return response.json();
       })
@@ -33,6 +33,25 @@ export default function Home() {
     } else {
       toast.error('Por favor, digite uma tarefa válida!');
     }
+  };
+
+  const handleDeleteTask = (indexToRemove) => {
+    const taskToDelete = tasks[indexToRemove];
+    setTasks(tasks.filter((_, idx) => idx !== indexToRemove));
+    console.log('Tarefa a ser deletada:', taskToDelete.conteudo);
+    fetch(`http://localhost:3001/api/auth/deletetask/${encodeURIComponent(taskToDelete.conteudo)}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('Erro ao deletar tarefa');
+      toast.success('Tarefa removida com sucesso!');
+    })
+    .catch(() => {
+      toast.error('Erro ao remover tarefa do banco!');
+    });
   };
 
   useEffect(() => {
@@ -52,7 +71,6 @@ export default function Home() {
       .catch(() => {
         toast.error('Erro ao carregar tarefas do banco!');
       });
-    setTasks(prev => [...prev, ...takos.tarefas]);
   }, []);
 
   return (
@@ -63,7 +81,19 @@ export default function Home() {
         <div className="qdd">
           <ul>
             {tasks.map((task, index) => (
-              <li className='task-item' key={index}>{task.conteudo}</li>
+              <li
+                className="task-item flex items-center justify-between px-4 py-2"
+                key={index}
+              >
+                <span>{task.conteudo}</span>
+                <button
+                  className="ml-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
+                  onClick={() => handleDeleteTask(index)}
+                  aria-label="Excluir tarefa"
+                >
+                  &times;
+                </button>
+              </li>
             ))}
           </ul>
         </div>
