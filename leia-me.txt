@@ -1,0 +1,10 @@
+Se você estiver em T-PAGO
+execute os seguintes comandos para rodar o código:
+cd back-end
+docker-compose up -d
+npm install
+npm run start ou dev
+cd ..
+cd tp
+npm install
+npm run dev
