@@ -1,4 +1,5 @@
 import User from '../models/usuario.js';
+import Task from '../models/task.js';
 
 // Login de usuário
 export const login = async (req, res) => {
@@ -40,5 +41,28 @@ export const cru = async (req, res) => {
     res.send(user);
   } catch (error) {
     res.status(500).json({ message: 'Erro ao criar usuário', error: error.message });
+  }
+};
+export const createtask = async (req,res) => {
+  try {
+    console.log("req.body:", req.body);
+    const taskData = {
+      texto: req.body.conteudo
+    };
+    const task = await Task.create(taskData);
+    res.send(task);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao criar tarefa', error: error.message });
+    
+  }
+} 
+export const gettasks = async (req, res) => {
+  try {
+    const tasks = await Task.findAll();
+    console.log("Tarefas encontradas:", tasks);
+    console.log("Texto das tarefas:", tasks.map(task => task.texto));
+    res.json(tasks.map(task => task.texto));
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar tarefas', error: error.message });
   }
 };
