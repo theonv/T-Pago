@@ -13,7 +13,7 @@ export default function Home() {
   const handleCreateTask = () => {
     if (inputValue.trim()) {
       setTasks([...tasks, { conteudo: inputValue.trim() }]);
-      fetch('http://localhost:3001/api/auth/createtask', {
+      fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/createtask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export default function Home() {
     const taskToDelete = tasks[indexToRemove];
     setTasks(tasks.filter((_, idx) => idx !== indexToRemove));
     console.log('Tarefa a ser deletada:', taskToDelete.conteudo);
-    fetch(`http://localhost:3001/api/auth/deletetask/${encodeURIComponent(taskToDelete.conteudo)}`, {
+    fetch(`https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/deletetask/${encodeURIComponent(taskToDelete.conteudo)}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/auth/gettasks')
+    fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/gettasks')
       .then(response => {
         console.log('Response status:', response.status);
         if (!response.ok) throw new Error('Erro ao buscar tarefas');
