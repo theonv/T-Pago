@@ -1,0 +1,77 @@
+### Exemplo de requisição GET
+GET http://localhost:3000/api/exemplo
+Content-Type: application/json
+
+###
+
+### Exemplo de requisição POST
+POST http://localhost:3000/api/exemplo
+Content-Type: application/json
+
+{
+    "campo1": "valor1",
+    "campo2": "valor2"
+}
+
+###
+
+### Exemplo de requisição PUT
+PUT http://localhost:3000/api/exemplo/1
+Content-Type: application/json
+
+{
+    "campo1": "novoValor"
+}
+
+###
+
+### Exemplo de requisição DELETE
+DELETE http://localhost:3000/api/exemplo/1
+Content-Type: application/json
+
+###
+
+### Teste: Login
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "teste@teste.com",
+    "senha": "123456"
+}
+
+###
+
+### Teste: Criar Usuário
+POST http://localhost:3001/api/auth/cru
+Content-Type: application/json
+
+{
+    "nome": "Usuário Teste",
+    "email": "teste@teste.com",
+    "senha": "123456"
+}
+
+###
+
+### Teste: Criar Tarefa
+POST http://localhost:3001/api/auth/createtask
+Content-Type: application/json
+
+{
+    "texto": "Minha nova tarefa"
+}
+
+###
+
+### Teste: Buscar Tarefas
+GET http://localhost:3001/api/auth/gettasks
+Content-Type: application/json
+
+###
+
+### Teste: Deletar Tarefa
+DELETE http://localhost:3001/api/auth/deletetask/Minha%20nova%20tarefa
+Content-Type: application/json
+
+###

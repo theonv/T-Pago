@@ -8,8 +8,10 @@ import router from './routes/routercontroller.js';
 dotenv.config();
 
 const app = express();
-app.use(cors());
-
+app.use(cors({
+  origin: true, // Aceita qualquer origem
+  credentials: true
+}));
 app.use(json());
 app.use('/api/auth', router);
 app.use(morgan('dev'));
