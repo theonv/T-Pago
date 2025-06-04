@@ -1,15 +1,9 @@
 {
     "listas": [
-        {
-            "liste": "Compras"
-        },
+        {"liste": "Compras"},
 
-        {
-            "liste": "Trabalhos"
-        },
+        {"liste": "Trabalhos"},
 
-        {
-            "liste": "Lista3"
-        }
+        {"liste": "Lista3"}
     ]
 }

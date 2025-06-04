@@ -1,13 +1,10 @@
 'use client';
 import '../../styles/header.css'
 
-const dadosJson = require('../../functions/user.json');
-const { email, senha, nome } = dadosJson;
-
 export default function Header() {
     return (
         <header>
-            <div className="cliente">{nome}</div>
+            <div className="cliente"></div>
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
                 <circle cx="12" cy="10" r="3"></circle>

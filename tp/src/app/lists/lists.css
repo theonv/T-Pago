@@ -9,12 +9,17 @@
 }
 
 .box {
-    width: 300px;
-    height: 50px;
-    background-color: #1741ca;
-    border-radius: 15px;
+    background-color: transparent;
+    padding: 10px;
+    min-width: 80vh;
+    min-height: 20vh;
+    max-height: 40vh; 
     display: flex;
-    align-items: left;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+    allign-items: center;
 }
 
 main {
@@ -32,8 +37,17 @@ main {
     gap: 10px;
 }
 
-.task {
-    margin-left: 35px;
+
+.list-item {
     display: flex;
     align-items: center;
+    padding: 1px;
+    border-bottom: 10px ;
+    background-color: blue;
+    color: white;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    padding-left: 5px;
 }
