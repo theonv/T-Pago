@@ -37,6 +37,10 @@ export default function Listas() {
                         ))}
                     </ul>
                 </div>
+                <div className="criarLista">
+                    <button className="button">CRIAR LISTA</button>
+                </div>
+                <div className="icon plus-icon"></div>
             </main>
             <Footer />
         </>
