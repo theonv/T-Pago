@@ -1,6 +1,6 @@
 import { Router } from 'express'
 const router = Router()
-import {createtask, login, cru, gettasks, deleteTask} from '../functions/funcoes.js'
+import {createtask, login, cru, gettasks, deleteTask, createlist, getlists, deletelist} from '../functions/funcoes.js'
 
 //router.post('/cadastro', authController.cadastro);
 router.post('/login', login)
@@ -8,6 +8,9 @@ router.post('/cru', cru)
 router.post('/createtask', createtask)
 router.get('/gettasks', gettasks)
 router.delete('/deletetask/:texto', deleteTask)
+router.post('/createlist', createlist)
+router.get('/getlists', getlists)
+router.delete('/deletelist/:nome', deleteList)
 //router.post('/nvsh',nvsh)
 //router.post('/recs',recs)
 

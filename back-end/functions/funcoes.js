@@ -1,5 +1,6 @@
 import User from '../models/usuario.js';
 import Task from '../models/task.js';
+import List from '../models/lists.js';
 
 // Login de usuário
 export const login = async (req, res) => {
@@ -43,6 +44,9 @@ export const cru = async (req, res) => {
     res.status(500).json({ message: 'Erro ao criar usuário', error: error.message });
   }
 };
+
+
+// tarefas
 export const createtask = async (req,res) => {
   try {
     console.log("req.body:", req.body);
@@ -79,5 +83,47 @@ export const deleteTask = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: 'Erro ao deletar tarefa', error: error.message });
+  }
+};
+
+
+
+// listas
+export const creatlist = async (req, res) => {
+  try {
+    console.log("req.body:", req.body);
+    const listData = {
+      nome: req.body.nome,
+      itens: req.body.itens
+    };
+    const list = await List.create(listData);
+    res.send(list);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao criar lista', error: error.message });
+  }
+};
+export const getlists = async (req, res) => {
+  try {
+    const lists = await List.findAll();
+    console.log("Listas encontradas:", lists);
+    console.log("Nomes das listas:", lists.map(list => list.nome));
+    res.json(lists.map(list => list.nome));
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar listas', error: error.message });
+  }
+}
+export const deletelist = async (req, res) => {
+  try {
+    const listName = req.params.nome;
+    console.log("Nome da lista a ser deletada:", listName);
+    const deletedList = await List.destroy({ where: { nome: listName } });
+    
+    if (deletedList) {
+      res.status(200).json({ message: 'Lista deletada com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Lista não encontrada' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao deletar lista', error: error.message });
   }
 }

@@ -22,7 +22,7 @@ export default function Listas() {
                     LISTAS
                 </h1>
             <main>
-                <div className="box">
+                <div className="box-list">
                     <ul className="task">
                         {lists.map((list, index) => (
                             <li className="list-item flex items-center justify-between px-4 py-2" key={index}>
