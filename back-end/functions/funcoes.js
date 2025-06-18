@@ -89,7 +89,7 @@ export const deleteTask = async (req, res) => {
 
 
 // listas
-export const creatlist = async (req, res) => {
+export const createlist = async (req, res) => {
   try {
     console.log("req.body:", req.body);
     const listData = {

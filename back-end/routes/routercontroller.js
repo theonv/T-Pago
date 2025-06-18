@@ -10,7 +10,7 @@ router.get('/gettasks', gettasks)
 router.delete('/deletetask/:texto', deleteTask)
 router.post('/createlist', createlist)
 router.get('/getlists', getlists)
-router.delete('/deletelist/:nome', deleteList)
+router.delete('/deletelist/:nome', deletelist)
 //router.post('/nvsh',nvsh)
 //router.post('/recs',recs)
 
