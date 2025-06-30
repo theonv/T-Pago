@@ -85,7 +85,7 @@ export default function Listas() {
             onClick={() => handleDeleteTask(index)}
             className="ml-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600"
           >
-            ×
+          x
           </button>
         </li>
       ))}
