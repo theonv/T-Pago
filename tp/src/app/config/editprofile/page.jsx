@@ -1,5 +1,5 @@
 import './editprofile.css'
-import Footer from '../../components/Footer'
+import Footer from '@/components/footer/footer'
 import Header from '@/components/header/page'
 
 export default function EditarPerfil() {
@@ -7,7 +7,7 @@ export default function EditarPerfil() {
         <>
             <Header />
     <div className="corpo">
-        <h1 className="titulo">
+        <h1 className="text-2xl font-bold text-[var(--foreground)] h-[10vh] flex justify-center items-center">
             EDITAR PERFIL
         </h1>
     </div>

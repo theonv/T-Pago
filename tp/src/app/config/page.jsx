@@ -1,4 +1,5 @@
 import './config.css'
+import Link from 'next/link'
 import Footer from '../../components/footer/footer.jsx'
 import Header from '@/components/header/page'
 
@@ -6,25 +7,30 @@ export default function Config() {
     return (
         <>
             <Header />
-            <div className="corpo">
-                <h1 className="titulo">
+                <h1 className="text-2xl font-bold text-[var(--foreground)] h-[10vh] flex justify-center items-center">
                     CONFIGURAÇÕES
                 </h1>
-            </div>
             <main>
                 <div>
+                    <Link href="/config/editprofile">
                     <div className="box" id="editarPerfil">
                         <p className="conf">
                             EDITAR PERFIL
                         </p>
                         <div className="icon pencil-icon"></div>
                     </div>
+                    </Link>
+                    <Link href ="/config/notifications">
                     <div className="box" id="notificacoes">
-                        <p className="conf">
+                        
+                        
+                        <p className="conf" >
                             NOTIFICAÇÕES
                         </p>
+                       
                         <div className="icon bell-icon"></div>
                     </div>
+                     </Link>
                 </div>
             </main>
             <Footer />

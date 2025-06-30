@@ -7,7 +7,7 @@ export default function Notification() {
         <>
             <Header />
             <div class="corpo">
-                <h1 class="titulo">
+                <h1 class="text-2xl font-bold text-[var(--foreground)] h-[10vh] flex justify-center items-center">
                     NOTIFICAÇÕES
                 </h1>
             </div>

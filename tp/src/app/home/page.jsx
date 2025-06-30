@@ -1,5 +1,4 @@
 'use client';
-import './home.css';
 import Footer from '../../components/footer/footer.jsx';
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -21,7 +20,6 @@ export default function Home() {
         body: JSON.stringify({ texto: inputValue.trim() }),
       })
       .then(response => {
-        console.log('Response status:', response.status);
         if (!response.ok) throw new Error('Erro ao salvar tarefa');
         return response.json();
       })
@@ -38,12 +36,9 @@ export default function Home() {
   const handleDeleteTask = (indexToRemove) => {
     const taskToDelete = tasks[indexToRemove];
     setTasks(tasks.filter((_, idx) => idx !== indexToRemove));
-    console.log('Tarefa a ser deletada:', taskToDelete.conteudo);
     fetch(`https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/deletetask/${encodeURIComponent(taskToDelete.conteudo)}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     })
     .then(response => {
       if (!response.ok) throw new Error('Erro ao deletar tarefa');
@@ -57,14 +52,12 @@ export default function Home() {
   useEffect(() => {
     fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/gettasks')
       .then(response => {
-        console.log('Response status:', response.status);
         if (!response.ok) throw new Error('Erro ao buscar tarefas');
         return response.json();
       })
       .then(data => {
-        console.log('Dados recebidos do servidor:', data);
         if (Array.isArray(data)) {
-          setTasks(prev => [...prev, ...data.map(t => ({ conteudo: t }))]);
+          setTasks(data.map(t => ({ conteudo: t })));
           toast.success('Tarefas carregadas com sucesso!');
         }
       })
@@ -76,19 +69,23 @@ export default function Home() {
   return (
     <>
       <Header />
-      <h1 className="titulo">ROTINA</h1>
-      <main className='flex flex-col items-center justify-center'>
-        <div className="qdd">
+      <h1 className="text-2xl font-bold text-center text-[var(--foreground)] h-[10vh] flex items-center justify-center">
+        ROTINA
+      </h1>
+
+      <main className="flex flex-col items-center justify-start px-4 py-8 min-h-[60vh] md:min-h-[auto]">
+
+        <div className="w-full max-w-[600px] bg-transparent p-2 my-5 overflow-y-auto max-h-[40vh] md:max-h-[60vh]">
           <ul>
             {tasks.map((task, index) => (
               <li
-                className="task-item flex items-center justify-between px-4 py-2"
                 key={index}
+                className="flex items-center justify-between px-4 py-2 mb-3 bg-blue-700 text-white rounded cursor-pointer"
               >
                 <span>{task.conteudo}</span>
                 <button
-                  className="ml-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
                   onClick={() => handleDeleteTask(index)}
+                  className="ml-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600"
                   aria-label="Excluir tarefa"
                 >
                   &times;
@@ -97,26 +94,33 @@ export default function Home() {
             ))}
           </ul>
         </div>
-        <div className="container">
-          <input
+
+        <div className="w-full max-w-[600px] p-2">
+          <textarea
             id="put"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Digite sua tarefa"
+            className="w-full h-[100px] rounded shadow text-sm text-white bg-blue-700 p-2 resize-none focus:outline-none"
           />
         </div>
-        {/*Removido o uso do id redundante e reestruturada a div com apenas classes do Tailwind para simplificação e melhor consistência. */}
-        <div className='flex justify-end w-[80vh] px-[10px]'>
-          <button className="criar-tarefa" onClick={handleCreateTask}>Adicionar Tarefa</button>
+
+        <div className="flex justify-end w-full max-w-[600px] px-2 mt-3">
+          <button
+            onClick={handleCreateTask}
+            className="px-5 py-2 bg-[var(--corPrimaria)] text-white rounded hover:bg-blue-800 transition-colors"
+          >
+            Adicionar Tarefa
+          </button>
         </div>
+
       </main>
 
       <Footer />
+
       <ToastContainer
-        position='top-center'
-        toastStyle={{
-          backgroundColor: 'white',
-        }}
+        position="top-center"
+        toastStyle={{ backgroundColor: 'white' }}
       />
     </>
   );
