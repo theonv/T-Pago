@@ -14,24 +14,19 @@ export default function EditarPerfil() {
     </div>
     <main>
         <div>
-            <div className="box">
-                <p className="conf">
+            <div className="box" >
+                <p className="conf" id='username'>
                     NOME DE USUÁRIO
                 </p>
                 <LapisBranco/>
             </div><br/>
-            <div className="box">
-                <p className="conf">
-                    FOTO DE PERFIL
-                </p>
-                <LapisBranco/>
-            </div><br/>
-            <div className="box">
-                <p className="conf">
+            <div className="box" >
+                <p className="conf" id='foto'>
                     FOTO DE PERFIL
                 </p>
                 <LapisBranco/>
             </div>
+            
         </div>
     </main>
     <Footer/>

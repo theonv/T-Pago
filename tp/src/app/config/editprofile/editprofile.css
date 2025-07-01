@@ -19,6 +19,7 @@ header {
 p{
     color: white;
     font-weight: bold;
+    margin-left: 20px;
 }
 .box {
     width: 400px;
@@ -28,6 +29,14 @@ p{
     display: flex;
     justify-content: center;
     align-items: center;
+    justify-content: flex-start;
+}
+
+#foto{
+    margin-right: 200px;
+}
+#username {
+    margin-right: 175px;
 }
 
 main {
@@ -59,4 +68,13 @@ img {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+}
+
+.LapisBranco {
+    width: 200px;
+    height: 20px;
+    background: url('/assets/lapisbranco.svg') no-repeat center center;
+    background-size: contain;
+    display: inline-block;
+    align-items: flex-end;
 }
