@@ -1,9 +1,11 @@
+'use client'
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
 const UserContext = createContext(undefined);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Carrega o usuário do localStorage ao iniciar
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) setUser(JSON.parse(storedUser));

@@ -1,22 +1,36 @@
 'use client';
+import { useUser } from '@/context/usercontext';
 import '../styles/login.css';
 import { verify } from '../functions/verify.js';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Login() {
+    const { login } = useUser();
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const email = event.target.email.value;
+        const senha = event.target.senha.value;
+        try {
+            const user = await verify({ email, senha });
+            console.log(user)
+            alert(user)
+            login(user); // Salva no contexto
+            window.location.href = './home';
+        } catch (e) {
+            alert('Erro ao fazer login');
+        }
+    };
+
     return (
         <>
             <main className="container">
-                {/* A função `verify` foi removida do atributo `onClick` do botão e atribuída ao `onSubmit` 
-             do <form>, para garantir a semântica correta e permitir o envio ao pressionar "Enter". */}
-                <form id="formLogin" onSubmit={verify}>
+                <form id="formLogin" onSubmit={handleSubmit}>
                     <h1 id="titulo">
                         LOGIN <span className="titulo-color">TÁ PAGO</span>
                     </h1>
                     <div className="logo">
-                        {/* O <img> foi substituído por <Image> do Next.js para aproveitar os benefícios de 
-                otimização automática de imagens, como carregamento preguiçoso (lazy loading) e melhoria no SEO. */}
                         <Image
                             src="/img/Logo.png"
                             alt="Logo Tá Pago"
@@ -25,21 +39,20 @@ export default function Login() {
                         />
                     </div>
                     <div className="input">
-                        <input type="email" id="email" placeholder="Email" required />
+                        <input type="email" id="email" name="email" placeholder="Email" required />
                     </div>
                     <div className="input">
-                        <input type="password" id="senha" placeholder="Senha" required />
+                        <input type="password" id="senha" name="senha" placeholder="Senha" required />
                     </div>
                     <div className="recuperar">
                         <Link href="forgotpwd" className="underline text-blue-600 hover:text-blue-900">Esqueci minha senha</Link>
                     </div>
-                    {/* Botão agora tem type="submit", o que vai automaticamente disparar o envio do formulário */}
                     <button className="button" type="submit">
                         Acesse
                     </button>
                     <div className="cadastro">
                         <p>
-                            Não tem uma conta? <Link href="register"className="underline text-blue-600 hover:text-blue-900">Registre-se</Link>
+                            Não tem uma conta? <Link href="register" className="underline text-blue-600 hover:text-blue-900">Registre-se</Link>
                         </p>
                     </div>
                 </form>

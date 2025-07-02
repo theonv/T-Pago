@@ -1,12 +1,9 @@
-export async function verify(event) {
-    event.preventDefault();
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
-
+// Esta função apenas faz a requisição e retorna o usuário, não manipula contexto!
+export async function verify({ email, senha }) {
     try {
-        console.log(JSON.stringify({ email, senha }))
-        const response = await fetch(`${API_URL}/api/auth/login`, { //como o front ta rodando no live server porta 5500 (padrão) e o back na 3001 estava dando erro ao acessar a rota
+        const response = await fetch(`${API_URL}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -15,14 +12,13 @@ export async function verify(event) {
         });
 
         const data = await response.json();
-
         if (response.ok) {
-            window.location.href = "./home"
-        }
-        else {
-            console.error('error ao fazer login nego')
+            console.log('Usuário logado:', data);
+            return data; // Retorna o usuário para ser salvo no contexto pelo componente React
+        } else {
+            throw new Error('Erro ao fazer login');
         }
     } catch (er) {
-        console.error('error ao fazer login negão', er)
+        throw er;
     }
 }

@@ -22,7 +22,7 @@ export const login = async (req, res) => {
       return res.status(500).json({ message: 'senha errada papai' });
     }
     res.status(200).json({
-      message: 'Login realizado com sucesso',
+      email: user.email,
     });
   } catch (error) {
     console.error('Erro ao realizar login F:');
