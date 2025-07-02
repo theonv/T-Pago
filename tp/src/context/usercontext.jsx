@@ -1,27 +1,18 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+const UserContext = createContext(undefined);
 
-interface AuthContextType {
-  user: string | null;
-  login: (username: string) => void;
-  logout: () => void;
-  isAuthenticated: boolean;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<string | null>(null);
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
 
   // Carrega o usuário do localStorage ao iniciar
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    if (storedUser) setUser(storedUser);
+    if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
 
-  // Login simulado
-  const login = (username: string) => {
-    setUser(username);
-    localStorage.setItem('user', username);
+  // Login: recebe objeto { id, nome, email }
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
   };
 
   // Logout
@@ -31,14 +22,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+    <UserContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
       {children}
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth deve ser usado dentro do AuthProvider');
+export const useUser = () => {
+  const ctx = useContext(UserContext);
+  if (!ctx) throw new Error('useUser deve ser usado dentro do UserProvider');
   return ctx;
 };
