@@ -1,9 +1,12 @@
 'use client';
+
 import Footer from '../../components/footer/footer.jsx';
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/header/page';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
@@ -12,7 +15,7 @@ export default function Home() {
   const handleCreateTask = () => {
     if (inputValue.trim()) {
       setTasks([...tasks, { conteudo: inputValue.trim() }]);
-      fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/createtask', {
+      fetch(`${API_URL}/api/auth/createtask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +39,7 @@ export default function Home() {
   const handleDeleteTask = (indexToRemove) => {
     const taskToDelete = tasks[indexToRemove];
     setTasks(tasks.filter((_, idx) => idx !== indexToRemove));
-    fetch(`https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/deletetask/${encodeURIComponent(taskToDelete.conteudo)}`, {
+    fetch(`${API_URL}/api/auth/deletetask/${encodeURIComponent(taskToDelete.conteudo)}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -50,7 +53,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/gettasks')
+    fetch(`${API_URL}/api/auth/gettasks`)
       .then(response => {
         if (!response.ok) throw new Error('Erro ao buscar tarefas');
         return response.json();

@@ -5,7 +5,7 @@ export async function create(event) {
     const senha = document.getElementById('senha').value;
 
     try {
-        const response = await fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/cru', {
+        const response = await fetch(`${API_URL}/api/auth/cru`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

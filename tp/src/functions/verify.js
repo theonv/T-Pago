@@ -6,7 +6,7 @@ export async function verify(event) {
 
     try {
         console.log(JSON.stringify({ email, senha }))
-        const response = await fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/login', { //como o front ta rodando no live server porta 5500 (padrão) e o back na 3001 estava dando erro ao acessar a rota
+        const response = await fetch(`${API_URL}/api/auth/login`, { //como o front ta rodando no live server porta 5500 (padrão) e o back na 3001 estava dando erro ao acessar a rota
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
