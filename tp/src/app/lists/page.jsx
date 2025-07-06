@@ -6,25 +6,25 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Listas() {
-  const [tasks, setTasks] = useState([])
+  const [listas, setListas] = useState([])
   const [inputValue, setInputValue] = useState('')
 
-  // Carrega tarefas do banco na primeira renderização
+  // Carrega listas do banco na primeira renderização
   useEffect(() => {
-    fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/gettasks')
+    fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/getlists')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          setTasks(data.map(t => ({ conteudo: t })))
+          setListas(data.map(t => ({ conteudo: t })))
         }
       })
-      .catch(() => toast.error('Erro ao carregar tarefas!'))
+      .catch(() => toast.error('Erro ao carregar listas!'))
   }, [])
 
-  // Adiciona nova tarefa
-  const handleCreateTask = () => {
+  // Adiciona nova lista
+  const handleCreateList = () => {
     if (!inputValue.trim()) {
-      return toast.error('Digite uma tarefa válida!')
+      return toast.error('Digite uma lista válida!')
     }
 
     const nova = { conteudo: inputValue.trim() }
@@ -32,33 +32,33 @@ export default function Listas() {
     setTasks(prev => [...prev, nova])
     setInputValue('')
 
-    fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/createtask', {
+    fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/createlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ texto: nova.conteudo })
     })
       .then(res => {
         if (!res.ok) throw new Error()
-        toast.success('Tarefa adicionada com sucesso!')
+        toast.success('Lista adicionada com sucesso!')
       })
-      .catch(() => toast.error('Erro ao salvar tarefa!'))
+      .catch(() => toast.error('Erro ao salvar lista!'))
   }
 
-  // Exclui tarefa
-  const handleDeleteTask = (index) => {
-    const taskToDelete = tasks[index]
+  // Exclui lista
+  const handleDeleteList = (indexToRemove) => {
+    const listToDelete = listas[indexToRemove]
 
-    setTasks(tasks.filter((_, i) => i !== index))
+    setListas(listas.filter((_, idx) => idx !== indexToRemove))
 
-    fetch(`https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/deletetask/${encodeURIComponent(taskToDelete.conteudo)}`, {
+    fetch(`https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/deletelist/${encodeURIComponent(listToDelete.conteudo)}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     })
       .then(res => {
         if (!res.ok) throw new Error()
-        toast.success('Tarefa removida com sucesso!')
+        toast.success('Lista removida com sucesso!')
       })
-      .catch(() => toast.error('Erro ao deletar tarefa!'))
+      .catch(() => toast.error('Erro ao deletar lista!'))
   }
 
   return (
@@ -75,14 +75,14 @@ export default function Listas() {
                   overflow-y-auto max-h-[40vh] md:max-h-[60vh]">
     {/* max-height maior no desktop para diminuir scrollbar */}
     <ul className="w-full">
-      {tasks.map((task, index) => (
+      {listas.map((list, index) => (
         <li
           key={index}
           className="flex items-center justify-between px-4 py-2 mb-3 bg-blue-700 text-white rounded cursor-pointer"
         >
-          {task.conteudo}
+          {list.conteudo}
           <button
-            onClick={() => handleDeleteTask(index)}
+            onClick={() => handleDeleteList(index)}
             className="ml-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600"
           >
           x
@@ -96,7 +96,7 @@ export default function Listas() {
     <textarea
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
-      placeholder="Digite sua tarefa"
+      placeholder="Digite sua lista"
       className="w-full h-[100px] rounded shadow text-sm text-white bg-blue-700 p-2 resize-none focus:outline-none"
     />
   </div>
@@ -104,10 +104,10 @@ export default function Listas() {
   <div className="flex justify-end w-full max-w-[600px] px-2 mt-3">
     {/* mt-3 para dar um espaçamento pequeno e natural entre textarea e botão */}
     <button
-      onClick={handleCreateTask}
+      onClick={handleCreateList}
       className="px-5 py-2 bg-[var(--corPrimaria)] text-white rounded hover:bg-blue-800 transition-colors"
     >
-      Adicionar Tarefa
+      Adicionar Lista
     </button>
   </div>
 </main>
