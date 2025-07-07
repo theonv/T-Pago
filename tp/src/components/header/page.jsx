@@ -3,7 +3,8 @@ import '../../styles/header.css'
 import { useUser } from '@/context/usercontext';
 
 export default function Header() {
-    const { user} = useUser();
+    const { user } = useUser();
+    if (!user) return null; // ou um loading, ou só não mostra o email
     return (
         <header className='m-3'>
             <div className="cliente">{user.email}</div>
@@ -13,5 +14,5 @@ export default function Header() {
                 <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"></path>
             </svg>
         </header>
-    )
+    );
 }

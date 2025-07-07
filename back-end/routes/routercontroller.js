@@ -6,7 +6,7 @@ import {createtask, login, cru, gettasks, deleteTask, createlist, getlists, dele
 router.post('/login', login)
 router.post('/cru', cru)
 router.post('/createtask', createtask)
-router.get('/gettasks', gettasks)
+router.post('/gettasks', gettasks)
 router.delete('/deletetask/:texto', deleteTask)
 router.post('/createlist', createlist)
 router.get('/getlists', getlists)

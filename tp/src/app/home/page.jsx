@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/header/page';
+import { useUser } from '@/context/usercontext.jsx';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Home() {
+  const { user } = useUser(); 
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -20,7 +22,9 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ texto: inputValue.trim() }),
+        body: JSON.stringify({ texto: inputValue.trim(),
+          usuarioId: user.id
+         }),
       })
       .then(response => {
         if (!response.ok) throw new Error('Erro ao salvar tarefa');
@@ -53,7 +57,12 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetch(`${API_URL}/api/auth/gettasks`)
+    if (!user) return; // Só executa quando o usuário estiver disponível
+    fetch(`${API_URL}/api/auth/gettasks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ usuarioId: user.id }),
+    })
       .then(response => {
         if (!response.ok) throw new Error('Erro ao buscar tarefas');
         return response.json();
@@ -67,7 +76,7 @@ export default function Home() {
       .catch(() => {
         toast.error('Erro ao carregar tarefas do banco!');
       });
-  }, []);
+  }, [user]);
 
   return (
     <>

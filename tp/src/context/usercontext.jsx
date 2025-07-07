@@ -14,6 +14,7 @@ export const UserProvider = ({ children }) => {
   // Login: recebe objeto { id, nome, email }
   const login = (userData) => {
     setUser(userData);
+    console.log(userData);
     localStorage.setItem('user', JSON.stringify(userData));
   };
 

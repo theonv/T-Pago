@@ -22,7 +22,10 @@ export const login = async (req, res) => {
       return res.status(500).json({ message: 'senha errada papai' });
     }
     res.status(200).json({
+      id: user.id,
+      senha: user.senha,
       email: user.email,
+      message: 'Login realizado com sucesso',
     });
   } catch (error) {
     console.error('Erro ao realizar login F:');
@@ -51,7 +54,8 @@ export const createtask = async (req,res) => {
   try {
     console.log("req.body:", req.body);
     const taskData = {
-      texto: req.body.texto
+      texto: req.body.texto,
+      usuarioId: req.body.usuarioId 
     };
     const task = await Task.create(taskData);
     res.send(task);
@@ -62,7 +66,11 @@ export const createtask = async (req,res) => {
 } 
 export const gettasks = async (req, res) => {
   try {
-    const tasks = await Task.findAll();
+    const { usuarioId } = req.body;
+    if (!usuarioId) {
+      return res.status(400).json({ message: 'usuarioId é obrigatório' });
+    }
+    const tasks = await Task.findAll({ where: { usuarioId } });
     console.log("Tarefas encontradas:", tasks);
     console.log("Texto das tarefas:", tasks.map(task => task.texto));
     res.json(tasks.map(task => task.texto));

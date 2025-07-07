@@ -14,8 +14,8 @@ export default function Login() {
         const senha = event.target.senha.value;
         try {
             const user = await verify({ email, senha });
-            console.log(user)
-            alert(user)
+            console.log(user.email)
+            alert(user.email)
             login(user); // Salva no contexto
             window.location.href = './home';
         } catch (e) {
