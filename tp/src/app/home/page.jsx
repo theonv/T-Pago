@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/header/page';
 import { useUser } from '@/context/usercontext.jsx';
+import LapisBranco from '@/components/lapis/page.jsx';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -95,13 +96,25 @@ export default function Home() {
                 className="flex items-center justify-between px-4 py-2 mb-3 bg-blue-700 text-white rounded cursor-pointer"
               >
                 <span>{task.conteudo}</span>
-                <button
-                  onClick={() => handleDeleteTask(index)}
-                  className="ml-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600"
-                  aria-label="Excluir tarefa"
+                <div className="flex items-center">
+                  <button
+                    onClick={() => {
+                      // Adicione aqui a ação desejada ao clicar no lápis
+                      toast.info('Função de editar ainda não implementada!');
+                    }}
+                    className="mr-2 p-1 rounded hover:bg-blue-600 transition-colors"
+                    aria-label="Editar tarefa"
                 >
-                  &times;
-                </button>
+                    <LapisBranco />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteTask(index)}
+                    className="ml-2 w-7 h-7 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 border border-red-400"
+                    aria-label="Excluir tarefa"
+                  >
+                    &times;
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -122,7 +135,7 @@ export default function Home() {
             onClick={handleCreateTask}
             className="px-5 py-2 bg-[var(--corPrimaria)] text-white rounded hover:bg-blue-800 transition-colors"
           >
-            Adicionar Tarefa
+            Adicionar tarefa
           </button>
         </div>
 

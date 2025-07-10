@@ -4,6 +4,7 @@ import Header from '@/components/header/page'
 import Footer from '@/components/footer/footer.jsx'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import LapisBranco from '@/components/lapis/page.jsx'
 
 export default function Listas() {
   const [listas, setListas] = useState([])
@@ -29,7 +30,7 @@ export default function Listas() {
 
     const nova = { conteudo: inputValue.trim() }
 
-    setTasks(prev => [...prev, nova])
+    setListas(prev => [...prev, nova])
     setInputValue('')
 
     fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/createlist', {
@@ -81,12 +82,23 @@ export default function Listas() {
           className="flex items-center justify-between px-4 py-2 mb-3 bg-blue-700 text-white rounded cursor-pointer"
         >
           {list.conteudo}
+          <div className="flex items-center">
+          <button
+            onClick={() => {
+                toast.info('Função de editar ainda não implementada!');
+              }}
+              className="mr-1 p-1 rounded hover:bg-blue-600 transition-colors"
+              aria-label="Editar lista"
+            >
+              <LapisBranco />
+          </button>
           <button
             onClick={() => handleDeleteList(index)}
-            className="ml-4 w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600"
+            className="ml-1 w-7 h-7 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 border border-red-400"
           >
-          x
+            &times;
           </button>
+          </div>
         </li>
       ))}
     </ul>
@@ -107,7 +119,7 @@ export default function Listas() {
       onClick={handleCreateList}
       className="px-5 py-2 bg-[var(--corPrimaria)] text-white rounded hover:bg-blue-800 transition-colors"
     >
-      Adicionar Lista
+      Adicionar lista
     </button>
   </div>
 </main>
