@@ -1,22 +1,20 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import sequelize from '../db.js'; 
 import Usuario from './usuario.js';
 
-
-
 const Tarefa = sequelize.define('tarefa', {
-    id_tarefa: {
+    id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     nome: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: true
     },
     descricao: {
         type: DataTypes.TEXT,
-        allowNull: true
+        allowNull: false
     },
     status: {
         type: DataTypes.STRING(20),
@@ -30,12 +28,12 @@ const Tarefa = sequelize.define('tarefa', {
         type: DataTypes.STRING(100),
         allowNull: true
     },
-    FK_USUARIO_id_usuario: {
+    FK_USUARIO_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: Usuario,
-            key: 'id_usuario'
+            key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
@@ -44,7 +42,7 @@ const Tarefa = sequelize.define('tarefa', {
     timestamps: false
 });
 
-Tarefa.belongsTo(Usuario, { foreignKey: 'FK_USUARIO_id_usuario' });
+Tarefa.belongsTo(Usuario, { foreignKey: 'FK_USUARIO_id' });
 
 (async () => {
     await Tarefa.sync();

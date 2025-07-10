@@ -4,7 +4,7 @@ import Usuario from './usuario.js';
 import Tarefa from './task.js';
 
 const Lista = sequelize.define('lista', {
-    id_lista: {
+    id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
@@ -21,22 +21,22 @@ const Lista = sequelize.define('lista', {
         type: DataTypes.DATE,
         allowNull: true
     },
-    FK_USUARIO_id_usuario: {
+    FK_USUARIO_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: Usuario,
-            key: 'id_usuario'
+            key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
-    FK_TAREFA_id_tarefa: {
+    FK_TAREFA_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
             model: Tarefa,
-            key: 'id_tarefa'
+            key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
@@ -46,8 +46,8 @@ const Lista = sequelize.define('lista', {
 });
 
 
-Lista.belongsTo(Usuario, { foreignKey: 'FK_USUARIO_id_usuario' });
-Lista.belongsTo(Tarefa, { foreignKey: 'FK_TAREFA_id_tarefa' });
+Lista.belongsTo(Usuario, { foreignKey: 'FK_USUARIO_id' });
+Lista.belongsTo(Tarefa, { foreignKey: 'FK_TAREFA_id' });
 
 
 (async () => {

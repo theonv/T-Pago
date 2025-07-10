@@ -1,16 +1,15 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
 
-
 const Usuario = sequelize.define('usuario', {
-    id_usuario: {
+    id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     nome: {
         type: DataTypes.STRING(40),
-        allowNull: false
+        allowNull: true
     },
     email: {
         type: DataTypes.STRING(100),
@@ -24,10 +23,6 @@ const Usuario = sequelize.define('usuario', {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW
-    },
-    id: {
-        type: DataTypes.INTEGER,
-        allowNull: true
     },
     tema: {
         type: DataTypes.STRING(10),
