@@ -17,52 +17,56 @@ export default function Home() {
 
   const handleCreateTask = () => {
     if (inputValue.trim()) {
-      setTasks([...tasks, { conteudo: inputValue.trim() }]);
       fetch(`${API_URL}/api/auth/createtask`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ texto: inputValue.trim(),
-          usuarioId: user.id
-         }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        descricao: inputValue.trim(),
+        FK_USUARIO_id: user.id
+      }),
       })
       .then(response => {
-        if (!response.ok) throw new Error('Erro ao salvar tarefa');
-        return response.json();
+      if (!response.ok) throw new Error('Erro ao salvar tarefa');
+      return response.json();
       })
-      .catch(() => {
-        toast.error('Erro ao salvar tarefa no banco!');
-      });
+      .then(data => {
+      console.log(data.id);
+      setTasks([...tasks, { conteudo: inputValue.trim(), id: data.id }]);
       setInputValue('');
       toast.success('Tarefa adicionada com sucesso!');
+      })
+      .catch(() => {
+      toast.error('Erro ao salvar tarefa no banco!');
+      });
     } else {
       toast.error('Por favor, digite uma tarefa válida!');
     }
   };
 
-  const handleDeleteTask = (indexToRemove) => {
-    const taskToDelete = tasks[indexToRemove];
-    setTasks(tasks.filter((_, idx) => idx !== indexToRemove));
-    fetch(`${API_URL}/api/auth/deletetask/${encodeURIComponent(taskToDelete.conteudo)}`, {
+  const handleDeleteTask = (taskId) => {
+    fetch(`${API_URL}/api/auth/deletetask/${taskId}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: taskId }),
     })
-    .then(response => {
-      if (!response.ok) throw new Error('Erro ao deletar tarefa');
-      toast.success('Tarefa removida com sucesso!');
-    })
-    .catch(() => {
-      toast.error('Erro ao remover tarefa do banco!');
-    });
+      .then(response => {
+        if (!response.ok) throw new Error('Erro ao deletar tarefa');
+        setTasks(tasks.filter((task) => task.id !== taskId));
+        toast.success('Tarefa removida com sucesso!');
+      })
+      .catch(() => {
+        toast.error('Erro ao remover tarefa do banco!');
+      });
   };
 
   useEffect(() => {
-    if (!user) return; // Só executa quando o usuário estiver disponível
+    if (!user) return; 
     fetch(`${API_URL}/api/auth/gettasks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ usuarioId: user.id }),
+      body: JSON.stringify({ FK_USUARIO_id: user.id }),
     })
       .then(response => {
         if (!response.ok) throw new Error('Erro ao buscar tarefas');
@@ -92,23 +96,22 @@ export default function Home() {
           <ul>
             {tasks.map((task, index) => (
               <li
-                key={index}
+                key={task.id || index}
                 className="flex items-center justify-between px-4 py-2 mb-3 bg-blue-700 text-white rounded cursor-pointer"
               >
-                <span>{task.conteudo}</span>
+                <span id={task.id}>{task.conteudo}</span>
                 <div className="flex items-center">
                   <button
                     onClick={() => {
-                      // Adicione aqui a ação desejada ao clicar no lápis
                       toast.info('Função de editar ainda não implementada!');
                     }}
                     className="mr-2 p-1 rounded hover:bg-blue-600 transition-colors"
                     aria-label="Editar tarefa"
-                >
+                  >
                     <LapisBranco />
                   </button>
                   <button
-                    onClick={() => handleDeleteTask(index)}
+                    onClick={() => handleDeleteTask(task.id)}
                     className="ml-2 w-7 h-7 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 border border-red-400"
                     aria-label="Excluir tarefa"
                   >

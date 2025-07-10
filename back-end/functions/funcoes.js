@@ -79,9 +79,9 @@ export const gettasks = async (req, res) => {
 };
 export const deleteTask = async (req, res) => {
   try {
-    const taskName = req.params.texto;
-    console.log("Nome da tarefa a ser deletada:", taskName);
-    const deletedTask = await Task.destroy({ where: { texto: taskName } });
+    const id = req.body.id;
+    console.log("Nome da tarefa a ser deletada:", id);
+    const deletedTask = await Task.destroy({ where: { id: id } });
     
     if (deletedTask) {
       res.status(200).json({ message: 'Tarefa deletada com sucesso' });

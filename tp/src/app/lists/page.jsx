@@ -4,15 +4,19 @@ import Header from '@/components/header/page'
 import Footer from '@/components/footer/footer.jsx'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+//import { useUser} from '@/context/usercontext.jsx'
 import LapisBranco from '@/components/lapis/page.jsx'
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function Listas() {
+//  const { user } = useUser()
   const [listas, setListas] = useState([])
   const [inputValue, setInputValue] = useState('')
 
   // Carrega listas do banco na primeira renderização
   useEffect(() => {
-    fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/getlists')
+    fetch(`${API_URL}/api/auth/getlists`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -33,7 +37,7 @@ export default function Listas() {
     setListas(prev => [...prev, nova])
     setInputValue('')
 
-    fetch('https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/createlist', {
+    fetch(`${API_URL}/api/auth/createlist`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ texto: nova.conteudo })
@@ -51,7 +55,7 @@ export default function Listas() {
 
     setListas(listas.filter((_, idx) => idx !== indexToRemove))
 
-    fetch(`https://organic-eureka-695w649q7gpxh56jw-3001.app.github.dev/api/auth/deletelist/${encodeURIComponent(listToDelete.conteudo)}`, {
+    fetch(`${API_URL}/api/auth/deletelist/${encodeURIComponent(listToDelete.conteudo)}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
     })
