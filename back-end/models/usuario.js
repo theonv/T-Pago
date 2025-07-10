@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
 
-const Usuario = sequelize.define('usuario', {
+const User = sequelize.define('usuario', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -10,19 +10,6 @@ const Usuario = sequelize.define('usuario', {
     nome: {
         type: DataTypes.STRING(40),
         allowNull: true
-    },
-    email: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-    },
-    senha: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-    },
-    data_cadastro: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
     },
     tema: {
         type: DataTypes.STRING(10),
@@ -35,13 +22,21 @@ const Usuario = sequelize.define('usuario', {
     hora_notificacao: {
         type: DataTypes.STRING(10),
         allowNull: true
+    },
+    email: {
+        type: DataTypes.STRING(100),
+        allowNull: false
+    },
+    senha: {
+        type: DataTypes.STRING(100),
+        allowNull: false
     }
 }, {
     timestamps: false
 });
 
 (async () => {
-    await Usuario.sync();
+    await User.sync({ alter: true });
     console.log('Tabela de usuários criada ou já existe.');
 })();
-export default Usuario;
+export default User;

@@ -17,6 +17,7 @@ app.use('/api/auth', router);
 app.use(morgan('dev'));
 
 // Realiza a conexão com o banco de dados
+setTimeout(() => {
 sequelize.authenticate()
     .then(() => {
         console.log('Conexão com o banco de dados estabelecida com sucesso.');
@@ -24,7 +25,7 @@ sequelize.authenticate()
     .catch(err => {
         console.error('Não foi possível conectar ao banco de dados:', err);
     });
-
+}, 2000);
 app.get('/teste', (req, res) => {
     res.send('Servidor Express rodando!');
 });

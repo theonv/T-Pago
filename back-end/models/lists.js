@@ -1,9 +1,9 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
-import Usuario from './usuario.js';
-import Tarefa from './task.js';
+import User from './usuario.js';
+import Task from './task.js';
 
-const Lista = sequelize.define('lista', {
+const List = sequelize.define('lista', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -17,15 +17,11 @@ const Lista = sequelize.define('lista', {
         type: DataTypes.STRING(255),
         allowNull: true
     },
-    data: {
-        type: DataTypes.DATE,
-        allowNull: true
-    },
     FK_USUARIO_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Usuario,
+            model: User,
             key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -35,7 +31,7 @@ const Lista = sequelize.define('lista', {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-            model: Tarefa,
+            model: Task,
             key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -46,12 +42,12 @@ const Lista = sequelize.define('lista', {
 });
 
 
-Lista.belongsTo(Usuario, { foreignKey: 'FK_USUARIO_id' });
-Lista.belongsTo(Tarefa, { foreignKey: 'FK_TAREFA_id' });
+List.belongsTo(User, { foreignKey: 'FK_USUARIO_id' });
+List.belongsTo(Task, { foreignKey: 'FK_TAREFA_id' });
 
 
 (async () => {
-    await Lista.sync();
+    await List.sync({ alter: true });
     console.log('Tabela de listas criada ou já existe.');
 })();
-export default Lista;
+export default List;

@@ -9,7 +9,6 @@ export const login = async (req, res) => {
     // Verificar se o usuário existe
     const user = await User.findOne({ where: { email } });
     console.log(email, senha);
-
     if (!user) {
       console.error('Erro ao realizar login email:');
       return res.status(500).json({ message: 'usuario não encontrado' });
@@ -25,10 +24,9 @@ export const login = async (req, res) => {
       id: user.id,
       senha: user.senha,
       email: user.email,
-      message: 'Login realizado com sucesso',
     });
   } catch (error) {
-    console.error('Erro ao realizar login F:');
+    console.error('Erro ao realizar login F:', error);
     res.status(500).json({ message: 'Erro ao realizar login', error: error.message });
   }
 };
@@ -37,7 +35,6 @@ export const cru = async (req, res) => {
   try {
     console.log("req.body:", req.body);
     const userData = {
-      nome: req.body.nome,
       email: req.body.email,
       senha: req.body.senha,
     };
@@ -54,26 +51,28 @@ export const createtask = async (req,res) => {
   try {
     console.log("req.body:", req.body);
     const taskData = {
-      texto: req.body.texto,
-      usuarioId: req.body.usuarioId 
+      descricao: req.body.descricao,
+      FK_USUARIO_id: req.body.FK_USUARIO_id 
     };
     const task = await Task.create(taskData);
+    console.log("Tarefa eu sou foda criada:", task);
     res.send(task);
   } catch (error) {
+    console.log("Erro foda ao criar tarefa:", error);
     res.status(500).json({ message: 'Erro ao criar tarefa', error: error.message });
     
   }
 } 
 export const gettasks = async (req, res) => {
   try {
-    const { usuarioId } = req.body;
-    if (!usuarioId) {
+    const { FK_USUARIO_id } = req.body;
+    if (!FK_USUARIO_id) {
       return res.status(400).json({ message: 'usuarioId é obrigatório' });
     }
-    const tasks = await Task.findAll({ where: { usuarioId } });
+    const tasks = await Task.findAll({ where: { FK_USUARIO_id } });
     console.log("Tarefas encontradas:", tasks);
-    console.log("Texto das tarefas:", tasks.map(task => task.texto));
-    res.json(tasks.map(task => task.texto));
+    console.log("Texto das tarefas:", tasks.map(task => task.descricao));
+    res.json(tasks.map(task => task.descricao));
   } catch (error) {
     res.status(500).json({ message: 'Erro ao buscar tarefas', error: error.message });
   }

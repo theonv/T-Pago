@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js'; 
-import Usuario from './usuario.js';
+import User from './usuario.js';
 
-const Tarefa = sequelize.define('tarefa', {
+const Task = sequelize.define('tarefa', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -32,7 +32,7 @@ const Tarefa = sequelize.define('tarefa', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: Usuario,
+            model: User,
             key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -42,10 +42,10 @@ const Tarefa = sequelize.define('tarefa', {
     timestamps: false
 });
 
-Tarefa.belongsTo(Usuario, { foreignKey: 'FK_USUARIO_id' });
+Task.belongsTo(User, { foreignKey: 'FK_USUARIO_id' });
 
 (async () => {
-    await Tarefa.sync();
+    await Task.sync({ alter: true });
     console.log('Tabela de taks criada ou já existe.');
 })();
-export default Tarefa;
+export default Task;
