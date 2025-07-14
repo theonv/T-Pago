@@ -46,17 +46,6 @@ export default function Notification() {
                             </label>
                         </div>
                     ))}
-
-                    {/* Item final com ícone */}
-                    <div className="w-full max-w-[300px] bg-[#5768FF] rounded-[15px] flex items-center px-4 py-3 shadow-md">
-                        <div className="text-white font-bold text-sm sm:text-base leading-tight w-[70%] break-words">
-                            EDITAR SOM DO LEMBRETE
-                        </div>
-                        <div className="ml-auto">
-                            <LapisBranco />
-                        </div>
-                    </div>
-
                 </div>
             </main>
 

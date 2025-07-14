@@ -71,8 +71,9 @@ export const gettasks = async (req, res) => {
     }
     const tasks = await Task.findAll({ where: { FK_USUARIO_id } });
     console.log("Tarefas encontradas:", tasks);
+    console.log("id das tarefas:", tasks.map(task => task.id));
     console.log("Texto das tarefas:", tasks.map(task => task.descricao));
-    res.json(tasks.map(task => task.descricao));
+    res.json(tasks);
   } catch (error) {
     res.status(500).json({ message: 'Erro ao buscar tarefas', error: error.message });
   }
@@ -80,7 +81,8 @@ export const gettasks = async (req, res) => {
 export const deleteTask = async (req, res) => {
   try {
     const id = req.body.id;
-    console.log("Nome da tarefa a ser deletada:", id);
+    console.log("Nome da tarefa a ser deletada:", req.body.descricao); // Corrigido para usar descricao
+    console.log("Id da tarefa a ser deletada:", id);
     const deletedTask = await Task.destroy({ where: { id: id } });
     
     if (deletedTask) {
@@ -96,12 +98,13 @@ export const deleteTask = async (req, res) => {
 
 
 // listas
-export const createlist = async (req, res) => {
+export const createlist = async (req,res) => {
   try {
     console.log("req.body:", req.body);
     const listData = {
       nome: req.body.nome,
-      itens: req.body.itens
+      //itens: req.body.itens,
+      FK_USUARIO_id: req.body.FK_USUARIO_id
     };
     const list = await List.create(listData);
     res.send(list);
@@ -109,22 +112,28 @@ export const createlist = async (req, res) => {
     res.status(500).json({ message: 'Erro ao criar lista', error: error.message });
   }
 };
+
 export const getlists = async (req, res) => {
   try {
-    const lists = await List.findAll();
+    const { FK_USUARIO_id } = req.body;
+    if (!FK_USUARIO_id) {
+      return res.status(400).json({ message: 'usuarioId é obrigatório' });
+    }
+    const lists = await List.findAll({ where: { FK_USUARIO_id } });
     console.log("Listas encontradas:", lists);
     console.log("Nomes das listas:", lists.map(list => list.nome));
-    res.json(lists.map(list => list.nome));
+    res.json(lists);
   } catch (error) {
     res.status(500).json({ message: 'Erro ao buscar listas', error: error.message });
   }
 }
 export const deletelist = async (req, res) => {
   try {
-    const listName = req.params.nome;
-    console.log("Nome da lista a ser deletada:", listName);
-    const deletedList = await List.destroy({ where: { nome: listName } });
-    
+    const id = req.body.id;
+    console.log("Id da lista a ser deletada:", id);
+    console.log("Nome da lista a ser deletada:", req.body.nome);
+    const deletedList = await List.destroy({ where: { id: id } });
+
     if (deletedList) {
       res.status(200).json({ message: 'Lista deletada com sucesso' });
     } else {
@@ -133,4 +142,4 @@ export const deletelist = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: 'Erro ao deletar lista', error: error.message });
   }
-}
+};

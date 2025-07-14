@@ -60,28 +60,31 @@ export default function Home() {
         toast.error('Erro ao remover tarefa do banco!');
       });
   };
-
   useEffect(() => {
-    if (!user) return; 
-    fetch(`${API_URL}/api/auth/gettasks`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ FK_USUARIO_id: user.id }),
+  if (!user) return; 
+  fetch(`${API_URL}/api/auth/gettasks`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ FK_USUARIO_id: user.id }),
+  })
+    .then(response => {
+      if (!response.ok) throw new Error('Erro ao buscar tarefas');
+      return response.json();
     })
-      .then(response => {
-        if (!response.ok) throw new Error('Erro ao buscar tarefas');
-        return response.json();
-      })
-      .then(data => {
-        if (Array.isArray(data)) {
-          setTasks(data.map(t => ({ conteudo: t })));
-          toast.success('Tarefas carregadas com sucesso!');
-        }
-      })
-      .catch(() => {
-        toast.error('Erro ao carregar tarefas do banco!');
-      });
-  }, [user]);
+    .then(data => {
+      if (Array.isArray(data)) {
+        // Modifique esta linha para incluir o ID:
+        setTasks(data.map(task => ({ 
+          conteudo: task.descricao, 
+          id: task.id 
+        })));
+        toast.success('Tarefas carregadas com sucesso!');
+      }
+    })
+    .catch(() => {
+      toast.error('Erro ao carregar tarefas do banco!');
+    });
+}, [user]);
 
   return (
     <>

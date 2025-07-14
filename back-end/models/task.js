@@ -46,6 +46,6 @@ Task.belongsTo(User, { foreignKey: 'FK_USUARIO_id' });
 
 (async () => {
     await Task.sync({ alter: true });
-    console.log('Tabela de taks criada ou já existe.');
+    console.log('Tabela de tarefas criada ou já existe.');
 })();
 export default Task;

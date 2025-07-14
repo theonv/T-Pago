@@ -4,67 +4,89 @@ import Header from '@/components/header/page'
 import Footer from '@/components/footer/footer.jsx'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-//import { useUser} from '@/context/usercontext.jsx'
+import { useUser} from '@/context/usercontext.jsx'
 import LapisBranco from '@/components/lapis/page.jsx'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Listas() {
-//  const { user } = useUser()
-  const [listas, setListas] = useState([])
+  const { user } = useUser()
+  const [lists, setListas] = useState([])
   const [inputValue, setInputValue] = useState('')
 
-  // Carrega listas do banco na primeira renderização
-  useEffect(() => {
-    fetch(`${API_URL}/api/auth/getlists`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          setListas(data.map(t => ({ conteudo: t })))
-        }
-      })
-      .catch(() => toast.error('Erro ao carregar listas!'))
-  }, [])
 
   // Adiciona nova lista
   const handleCreateList = () => {
-    if (!inputValue.trim()) {
-      return toast.error('Digite uma lista válida!')
-    }
-
-    const nova = { conteudo: inputValue.trim() }
-
-    setListas(prev => [...prev, nova])
-    setInputValue('')
-
-    fetch(`${API_URL}/api/auth/createlist`, {
+    if (inputValue.trim()) {
+      fetch(`${API_URL}/api/auth/createlist`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ texto: nova.conteudo })
-    })
-      .then(res => {
-        if (!res.ok) throw new Error()
-        toast.success('Lista adicionada com sucesso!')
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nome: inputValue.trim(),
+        FK_USUARIO_id: user.id
+      }),
       })
-      .catch(() => toast.error('Erro ao salvar lista!'))
-  }
+      .then(response => {
+      if (!response.ok) throw new Error('Erro ao salvar lista');
+      return response.json();
+      })
+      .then(data => {
+      console.log(data.id);
+      setListas([...lists, { conteudo: inputValue.trim(), id: data.id }]);
+      setInputValue('');
+      toast.success('Lista adicionada com sucesso!');
+      })
+      .catch(() => {
+      toast.error('Erro ao salvar lista no banco!');
+      });
+    } else {
+      toast.error('Por favor, digite uma lista válida!');
+    }
+  };
 
   // Exclui lista
-  const handleDeleteList = (indexToRemove) => {
-    const listToDelete = listas[indexToRemove]
+  const handleDeleteList = (listId) => {
+    fetch(`${API_URL}/api/auth/deletelist/${listId}`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: listId }),
+        })
+          .then(response => {
+            if (!response.ok) throw new Error('Erro ao deletar lista');
+            setListas(lists.filter((list) => list.id !== listId));
+            toast.success('Lista removida com sucesso!');
+          })
+          .catch(() => {
+            toast.error('Erro ao remover lista do banco!');
+          });
+    };
 
-    setListas(listas.filter((_, idx) => idx !== indexToRemove))
-
-    fetch(`${API_URL}/api/auth/deletelist/${encodeURIComponent(listToDelete.conteudo)}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(res => {
-        if (!res.ok) throw new Error()
-        toast.success('Lista removida com sucesso!')
+    useEffect(() => {
+      if (!user) return; 
+      fetch(`${API_URL}/api/auth/getlists`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ FK_USUARIO_id: user.id }),
       })
-      .catch(() => toast.error('Erro ao deletar lista!'))
-  }
+        .then(response => {
+          if (!response.ok) throw new Error('Erro ao buscar listas');
+          return response.json();
+        })
+        .then(data => {
+          if (Array.isArray(data)) {
+            setListas(data.map(list => ({ 
+              conteudo: list.nome,
+              id: list.id
+            })));
+            toast.success('Listas carregadas com sucesso!');
+          }
+        })
+        .catch(() => {
+          toast.error('Erro ao carregar listas do banco!');
+        });
+    }, [user]);
 
   return (
     <>
@@ -76,36 +98,34 @@ export default function Listas() {
       <main className="flex flex-col items-center justify-start px-4 py-8 min-h-[60vh] md:min-h-[auto]">
   {/* min-h-[60vh] em mobile para manter boa altura, e no desktop deixa automático */}
 
-  <div className="w-full max-w-[600px] bg-transparent p-2 my-5 
-                  overflow-y-auto max-h-[40vh] md:max-h-[60vh]">
-    {/* max-height maior no desktop para diminuir scrollbar */}
-    <ul className="w-full">
-      {listas.map((list, index) => (
+  <div className="w-full max-w-[600px] bg-transparent p-2 my-5 overflow-y-auto max-h-[40vh] md:max-h-[60vh]">
+      <ul className="w-full">
+        {lists.map((list, index) => (
         <li
-          key={index}
+          key={list.id || index}
           className="flex items-center justify-between px-4 py-2 mb-3 bg-blue-700 text-white rounded cursor-pointer"
         >
-          {list.conteudo}
+          <span id={list.id}>{list.conteudo}</span>
           <div className="flex items-center">
           <button
-            onClick={() => {
-                toast.info('Função de editar ainda não implementada!');
-              }}
-              className="mr-1 p-1 rounded hover:bg-blue-600 transition-colors"
-              aria-label="Editar lista"
-            >
-              <LapisBranco />
+          onClick={() => {
+            toast.info('Função de editar ainda não implementada!');
+          }}
+          className="mr-1 p-1 rounded hover:bg-blue-600 transition-colors"
+          aria-label="Editar lista"
+          >
+          <LapisBranco />
           </button>
           <button
-            onClick={() => handleDeleteList(index)}
-            className="ml-1 w-7 h-7 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 border border-red-400"
+          onClick={() => handleDeleteList(list.id)}
+          className="ml-1 w-7 h-7 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600 border border-red-400"
           >
-            &times;
+          &times;
           </button>
           </div>
         </li>
-      ))}
-    </ul>
+        ))}
+      </ul>       
   </div>
 
   <div className="w-full max-w-[600px] p-2">
