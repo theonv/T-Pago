@@ -1,5 +1,4 @@
 'use client';
-import '../../styles/login.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import { create } from '../../functions/create.js';
