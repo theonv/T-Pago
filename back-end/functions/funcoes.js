@@ -95,6 +95,24 @@ export const deleteTask = async (req, res) => {
   }
 };
 
+export const updatetask = async (req, res) => {
+  try {
+    const { id, descricao } = req.body;
+    console.log("Id da tarefa a ser atualizada:", id);
+    console.log("Novo nome da tarefa:", descricao);
+
+    const updatedTask = await Task.update({ descricao: descricao }, { where: { id: id } });
+
+    if (updatedTask[0] > 0) {
+      res.status(200).json({ message: 'Tarefa atualizada com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Tarefa não encontrada' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar Tarefa', error: error.message });
+  }
+}
+
 
 
 // listas
@@ -143,3 +161,21 @@ export const deletelist = async (req, res) => {
     res.status(500).json({ message: 'Erro ao deletar lista', error: error.message });
   }
 };
+
+export const updatelist = async (req, res) => {
+  try {
+    const { id, nome } = req.body;
+    console.log("Id da lista a ser atualizada:", id);
+    console.log("Novo nome da lista:", nome);
+
+    const updatedList = await List.update({ nome: nome }, { where: { id: id } });
+
+    if (updatedList[0] > 0) {
+      res.status(200).json({ message: 'Lista atualizada com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Lista não encontrada' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar lista', error: error.message });
+  }
+}

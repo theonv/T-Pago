@@ -73,7 +73,7 @@ export default function Home() {
     })
     .then(data => {
       if (Array.isArray(data)) {
-        // Modifique esta linha para incluir o ID:
+
         setTasks(data.map(task => ({ 
           conteudo: task.descricao, 
           id: task.id 
@@ -106,12 +106,26 @@ export default function Home() {
                 <div className="flex items-center">
                   <button
                     onClick={() => {
-                      toast.info('Função de editar ainda não implementada!');
-                    }}
+                      const newName = prompt('Editar nome da tarefa:', task.conteudo);
+                        if (newName && newName.trim() && newName.trim() !== task.conteudo) {
+                          fetch(`${API_URL}/api/auth/updatetask`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ descricao: newName.trim(), id: task.id }),
+                          })
+                          .then(response => {
+                            if (!response.ok) throw new Error('Erro ao editar lista');
+                            setTasks(tasks.map(t => t.id === task.id ? { ...t, conteudo: newName.trim() } : t));
+                            toast.success('Tarefa editada com sucesso!');
+                          })
+                          .catch(() => {
+                            toast.error('Erro ao editar tarefa no banco!');
+                          });
+                        }}}
                     className="mr-2 p-1 rounded hover:bg-blue-600 transition-colors"
                     aria-label="Editar tarefa"
                   >
-                    <LapisBranco />
+                  <LapisBranco />
                   </button>
                   <button
                     onClick={() => handleDeleteTask(task.id)}

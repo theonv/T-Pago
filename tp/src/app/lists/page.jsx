@@ -109,8 +109,25 @@ export default function Listas() {
           <div className="flex items-center">
           <button
           onClick={() => {
-            toast.info('Função de editar ainda não implementada!');
-          }}
+            const newName = window.prompt(
+              'Editar nome da lista:',
+              list.conteudo
+            );
+            if (newName && newName.trim() && newName.trim() !== list.conteudo) {
+              fetch(`${API_URL}/api/auth/updatelist`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome: newName.trim(), id: list.id }),
+              })
+                .then(response => {
+                  if (!response.ok) throw new Error('Erro ao editar lista');
+                  setListas(lists.map(l => l.id === list.id ? { ...l, conteudo: newName.trim() } : l));
+                  toast.success('Lista editada com sucesso!');
+                })
+                .catch(() => {
+                  toast.error('Erro ao editar lista no banco!');
+                });
+            }}}
           className="mr-1 p-1 rounded hover:bg-blue-600 transition-colors"
           aria-label="Editar lista"
           >
@@ -141,6 +158,7 @@ export default function Listas() {
     {/* mt-3 para dar um espaçamento pequeno e natural entre textarea e botão */}
     <button
       onClick={handleCreateList}
+
       className="px-5 py-2 bg-[var(--corPrimaria)] text-white rounded hover:bg-blue-800 transition-colors"
     >
       Adicionar lista
