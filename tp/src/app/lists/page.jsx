@@ -109,10 +109,7 @@ export default function Listas() {
           <div className="flex items-center">
           <button
           onClick={() => {
-            const newName = window.prompt(
-              'Editar nome da lista:',
-              list.conteudo
-            );
+            const newName = prompt('Editar nome da lista:', list.conteudo);
             if (newName && newName.trim() && newName.trim() !== list.conteudo) {
               fetch(`${API_URL}/api/auth/updatelist`, {
                 method: 'PUT',

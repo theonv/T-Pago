@@ -45,6 +45,25 @@ export const cru = async (req, res) => {
   }
 };
 
+export const updateemail = async (req, res) => {
+  try {
+    const { email, id} = req.body;
+    console.log("Novo email:", email)
+    const updatedUser = await User.update(
+      { email: email },
+      { where: { id: id } }
+    );
+    console.log("Usuário atualizado:", updatedUser);
+    if (updatedUser[0] > 0) {
+      res.status(200).json({ message: 'Email atualizado com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar email', error: error.message });
+  }
+};
+
 
 // tarefas
 export const createtask = async (req,res) => {

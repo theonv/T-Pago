@@ -2,9 +2,15 @@
 import { useUser } from '@/context/usercontext';
 import Footer from '@/components/footer/footer.jsx';
 import LapisBranco from '@/components/lapis/page.jsx';
+import { ToastContainer, toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import 'react-toastify/dist/ReactToastify.css';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EditarPerfil() {
     const { user } = useUser();
+    const [emails, setEmails] = useState([]);
 
     return (
         <>
@@ -35,7 +41,29 @@ export default function EditarPerfil() {
                         <div className="w-full bg-[#5768FF] rounded-[15px] flex items-center justify-between px-4 py-4 shadow-md">
                             <span className="text-white font-bold text-sm sm:text-base">EMAIL</span>
                             <span className="text-white text-sm sm:text-lg font-mono truncate">{user?.email || '---'}</span>
+                            <div>
+                            <button
+                            onClick={() => {
+                                const newEmail = prompt('Editar email:', user.email);
+                                if (newEmail && newEmail.trim() && newEmail.trim() !== user.email) {
+                                    fetch(`${API_URL}/api/auth/updateemail`, {
+                                        method: 'PUT',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ id: user.id, email: newEmail.trim() }),
+                                    })
+                                    .then(response => {
+                                        if (!response.ok) throw new Error('Erro ao editar email');
+                                        toast.success('Email editado com sucesso!');
+                                    })
+                                    .catch(() => {
+                                        toast.error('Erro ao salvar email no banco!');
+                                    });
+                                }
+                            }}
+                            >
                             <LapisBranco />
+                            </button>
+                            </div>
                         </div>
 
                         {/* SENHA */}
