@@ -26,7 +26,7 @@ sequelize.authenticate()
         console.error('Não foi possível conectar ao banco de dados:', err);
     });
 }, 2000);
-app.get('/teste', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Servidor Express rodando!');
 });
 

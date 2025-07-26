@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { e_mail } from '@/functions/email'
 
 export default function ForgotPassword() {
   return (
@@ -28,7 +29,7 @@ export default function ForgotPassword() {
             garantindo melhor semântica e funcionamento, além de permitir o envio ao pressionar "Enter". 
             <form onSubmit={fase_de_desenvolvimento}> -> Só para lembrar como deve ser feito, já que a página
             ainda não foi finalizada. */}
-        <form className="w-full mt-8">
+        <form className="w-full mt-8" onSubmit={e_mail}>
           <div className="w-full max-w-[90%] mx-auto space-y-6">
             <div className="h-[50px]">
               <input

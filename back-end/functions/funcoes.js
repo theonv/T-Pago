@@ -1,6 +1,10 @@
 import User from '../models/usuario.js';
 import Task from '../models/task.js';
 import List from '../models/lists.js';
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Login de usuário
 export const login = async (req, res) => {
@@ -198,3 +202,51 @@ export const updatelist = async (req, res) => {
     res.status(500).json({ message: 'Erro ao atualizar lista', error: error.message });
   }
 }
+
+export const sendEmail = async (req, res) => {
+  try {
+    const { to } = req.body;
+
+    if (!to) {
+      return res.status(400).json({ message: 'E-mail do destinatário é obrigatório.' });
+    }
+  
+    const transport = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS,
+      },
+    });
+
+    const info = await transport.sendMail({
+      from: 'tapago024@gmail.com',
+      to: to,
+      subject: 'Redefinição de senha',
+      html: `
+        <p>Olá,</p>
+        <p>Recebemos uma solicitação para redefinir a senha associada a este endereço de e-mail.</p>
+        <p>Para prosseguir com a alteração da sua senha, clique no link abaixo:</p>
+        <p>
+          <a href="https://fantastic-rotary-phone-wrgp749g7wxw3967-3000.app.github.dev/forgotpwd/dispemail"
+            target="_blank"
+            rel="noopener noreferrer">
+            Redefinir Senha
+          </a>
+        </p>
+        <p>Se você não solicitou essa alteração, por favor, desconsidere este e-mail.</p>
+        <p>Atenciosamente,<br/><strong>Equipe Tá Pago</strong></p>
+      `,
+      text: 'Olá, clique no link para redefinir sua senha.',
+    });
+
+    console.log('E-mail enviado:', info.response);
+    return res.status(200).json({ message: 'E-mail enviado com sucesso', info: info.response });
+
+  } catch (error) {
+    console.error('Erro ao enviar e-mail:', error);
+    return res.status(500).json({ message: 'Erro ao enviar e-mail', error: error.message });
+  }
+};
