@@ -3,6 +3,7 @@ execute os seguintes comandos para rodar o código:
 cd back-end
 docker-compose up -d
 npm install
+npm install nodemailer
 npm run start ou dev
 cd ..
 cd tp

@@ -149,6 +149,11 @@ export default function Home() {
             className="w-full h-[100px] rounded shadow text-sm text-white bg-blue-700 p-2 resize-none focus:outline-none"
           />
         </div>
+        <div className="flex justify-end w-full max-w-[600px] px-2 mt-3"> 
+          <input 
+          type="time" 
+          className="px-5 py-2 bg-[var(--corPrimaria)] text-white rounded hover:bg-blue-800 transition-colors"/>
+        </div>
 
         <div className="flex justify-end w-full max-w-[600px] px-2 mt-3">
           <button

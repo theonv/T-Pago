@@ -1,27 +1,37 @@
-'use client'
+'use client';
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const UserContext = createContext(undefined);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  // Recarrega o usuário do localStorage ao iniciar
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    if (storedUser) setUser(JSON.parse(storedUser));
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
   }, []);
 
-  // Login: recebe objeto { id, nome, email }
+  // Login: salva no estado, localStorage e no cookie
   const login = (userData) => {
     setUser(userData);
-    console.log(userData);
     localStorage.setItem('user', JSON.stringify(userData));
+
+    // Cria o cookie "auth", válido por 1 dia
+    Cookies.set('auth', 'true', { expires: 1, path: '/' });
   };
 
-  // Logout
+  // Logout: limpa estado, localStorage e o cookie
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+
+    // Remove o cookie "auth"
+    Cookies.remove('auth');
   };
 
   return (

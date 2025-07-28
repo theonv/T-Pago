@@ -100,12 +100,14 @@ export default function Listas() {
 
   <div className="w-full max-w-[600px] bg-transparent p-2 my-5 overflow-y-auto max-h-[40vh] md:max-h-[60vh]">
       <ul className="w-full">
+
         {lists.map((list, index) => (
         <li
           key={list.id || index}
           className="flex items-center justify-between px-4 py-2 mb-3 bg-blue-700 text-white rounded cursor-pointer"
+          onClick={() => alert(`Lista: ${list.conteudo}`)}
         >
-          <span id={list.id}>{list.conteudo}</span>
+          <span id={list.id} >{list.conteudo}</span>
           <div className="flex items-center">
           <button
           onClick={() => {
