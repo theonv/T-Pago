@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer
       className="w-full fixed bottom-0 left-0 right-0"
-      style={{ backgroundColor: 'var(--background)' }}
+      style={{ backgroundColor: 'bg-gray-50 dark:bg-gray-900' }}
     >
       <div className="flex justify-around items-center px-4 py-2">
         {/* Casa */}

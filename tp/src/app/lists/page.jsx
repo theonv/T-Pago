@@ -5,7 +5,7 @@ import Footer from '@/components/footer/footer.jsx'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useUser} from '@/context/usercontext.jsx'
-import LapisBranco from '@/components/lapis/page.jsx'
+import { IconEdit } from '@/components/actionbuttons/actionbuttons.jsx'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -130,7 +130,7 @@ export default function Listas() {
           className="mr-1 p-1 rounded hover:bg-blue-600 transition-colors"
           aria-label="Editar lista"
           >
-          <LapisBranco />
+          <IconEdit />
           </button>
           <button
           onClick={() => handleDeleteList(list.id)}
