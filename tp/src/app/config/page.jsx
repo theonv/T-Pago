@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Footer from '../../components/footer/footer.jsx'
 import Header from '@/components/header/page'
+import { IconEdit } from '@/components/actionbuttons/actionbuttons.jsx'
 
 
 export default function Config() {
@@ -19,6 +20,7 @@ export default function Config() {
                             <p className="text-white font-bold text-[1.1em] ml-[10px] mr-[160px]">
                                 EDITAR PERFIL
                             </p>
+                            <IconEdit />
                             
                         </div>
                     </Link>

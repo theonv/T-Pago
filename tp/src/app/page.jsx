@@ -49,7 +49,7 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Email */}
           <div className="relative">
-            <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
+            <label htmlFor="email" className="block mb-1 font-medium text-black">
               Email
             </label>
             <input
@@ -58,7 +58,7 @@ export default function Login() {
               name="email"
               required
               placeholder="seuemail@exemplo.com"
-              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-black"
               autoComplete="username"
             />
             <div className="absolute left-3 top-[38px] pointer-events-none text-blue-500">
@@ -77,7 +77,7 @@ export default function Login() {
 
           {/* Senha */}
           <div className="relative">
-            <label htmlFor="senha" className="block mb-1 font-medium text-gray-700">
+            <label htmlFor="senha" className="block mb-1 font-medium text-black">
               Senha
             </label>
             <input
@@ -86,7 +86,7 @@ export default function Login() {
               name="senha"
               required
               placeholder="••••••••"
-              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-black"
               autoComplete="current-password"
             />
             <div className="absolute left-3 top-[38px] pointer-events-none text-blue-500">
@@ -121,7 +121,7 @@ export default function Login() {
               onChange={() => setShowPassword(!showPassword)}
               className="h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
             />
-            <label htmlFor="showPassword" className="text-gray-700 select-none cursor-pointer">
+            <label htmlFor="showPassword" className="text-gray-900 select-none cursor-pointer">                                       
               Mostrar senha
             </label>
           </div>

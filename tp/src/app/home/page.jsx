@@ -189,8 +189,8 @@ export default function Home() {
 
       <main className="flex-1 p-6 md:p-10 max-w-4xl mx-auto w-full">
         {/* Título com emoji */}
-        <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-900 select-none">
-          📝 Minhas Tarefas
+        <h1 className="900 text-4xl font-extrabold mb-8 text-center text-gray-900 select-none">
+          📝 <span className= "dark:text-gray-400">Minhas Tarefas</span>
         </h1>
 
         {/* Barra de progresso */}
@@ -310,7 +310,7 @@ export default function Home() {
         {/* Input para nova tarefa */}
         <div className="mt-10 max-w-3xl mx-auto flex flex-col sm:flex-row gap-3">
           <textarea
-            className="flex-1 resize-none rounded border border-gray-300 p-3 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="dark:text-gray-400 flex-1 resize-none rounded border border-gray-300 p-3 text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             rows={3}
             placeholder="Digite sua nova tarefa aqui... (máx. 54 caracteres)"
             value={inputValue}

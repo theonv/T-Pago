@@ -87,6 +87,7 @@ export default function Listas() {
           toast.error('Erro ao carregar listas do banco!');
         });
     }, [user]);
+  
 
   return (
     <>
