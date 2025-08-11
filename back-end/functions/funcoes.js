@@ -250,3 +250,22 @@ export const sendEmail = async (req, res) => {
     return res.status(500).json({ message: 'Erro ao enviar e-mail', error: error.message });
   }
 };
+
+export const toggletask = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { concluida } = req.body;
+    console.log("Id da tarefa a ser alternada:", id);
+    console.log("Novo status de concluída:", concluida);
+
+    const updatedTask = await Task.update({ concluida: concluida }, { where: { id: id } });
+
+    if (updatedTask[0] > 0) {
+      res.status(200).json({ message: 'Status da tarefa atualizado com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Tarefa não encontrada' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar status da tarefa', error: error.message });
+  }
+};

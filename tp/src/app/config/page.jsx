@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Footer from '../../components/footer/footer.jsx'
 import Header from '@/components/header/page'
-import LapisBranco from '@/components/lapis/page.jsx'
+
 
 export default function Config() {
     return (
@@ -19,7 +19,7 @@ export default function Config() {
                             <p className="text-white font-bold text-[1.1em] ml-[10px] mr-[160px]">
                                 EDITAR PERFIL
                             </p>
-                            <LapisBranco />
+                            
                         </div>
                     </Link>
 

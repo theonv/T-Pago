@@ -1,6 +1,6 @@
 import Footer from '@/components/footer/footer'
 import Header from '@/components/header/page'
-import LapisBranco from '@/components/lapis/page'
+
 
 export default function Notification() {
     return (

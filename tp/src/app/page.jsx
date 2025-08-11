@@ -35,7 +35,7 @@ export default function Login() {
             alt="Logo Tá Pago"
             width={100}
             height={100}
-            className="mb-4 rounded-full shadow-lg animate-bounce"
+            className="mb-4 rounded-full shadow-lg"
           />
           <h1 className="text-3xl font-extrabold text-gray-800">
             Tá <span className="text-blue-700">Pago</span>

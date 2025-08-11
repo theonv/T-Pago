@@ -20,6 +20,11 @@ const Task = sequelize.define('tarefa', {
         type: DataTypes.STRING(20),
         allowNull: true
     },
+    concluida: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
     data: {
         type: DataTypes.DATE,
         allowNull: true

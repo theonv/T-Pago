@@ -1,7 +1,7 @@
 "use client";
 import { useUser } from '@/context/usercontext';
 import Footer from '@/components/footer/footer.jsx';
-import LapisBranco from '@/components/lapis/page.jsx';
+
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect, useState } from "react";
 import 'react-toastify/dist/ReactToastify.css';
@@ -70,7 +70,7 @@ export default function EditarPerfil() {
                         <div className="w-full bg-[#5768FF] rounded-[15px] flex items-center justify-between px-4 py-4 shadow-md">
                             <span className="text-white font-bold text-sm sm:text-base">SENHA</span>
                             <span className="text-white text-sm sm:text-lg font-mono truncate">{user?.senha || '---'}</span>
-                            <LapisBranco />
+                           
                         </div>
                     </div>
                 </div>
