@@ -1,6 +1,7 @@
 'use client';
 import { useUser } from '@/context/usercontext';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Header() {
     const { user, logout } = useUser();
@@ -36,7 +37,7 @@ export default function Header() {
                         <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
                     </svg>
                     <span className="text-white font-medium text-sm bg-white/20 px-4 py-1.5 rounded-full shadow-sm backdrop-blur-sm">
-                        {user.email}
+                        <Link href="/config/editprofile">{user.email}</Link>
                     </span>
                 </div>
 
