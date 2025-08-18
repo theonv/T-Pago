@@ -22,19 +22,24 @@ const FullCalendarComponent = () => {
           expandRows={true}
           aspectRatio={1.35}
           headerToolbar={{
-            left: '',
+            left: 'prev,next today',
             center: 'title',
-            right: 'prev,next today',
+            right: '',
           }}
           contentClassNames={[
             'flex-grow',
             'bg-white',
-            'text-gray-900',
+            'text-black',
             'flex',
             'flex-col',
+            'font-medium',
           ]}
           dayCellClassNames={() =>
-            'border border-gray-300 hover:bg-purple-100 transition-colors cursor-pointer'
+            'border border-gray-200 hover:bg-purple-100 transition-colors cursor-pointer rounded-lg p-1 text-black'
+          }
+          // 🟢 Aqui alteramos o estilo do nome dos dias da semana
+          dayHeaderClassNames={() =>
+            'text-black font-semibold text-sm bg-gray-100 py-2'
           }
           eventContent={renderEventContent}
           titleFormat={{ year: 'numeric', month: 'long' }}
@@ -48,7 +53,7 @@ const FullCalendarComponent = () => {
 function renderEventContent(eventInfo) {
   return (
     <div
-      className="bg-purple-600 text-white rounded-lg px-3 py-1 text-sm font-semibold truncate shadow-md hover:bg-purple-700 transition-colors cursor-pointer"
+      className="bg-purple-600 text-white rounded-lg px-2 py-1 text-xs font-semibold truncate shadow hover:bg-purple-700 transition-colors cursor-pointer"
       title={eventInfo.event.title}
     >
       {eventInfo.event.title}
