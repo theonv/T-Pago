@@ -25,7 +25,7 @@ export default function Footer() {
         </Link>
 
         {/* Listas */}
-        <Link href="/lists" className="stroke-current" style={{ color: 'var(--foreground)' }}>
+        <Link href="lists" className="stroke-current" style={{ color: 'var(--foreground)' }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

@@ -203,6 +203,86 @@ export const updatelist = async (req, res) => {
   }
 }
 
+
+export const additem = async (req, res) => {
+  try {
+    const { nomeItem, listaRecebe } = req.body;
+    
+    if (!nomeItem || !listaRecebe) {
+      return res.status(400).json({ error: 'Nome do item e ID da lista são obrigatórios' });
+    }
+    
+    const lista = await List.findByPk(listaRecebe);
+    if (!lista) {
+      return res.status(404).json({ error: 'Lista não encontrada' });
+    }
+    
+    const novosItens = lista.itens ? `${lista.itens},${nomeItem.trim()}` : nomeItem.trim();
+    
+    await List.update(
+      { itens: novosItens },
+      { where: { id: listaRecebe } }
+    );
+    
+    res.status(201).json({ 
+      id: Date.now(), // ID temporário
+      itens: nomeItem.trim()
+    });
+  } catch (error) {
+    console.error('Erro ao adicionar item:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+};
+
+export const removeitem = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'ID do item é obrigatório' });
+    }
+
+    const item = await ItemLista.findByPk(id);
+
+    if (!item) {
+      return res.status(404).json({ error: 'Item não encontrado' });
+    }
+
+    await item.destroy();
+
+    res.status(200).json({ message: 'Item removido com sucesso' });
+  } catch (error) {
+    console.error('Erro ao remover item:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+};
+
+
+export const toggleitem = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { concluido } = req.body;
+    
+    if (!id || concluido === undefined) {
+      return res.status(400).json({ error: 'ID do item e estado são obrigatórios' });
+    }
+    
+    const item = await ItemLista.findByPk(id);
+    
+    if (!item) {
+      return res.status(404).json({ error: 'Item não encontrado' });
+    }
+    
+    await item.update({ concluido });
+    
+    res.status(200).json({ message: 'Item atualizado com sucesso' });
+  } catch (error) {
+    console.error('Erro ao alternar estado do item:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+};
+
+// rec senha
 export const sendEmail = async (req, res) => {
   try {
     const { to } = req.body;

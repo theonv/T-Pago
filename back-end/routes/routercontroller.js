@@ -1,6 +1,6 @@
 import { Router } from 'express'
 const router = Router()
-import {createtask, login, cru, gettasks, deleteTask, updatetask, createlist, getlists, deletelist, updatelist, updateemail, sendEmail, toggletask} from '../functions/funcoes.js'
+import {removeitem, toggleitem, additem, createtask, login, cru, gettasks, deleteTask, updatetask, createlist, getlists, deletelist, updatelist, updateemail, sendEmail, toggletask,} from '../functions/funcoes.js'
 
 //router.post('/cadastro', authController.cadastro);
 router.post('/login', login)
@@ -15,8 +15,9 @@ router.post('/createlist', createlist)
 router.post('/getlists', getlists)
 router.delete('/deletelist/:nome', deletelist)
 router.put('/updatelist', updatelist)
-//router.post('/nvsh',nvsh)
-//router.post('/recs',recs)
+router.post('/additem', additem)
+router.post('/toggleitem', toggleitem)
+router.delete('/removeitem', removeitem)
 router.post('/sendEmail', sendEmail);
 
 export default router;
