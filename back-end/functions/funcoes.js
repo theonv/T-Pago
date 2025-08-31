@@ -8,7 +8,6 @@ import bcrypt from 'bcrypt';
 
 dotenv.config();
 
-// Login de usuário
 export const login = async (req, res) => {
   try {
     const { email, senha } = req.body;
@@ -281,7 +280,6 @@ export const toggleitem = async (req, res) => {
   }
 };
 
-// rec senha
 export const sendEmail = async (req, res) => {
   try {
     const { to } = req.body;
