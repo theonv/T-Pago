@@ -1,8 +1,10 @@
+
 import User from '../models/usuario.js';
 import Task from '../models/task.js';
 import List from '../models/lists.js';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 
 dotenv.config();
 
@@ -12,21 +14,18 @@ export const login = async (req, res) => {
     const { email, senha } = req.body;
     // Verificar se o usuário existe
     const user = await User.findOne({ where: { email } });
-    console.log(email, senha);
     if (!user) {
       console.error('Erro ao realizar login email:');
       return res.status(500).json({ message: 'usuario não encontrado' });
     }
-
     console.log(user.senha);
-
-    if (user.senha != senha) {
+    const senhaValida = await bcrypt.compare(senha, user.senha);
+    if (!senhaValida) {
       console.error('Erro ao realizar login senha:');
       return res.status(500).json({ message: 'senha errada papai' });
     }
     res.status(200).json({
       id: user.id,
-      senha: user.senha,
       email: user.email,
     });
   } catch (error) {

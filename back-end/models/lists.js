@@ -46,8 +46,4 @@ List.belongsTo(User, { foreignKey: 'FK_USUARIO_id' });
 List.belongsTo(Task, { foreignKey: 'FK_TAREFA_id' });
 
 
-(async () => {
-    await List.sync({ alter: true });
-    console.log('Tabela de listas criada ou já existe.');
-})();
 export default List;

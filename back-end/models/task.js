@@ -49,8 +49,4 @@ const Task = sequelize.define('tarefa', {
 
 Task.belongsTo(User, { foreignKey: 'FK_USUARIO_id' });
 
-(async () => {
-    await Task.sync({ alter: true });
-    console.log('Tabela de tarefas criada ou já existe.');
-})();
 export default Task;

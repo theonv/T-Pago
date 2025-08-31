@@ -1,5 +1,7 @@
+
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
+import bcrypt from 'bcrypt';
 
 const User = sequelize.define('usuario', {
     id: {
@@ -31,12 +33,21 @@ const User = sequelize.define('usuario', {
         type: DataTypes.STRING(100),
         allowNull: false
     }
+
 }, {
-    timestamps: false
+    timestamps: false,
+    hooks: {
+        beforeCreate: async (user) => {
+            if (user.senha) {
+                user.senha = await bcrypt.hash(user.senha, 10);
+            }
+        },
+        beforeUpdate: async (user) => {
+            if (user.changed('senha')) {
+                user.senha = await bcrypt.hash(user.senha, 10);
+            }
+        }
+    }
 });
 
-(async () => {
-    await User.sync({ alter: true });
-    console.log('Tabela de usuários criada ou já existe.');
-})();
 export default User;
