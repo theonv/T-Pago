@@ -1,10 +1,14 @@
-
 import User from '../models/usuario.js';
 import Task from '../models/task.js';
 import List from '../models/lists.js';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import * as jose from 'jose';
+
+const frase = process.env.JWT_SECRET;
+
+const secret = new TextEncoder().encode(frase);
 
 dotenv.config();
 
@@ -19,10 +23,18 @@ export const login = async (req, res) => {
     }
     console.log(user.senha);
     const senhaValida = await bcrypt.compare(senha, user.senha);
+    console.log("Senha válida:", senhaValida);
     if (!senhaValida) {
       console.error('Erro ao realizar login senha:');
       return res.status(500).json({ message: 'senha errada papai' });
     }
+    const jwt = await new jose.EncryptJWT({ id: user.id, email: user.email })
+      .setProtectedHeader({ alg: 'dir', enc: 'A128CBC-HS256' })
+      .setIssuedAt()
+      .setExpirationTime('2h')
+      .encrypt(secret);
+
+    console.log(jwt)
     res.status(200).json({
       id: user.id,
       email: user.email,
@@ -41,6 +53,7 @@ export const cru = async (req, res) => {
       senha: req.body.senha,
     };
     const user = await User.create(userData);
+    console.log("Usuário criado:", user);
     res.send(user);
   } catch (error) {
     res.status(500).json({ message: 'Erro ao criar usuário', error: error.message });
@@ -49,7 +62,7 @@ export const cru = async (req, res) => {
 
 export const updateemail = async (req, res) => {
   try {
-    const { email, id} = req.body;
+    const { email, id } = req.body;
     console.log("Novo email:", email)
     const updatedUser = await User.update(
       { email: email },
@@ -68,12 +81,12 @@ export const updateemail = async (req, res) => {
 
 
 // tarefas
-export const createtask = async (req,res) => {
+export const createtask = async (req, res) => {
   try {
     console.log("req.body:", req.body);
     const taskData = {
       descricao: req.body.descricao,
-      FK_USUARIO_id: req.body.FK_USUARIO_id 
+      FK_USUARIO_id: req.body.FK_USUARIO_id
     };
     const task = await Task.create(taskData);
     console.log("Tarefa eu sou foda criada:", task);
@@ -81,9 +94,9 @@ export const createtask = async (req,res) => {
   } catch (error) {
     console.log("Erro foda ao criar tarefa:", error);
     res.status(500).json({ message: 'Erro ao criar tarefa', error: error.message });
-    
+
   }
-} 
+}
 export const gettasks = async (req, res) => {
   try {
     const { FK_USUARIO_id } = req.body;
@@ -105,7 +118,7 @@ export const deleteTask = async (req, res) => {
     console.log("Nome da tarefa a ser deletada:", req.body.descricao); // Corrigido para usar descricao
     console.log("Id da tarefa a ser deletada:", id);
     const deletedTask = await Task.destroy({ where: { id: id } });
-    
+
     if (deletedTask) {
       res.status(200).json({ message: 'Tarefa deletada com sucesso' });
     } else {
@@ -137,7 +150,7 @@ export const updatetask = async (req, res) => {
 
 
 // listas
-export const createlist = async (req,res) => {
+export const createlist = async (req, res) => {
   try {
     console.log("req.body:", req.body);
     const listData = {
@@ -205,24 +218,24 @@ export const updatelist = async (req, res) => {
 export const additem = async (req, res) => {
   try {
     const { nomeItem, listaRecebe } = req.body;
-    
+
     if (!nomeItem || !listaRecebe) {
       return res.status(400).json({ error: 'Nome do item e ID da lista são obrigatórios' });
     }
-    
+
     const lista = await List.findByPk(listaRecebe);
     if (!lista) {
       return res.status(404).json({ error: 'Lista não encontrada' });
     }
-    
+
     const novosItens = lista.itens ? `${lista.itens},${nomeItem.trim()}` : nomeItem.trim();
-    
+
     await List.update(
       { itens: novosItens },
       { where: { id: listaRecebe } }
     );
-    
-    res.status(201).json({ 
+
+    res.status(201).json({
       id: Date.now(), // ID temporário
       itens: nomeItem.trim()
     });
@@ -260,19 +273,19 @@ export const toggleitem = async (req, res) => {
   try {
     const { id } = req.params;
     const { concluido } = req.body;
-    
+
     if (!id || concluido === undefined) {
       return res.status(400).json({ error: 'ID do item e estado são obrigatórios' });
     }
-    
+
     const item = await ItemLista.findByPk(id);
-    
+
     if (!item) {
       return res.status(404).json({ error: 'Item não encontrado' });
     }
-    
+
     await item.update({ concluido });
-    
+
     res.status(200).json({ message: 'Item atualizado com sucesso' });
   } catch (error) {
     console.error('Erro ao alternar estado do item:', error);
@@ -287,7 +300,7 @@ export const sendEmail = async (req, res) => {
     if (!to) {
       return res.status(400).json({ message: 'E-mail do destinatário é obrigatório.' });
     }
-  
+
     const transport = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
