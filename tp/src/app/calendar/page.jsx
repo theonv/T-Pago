@@ -7,7 +7,7 @@ import Footer from '@/components/footer/footer.jsx';
 
 const FullCalendarComponent = () => {
   return (
-    <main className="w-screen h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 via-indigo-800 to-blue-900 p-8">
+    <main className="w-screen h-screen flex items-center justify-center bg-blue-600 p-8">
       <div className="w-[85vw] h-[85vh] rounded-3xl shadow-2xl bg-white overflow-hidden flex flex-col min-h-0">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}

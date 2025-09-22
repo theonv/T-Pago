@@ -16,7 +16,7 @@ export default function Header() {
     };
 
     return (
-        <header className="w-full px-6 py-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 shadow-xl rounded-b-2xl backdrop-blur-md transition-all duration-500">
+        <header className="w-full px-6 py-2 bg-blue-600 shadow-xl rounded-b-2xl backdrop-blur-md transition-all duration-500">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 {/* Perfil à esquerda */}
                 <div className="flex items-center gap-3 animate-slide-in">

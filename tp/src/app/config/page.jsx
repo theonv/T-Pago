@@ -1,35 +1,32 @@
-import Link from 'next/link'
-import Footer from '../../components/footer/footer.jsx'
-import Header from '@/components/header/page'
-import { IconEdit } from '@/components/actionbuttons/actionbuttons.jsx'
-
+import Link from 'next/link';
+import Footer from '../../components/footer/footer.jsx';
+import Header from '@/components/header/page';
+import { IconEdit } from '@/components/actionbuttons/actionbuttons.jsx';
 
 export default function Config() {
     return (
         <>
             <Header />
 
-            <h1 className="text-2xl font-bold text-[var(--foreground)] h-[10vh] flex justify-center items-center">
-                CONFIGURAÇÕES
-            </h1>
+            {/* Título centralizado */}
+            <div className="h-[10vh] flex justify-center items-center px-4">
+                <h1 className="text-2xl font-bold text-[var(--foreground)] text-center w-full max-w-5xl">
+                    CONFIGURAÇÕES
+                </h1>
+            </div>
 
-            <main className="h-[40vh] flex justify-center items-center">
-                <div className="grid grid-cols-1">
+            {/* Botões de navegação */}
+            <main className="flex justify-center items-center px-4 py-4">
+                <div className="w-full max-w-5xl flex flex-col items-center gap-3">
                     <Link href="/config/editprofile">
-                        <div className="w-[400px] h-[50px] bg-[#5768FF] rounded-[15px] flex justify-between items-center px-5 mb-3 cursor-pointer transition duration-300 hover:bg-[#4456ee] hover:-translate-y-0.5 active:translate-y-[1px] shadow-md">
-                            <p className="text-white font-bold text-[1.1em] ml-[10px] mr-[160px]">
-                                EDITAR PERFIL
-                            </p>
+                        <div className="w-full max-w-[300px] bg-[#5768FF] rounded-[15px] flex justify-between items-center px-5 py-3 mb-3 cursor-pointer transition duration-300 hover:bg-[#4456ee] hover:-translate-y-0.5 active:translate-y-[1px] shadow-md">
+                            <span className="text-white font-bold text-[1.1em]">EDITAR PERFIL</span>
                             <IconEdit />
-                            
                         </div>
                     </Link>
-
                     <Link href="/config/notifications">
-                        <div className="w-[400px] h-[50px] bg-[#5768FF] rounded-[15px] flex justify-between items-center px-5 mb-3 cursor-pointer transition duration-300 hover:bg-[#4456ee] hover:-translate-y-0.5 active:translate-y-[1px] shadow-md">
-                            <p className="text-white font-bold text-[1.1em] ml-[10px]">
-                                NOTIFICAÇÕES
-                            </p>
+                        <div className="w-full max-w-[300px] bg-[#5768FF] rounded-[15px] flex justify-between items-center px-5 py-3 mb-3 cursor-pointer transition duration-300 hover:bg-[#4456ee] hover:-translate-y-0.5 active:translate-y-[1px] shadow-md">
+                            <span className="text-white font-bold text-[1.1em]">NOTIFICAÇÕES</span>
                             <svg
                                 style={{ stroke: 'white' }}
                                 xmlns="http://www.w3.org/2000/svg"
@@ -52,5 +49,5 @@ export default function Config() {
 
             <Footer />
         </>
-    )
+    );
 }

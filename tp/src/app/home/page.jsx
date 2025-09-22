@@ -205,7 +205,7 @@ export default function Home() {
         </div>
         {/* Texto explicativo da barra de progresso */}
         <p className="text-center text-gray-700 mb-6 text-sm">
-          Esta barra representa sua progressão diária e é reiniciada a cada dia.
+          Esta barra representa sua progressão.
         </p>
 
         {/* Lista de tarefas com fundo azul escuro suave */}
