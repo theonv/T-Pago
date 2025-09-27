@@ -17,24 +17,28 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
-  // Login: salva no estado e localStorage
+  // Login: salva no estado, localStorage e cookie
   const login = async (jwt) => {
     console.log('Token recebido:', jwt);
     try {
       const { payload } = await jose.jwtVerify(jwt, secret);
 
-      setUser(payload);
-      console.log('Payload decodificado:', payload);
-      localStorage.setItem('user', JSON.stringify(payload));
+      // Salva os dados do usuário
+      setUser(payload,jwt);
+      localStorage.setItem('user', JSON.stringify(payload),'token',jwt);
+      
+      console.log('Login realizado com sucesso');
     } catch (error) {
-      console.error('complexo', error);
+      console.error('Erro ao verificar token:', error);
+      throw new Error('Token inválido ou expirado');
     }
   };
 
-  // Logout: limpa estado e localStorage
+    // Logout: limpa estado e localStorage
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('auth_token');
   };
 
   return (
