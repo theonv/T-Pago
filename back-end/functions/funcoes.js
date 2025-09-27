@@ -6,11 +6,9 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import * as jose from 'jose';
 
-const frase = process.env.JWT_SECRET;
-
-const secret = new TextEncoder().encode(frase);
-
 dotenv.config();
+
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export const login = async (req, res) => {
   try {
@@ -28,16 +26,16 @@ export const login = async (req, res) => {
       console.error('Erro ao realizar login senha:');
       return res.status(500).json({ message: 'senha errada papai' });
     }
-    const jwt = await new jose.EncryptJWT({ id: user.id, email: user.email })
-      .setProtectedHeader({ alg: 'dir', enc: 'A128CBC-HS256' })
+    console.log(secret);
+    const jwt = await new jose.SignJWT({ id: user.id, email: user.email })
+      .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
       .setExpirationTime('2h')
-      .encrypt(secret);
+      .sign(secret);
 
     console.log(jwt)
     res.status(200).json({
-      id: user.id,
-      email: user.email,
+      jwt
     });
   } catch (error) {
     console.error('Erro ao realizar login F:', error);

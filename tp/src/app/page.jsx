@@ -16,8 +16,8 @@ export default function Login() {
     const email = event.target.email.value;
     const senha = event.target.senha.value;
     try {
-      const user = await verify({ email, senha });
-      login(user);
+      const jwt = await verify({ email, senha });
+      login(jwt);
       window.location.href = './home';
     } catch (e) {
       alert('Erro ao fazer login');

@@ -1,5 +1,8 @@
 'use client';
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import *  as jose from 'jose';
+
+const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET || 'sua_chave_secreta_padrao');
 
 const UserContext = createContext(undefined);
 
@@ -15,9 +18,17 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   // Login: salva no estado e localStorage
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+  const login = async (jwt) => {
+    console.log('Token recebido:', jwt);
+    try {
+      const { payload } = await jose.jwtVerify(jwt, secret);
+
+      setUser(payload);
+      console.log('Payload decodificado:', payload);
+      localStorage.setItem('user', JSON.stringify(payload));
+    } catch (error) {
+      console.error('complexo', error);
+    }
   };
 
   // Logout: limpa estado e localStorage

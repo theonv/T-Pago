@@ -12,9 +12,9 @@ export async function verify({ email, senha }) {
         });
 
         const data = await response.json();
+        console.log(data.jwt);
         if (response.ok) {
-            console.log('Usuário logado:', data);
-            return data; // Retorna o usuário para ser salvo no contexto pelo componente React
+            return data.jwt; // Retorna o token JWT
         } else {
             throw new Error('Erro ao fazer login');
         }
