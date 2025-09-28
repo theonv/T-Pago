@@ -1,48 +1,87 @@
 'use client';
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import *  as jose from 'jose';
+import * as jose from 'jose';
 
-const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET || 'sua_chave_secreta_padrao');
+const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET || 'porfavorfunciona');
 
 const UserContext = createContext(undefined);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Recarrega o usuário do localStorage ao iniciar
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    if (typeof window !== 'undefined') {
+      try {
+        const storedUser = localStorage.getItem('user');
+        const storedToken = localStorage.getItem('auth_token');
+        
+        if (storedUser && storedToken) {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+        }
+      } catch (error) {
+        console.error('Erro ao recuperar dados do usuário:', error);
+        // Limpa dados corrompidos
+        localStorage.removeItem('user');
+        localStorage.removeItem('auth_token');
+      } finally {
+        setIsLoading(false);
+      }
     }
   }, []);
 
-  // Login: salva no estado, localStorage e cookie
+  // Login: salva no estado, localStorage e configura token
   const login = async (jwt) => {
     console.log('Token recebido:', jwt);
     try {
       const { payload } = await jose.jwtVerify(jwt, secret);
 
-      // Salva os dados do usuário
-      setUser(payload,jwt);
-      localStorage.setItem('user', JSON.stringify(payload),'token',jwt);
+      // Salva os dados do usuário e token
+      setUser(payload);
+      localStorage.setItem('user', JSON.stringify(payload));
+      localStorage.setItem('auth_token', jwt);
       
-      console.log('Login realizado com sucesso');
+      console.log('Login realizado com sucesso', payload);
     } catch (error) {
       console.error('Erro ao verificar token:', error);
       throw new Error('Token inválido ou expirado');
     }
   };
 
-    // Logout: limpa estado e localStorage
+  // Logout: limpa estado e localStorage
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('user');
-    localStorage.removeItem('auth_token');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('user');
+      localStorage.removeItem('auth_token');
+      
+      // Restaura fetch original se foi modificado
+      if (window.fetch.toString().includes('Authorization')) {
+        window.location.reload();
+      }
+    }
+  };
+
+  // Função para atualizar dados do usuário
+  const updateUser = (newUserData) => {
+    const updatedUser = { ...user, ...newUserData };
+    setUser(updatedUser);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+    }
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+    <UserContext.Provider value={{ 
+      user, 
+      login, 
+      logout, 
+      updateUser,
+      isAuthenticated: !!user,
+      isLoading 
+    }}>
       {children}
     </UserContext.Provider>
   );

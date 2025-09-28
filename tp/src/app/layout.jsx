@@ -3,7 +3,6 @@ import "./globals.css";
 import { UserProvider } from "@/context/usercontext";
 import { AuthProvider } from "./AuthProvider";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -21,7 +20,6 @@ export const metadata = {
     icon: '/img/Logo.png'
   }
 };
-
 
 export default function RootLayout({ children }) {
   return (
