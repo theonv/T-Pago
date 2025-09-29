@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/header/page';
@@ -12,7 +13,23 @@ import { TaskDetailsModal } from '@/components/taskdetailsmodal.jsx/taskdetailsm
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Home() {
-  const { user } = useUser();
+  const { user, isAuthenticated, isLoading } = useUser();
+  const router = useRouter();
+
+  // Se não autenticado, redireciona para página de login
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.replace('/');
+    }
+  }, [isLoading, isAuthenticated, router]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">Carregando...</div>
+    );
+  }
+
+  if (!isAuthenticated) return null;
 
   const [tasks, setTasks] = useState([]);
   const [progress, setProgress] = useState(0);
@@ -29,9 +46,10 @@ export default function Home() {
   useEffect(() => {
     if (!user) return;
 
+    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
     fetch(`${API_URL}/api/auth/gettasks`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify({ FK_USUARIO_id: user.id }),
     })
       .then((response) => {
@@ -69,9 +87,10 @@ export default function Home() {
   // Criar tarefa
   const handleCreateTask = () => {
     if (inputValue.trim()) {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
       fetch(`${API_URL}/api/auth/createtask`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
         body: JSON.stringify({
           descricao: inputValue.trim(),
           FK_USUARIO_id: user.id,
@@ -96,9 +115,10 @@ export default function Home() {
 
   // Deletar tarefa
   const handleDeleteTask = (taskId) => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
     fetch(`${API_URL}/api/auth/deletetask/${taskId}`, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify({ id: taskId }),
     })
       .then((response) => {
@@ -116,9 +136,10 @@ export default function Home() {
     const task = tasks.find((t) => t.id === taskId);
     if (!task) return;
 
+    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
     fetch(`${API_URL}/api/auth/toggletask/${taskId}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify({ id: taskId, concluida: !task.concluida }),
     })
       .then((response) => {
@@ -149,9 +170,10 @@ export default function Home() {
       return;
     }
 
+    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
     fetch(`${API_URL}/api/auth/updatetask`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify({ descricao: editingValue.trim(), id: taskId }),
     })
       .then((response) => {

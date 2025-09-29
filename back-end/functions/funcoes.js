@@ -4,11 +4,9 @@ import List from '../models/lists.js';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-import * as jose from 'jose';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
-
-const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export const login = async (req, res) => {
   try {
@@ -26,16 +24,19 @@ export const login = async (req, res) => {
       console.error('Erro ao realizar login senha:');
       return res.status(500).json({ message: 'senha errada papai' });
     }
-    console.log(secret);
-    const jwt = await new jose.SignJWT({ id: user.id, email: user.email })
-      .setProtectedHeader({ alg: 'HS256' })
-      .setIssuedAt()
-      .setExpirationTime('2h')
-      .sign(secret);
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '2h' }
+    );
 
-    console.log(jwt)
+    console.log(token);
     res.status(200).json({
-      jwt
+      token,
+      user: {
+        id: user.id,
+        email: user.email
+      }
     });
   } catch (error) {
     console.error('Erro ao realizar login F:', error);
@@ -55,6 +56,35 @@ export const cru = async (req, res) => {
     res.send(user);
   } catch (error) {
     res.status(500).json({ message: 'Erro ao criar usuário', error: error.message });
+  }
+};
+
+export const refreshToken = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: 'Token não fornecido' });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findByPk(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+
+    const newToken = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '2h' }
+    );
+
+    res.json({ token: newToken });
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).json({ message: 'Token expirado' });
+    }
+    return res.status(401).json({ message: 'Token inválido' });
   }
 };
 
@@ -291,51 +321,87 @@ export const toggleitem = async (req, res) => {
   }
 };
 
+export const resetPassword = async (req, res) => {
+  try {
+    const { resetToken, newPassword } = req.body;
+    
+    if (!resetToken || !newPassword) {
+      return res.status(400).json({ message: 'Token de reset e nova senha são obrigatórios' });
+    }
+    
+    try {
+      const decoded = jwt.verify(resetToken, process.env.JWT_SECRET);
+      const user = await User.findOne({ where: { email: decoded.email } });
+      
+      if (!user) {
+        return res.status(404).json({ message: 'Usuário não encontrado' });
+      }
+      
+      // Atualiza a senha do usuário
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await User.update({ senha: hashedPassword }, { where: { id: user.id } });
+      
+      res.json({ message: 'Senha atualizada com sucesso' });
+    } catch (error) {
+      return res.status(401).json({ message: 'Token de reset inválido ou expirado' });
+    }
+  } catch (error) {
+    console.error('Erro ao resetar senha:', error);
+    res.status(500).json({ message: 'Erro ao resetar senha', error: error.message });
+  }
+};
+
 export const sendEmail = async (req, res) => {
   try {
-    const { to } = req.body;
+    const { email } = req.body;
 
-    if (!to) {
-      return res.status(400).json({ message: 'E-mail do destinatário é obrigatório.' });
+    // Verifica se o usuário existe
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
     }
 
-    const transport = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+    // Gera um token de reset válido por 1 hora
+    const resetToken = jwt.sign(
+      { email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+    // Configura o transportador de email
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
       auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS,
-      },
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
     });
 
-    const info = await transport.sendMail({
-      from: 'tapago024@gmail.com',
-      to: to,
-      subject: 'Redefinição de senha',
+    // URL de reset (ajuste conforme seu frontend)
+    const resetUrl = `${process.env.FRONTEND_URL}/forgotpwd/reset?token=${resetToken}`;
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Recuperação de Senha - Tá Pago',
       html: `
-        <p>Olá,</p>
-        <p>Recebemos uma solicitação para redefinir a senha associada a este endereço de e-mail.</p>
-        <p>Para prosseguir com a alteração da sua senha, clique no link abaixo:</p>
-        <p>
-          <a href="https://fantastic-rotary-phone-wrgp749g7wxw3967-3000.app.github.dev/forgotpwd/dispemail"
-            target="_blank"
-            rel="noopener noreferrer">
-            Redefinir Senha
-          </a>
-        </p>
-        <p>Se você não solicitou essa alteração, por favor, desconsidere este e-mail.</p>
-        <p>Atenciosamente,<br/><strong>Equipe Tá Pago</strong></p>
-      `,
-      text: 'Olá, clique no link para redefinir sua senha.',
+        <h1>Recuperação de Senha</h1>
+        <p>Você solicitou a recuperação de senha da sua conta no Tá Pago.</p>
+        <p>Clique no link abaixo para redefinir sua senha:</p>
+        <a href="${resetUrl}">Redefinir Senha</a>
+        <p>Este link é válido por 1 hora.</p>
+        <p>Se você não solicitou a recuperação de senha, ignore este email.</p>
+      `
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ 
+      message: 'Email de recuperação enviado com sucesso!',
+      resetToken // Enviando o token para desenvolvimento/testes
     });
-
-    console.log('E-mail enviado:', info.response);
-    return res.status(200).json({ message: 'E-mail enviado com sucesso', info: info.response });
-
   } catch (error) {
-    console.error('Erro ao enviar e-mail:', error);
-    return res.status(500).json({ message: 'Erro ao enviar e-mail', error: error.message });
+    console.error('Erro ao enviar email:', error);
+    res.status(500).json({ message: 'Erro ao enviar email', error: error.message });
   }
 };
 
