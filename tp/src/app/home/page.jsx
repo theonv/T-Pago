@@ -13,22 +13,8 @@ import { TaskDetailsModal } from '@/components/taskdetailsmodal.jsx/taskdetailsm
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Home() {
-  const { user, isAuthenticated, isLoading } = useUser();
-  const router = useRouter();
+  const { user} = useUser();
 
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      router.replace('/');
-    }
-  }, [isLoading, isAuthenticated, router]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">Carregando...</div>
-    );
-  }
-
-  if (!isAuthenticated) return null;
 
   const [tasks, setTasks] = useState([]);
   const [progress, setProgress] = useState(0);

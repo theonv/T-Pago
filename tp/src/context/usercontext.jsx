@@ -1,70 +1,75 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import {jwtDecode} from 'jwt-decode';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
-const UserContext = createContext(undefined);
+const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); 
+    const router = useRouter();
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const token = localStorage.getItem('auth_token');
-        if (token) {
-          try {
-            const decoded = jwtDecode(token);
-            setUser({ id: decoded.id, email: decoded.email });
-          } catch (e) {
-            console.log('Token inválido:', e);
-          }
+    useEffect(() => {
+        try {
+            const token = Cookies.get('auth_token');
+            if (token) {
+                const decodedUser = jwtDecode(token);
+                setUser({ id: decodedUser.id, email: decodedUser.email });
+            }
+        } catch (error) {
+            console.error('Falha ao decodificar o token do cookie:', error);
+            setUser(null);
+            Cookies.remove('auth_token');
+        } finally {
+            setIsLoading(false);
         }
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  }, []);
+    }, []);
 
-  const login = (token) => {
-    if (typeof window === 'undefined') return;
-    try {
-      alert("teste");
-      const decoded = jwtDecode(token);
-      const userData = { id: decoded.id, email: decoded.email };
-      localStorage.setItem('auth_token', token);
-      localStorage.setItem('user', JSON.stringify(userData));
-      setUser(userData);
-    } catch (e) {
-      throw new Error('Token inválido');
-    }
-  };
+    const login = (token, userData) => {
+        try {
+            Cookies.set('auth_token', token, {
+                expires: 1 / 12, 
+            });
+            setUser(userData);
+        } catch (error) {
+            console.error("Erro ao processar o login:", error);
+            throw new Error('Falha ao processar o login');
+        }
+    };
 
-  const logout = () => {
-    setUser(null);
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('user');
-      window.location.href = '/';
-    }
-  };
+    const logout = () => {
+        setUser(null);
+        Cookies.remove('auth_token');
+        router.push('/');
+    };
 
-  const updateUser = (newUserData) => {
-    const updated = { ...(user || {}), ...newUserData };
-    setUser(updated);
-    if (typeof window !== 'undefined') localStorage.setItem('user', JSON.stringify(updated));
-  };
+    const updateUser = (newUserData) => {
+        setUser((currentUser) => ({ ...currentUser, ...newUserData }));
+    };
 
-  return (
-    <UserContext.Provider value={{ user, login, logout, updateUser, isAuthenticated: !!user, isLoading }}>
-      {children}
-    </UserContext.Provider>
-  );
+    const value = {
+        user,
+        login,
+        logout,
+        updateUser,
+        isAuthenticated: !!user,
+        isLoading,
+    };
+
+    return (
+        <UserContext.Provider value={value}>
+            {children}
+        </UserContext.Provider>
+    );
 };
 
 export const useUser = () => {
-  const ctx = useContext(UserContext);
-  if (!ctx) throw new Error('useUser deve ser usado dentro do UserProvider');
-  return ctx;
+    const context = useContext(UserContext);
+    if (context === undefined) {
+        throw new Error('useUser deve ser usado dentro de um UserProvider');
+    }
+    return context;
 };

@@ -20,13 +20,10 @@ export default function Login() {
     const senha = event.target.senha.value;
     
     try {
-      console.log(' Tentando fazer login...');
       const jwt = await verify({ email, senha });
       
       console.log(' Token recebido, fazendo login...');
       await login(jwt);
-      
-      console.log(' Redirecionando para /home...');
       window.location.href = '/home';
     } catch (error) {
       console.error(' Erro no login:', error);

@@ -11,7 +11,6 @@ dotenv.config();
 export const login = async (req, res) => {
   try {
     const { email, senha } = req.body;
-    // Verificar se o usuário existe
     const user = await User.findOne({ where: { email } });
     if (!user) {
       console.error('Erro ao realizar login email:');
