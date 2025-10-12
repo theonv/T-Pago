@@ -16,7 +16,6 @@ export default function Home() {
   const { user, isAuthenticated, isLoading } = useUser();
   const router = useRouter();
 
-  // Se não autenticado, redireciona para página de login
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       router.replace('/');
@@ -35,14 +34,12 @@ export default function Home() {
   const [progress, setProgress] = useState(0);
   const [selectedTask, setSelectedTask] = useState(null);
 
-  // Para edição inline: track de qual tarefa está sendo editada e seu valor temporário
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [editingValue, setEditingValue] = useState('');
   const inputEditRef = useRef(null);
 
   const [inputValue, setInputValue] = useState('');
 
-  // Carregar tarefas
   useEffect(() => {
     if (!user) return;
 

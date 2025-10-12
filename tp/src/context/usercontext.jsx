@@ -18,8 +18,7 @@ export const UserProvider = ({ children }) => {
             const decoded = jwtDecode(token);
             setUser({ id: decoded.id, email: decoded.email });
           } catch (e) {
-            console.error('Token inválido no localStorage', e);
-            localStorage.removeItem('auth_token');
+            console.log('Token inválido:', e);
           }
         }
       } finally {
@@ -31,11 +30,12 @@ export const UserProvider = ({ children }) => {
   const login = (token) => {
     if (typeof window === 'undefined') return;
     try {
+      alert("teste");
       const decoded = jwtDecode(token);
       const userData = { id: decoded.id, email: decoded.email };
-      setUser(userData);
       localStorage.setItem('auth_token', token);
       localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
     } catch (e) {
       throw new Error('Token inválido');
     }
