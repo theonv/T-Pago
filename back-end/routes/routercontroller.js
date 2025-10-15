@@ -10,6 +10,15 @@ import {
   resetPassword
 } from '../functions/funcoes.js'
 
+/**
+ * ============================================================================
+ * MIDDLEWARE DE AUTENTICAÇÃO JWT
+ * ============================================================================
+ * Todas as rotas abaixo do router.use(authMiddleware) são protegidas e 
+ * requerem um token JWT válido no header Authorization: Bearer <token>
+ * ============================================================================
+ */
+
 // Middleware para verificar token em rotas de recuperação de senha
 const passwordResetMiddleware = (req, res, next) => {
   // Para a rota de envio de email, permite passar sem verificação
@@ -32,16 +41,23 @@ const passwordResetMiddleware = (req, res, next) => {
   }
 };
 
-// Rotas públicas (não precisam de autenticação)
-router.post('/login', login)           // Login
-router.post('/cru', cru)               // Cadastro de usuário
+// ============================================================================
+// ROTAS PÚBLICAS (não precisam de autenticação)
+// ============================================================================
+router.post('/login', login)           // Login de usuário
+router.post('/cru', cru)               // Cadastro de novo usuário
 
-// Rotas de recuperação de senha (parcialmente protegidas)
-router.post('/sendEmail', sendEmail)  // Envio de email para reset
-router.post('/resetPassword', passwordResetMiddleware, resetPassword)  // Reset de senha
+// ============================================================================
+// ROTAS DE RECUPERAÇÃO DE SENHA (parcialmente protegidas)
+// ============================================================================
+router.post('/sendEmail', sendEmail)  // Envio de email para reset de senha
+router.post('/resetPassword', passwordResetMiddleware, resetPassword)  // Reset de senha com token
 
-// Rotas protegidas (precisam de autenticação)
-router.use(authMiddleware)  // Aplica proteção em todas as rotas abaixo
+// ============================================================================
+// TODAS AS ROTAS ABAIXO ESTÃO PROTEGIDAS POR JWT
+// Requerem header: Authorization: Bearer <token>
+// ============================================================================
+router.use(authMiddleware)  // Aplica proteção JWT em todas as rotas abaixo
 
 // Rota de refresh token
 router.post('/refresh-token', refreshToken)
