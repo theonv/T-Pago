@@ -29,17 +29,21 @@ export default function Home() {
   useEffect(() => {
     if (!user) return;
 
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    console.log('🔑 [Home] Token recuperado:', token ? 'Existe' : 'Não encontrado');
+    
     fetch(`${API_URL}/api/auth/gettasks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify({ FK_USUARIO_id: user.id }),
     })
       .then((response) => {
+        console.log('📥 [Home] Status da resposta:', response.status);
         if (!response.ok) throw new Error('Erro ao buscar tarefas');
         return response.json();
       })
       .then((data) => {
+        console.log('✅ [Home] Tarefas recebidas:', data);
         if (Array.isArray(data)) {
           setTasks(
             data.map((task) => ({
@@ -70,7 +74,7 @@ export default function Home() {
   // Criar tarefa
   const handleCreateTask = () => {
     if (inputValue.trim()) {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
       fetch(`${API_URL}/api/auth/createtask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
@@ -98,7 +102,7 @@ export default function Home() {
 
   // Deletar tarefa
   const handleDeleteTask = (taskId) => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     fetch(`${API_URL}/api/auth/deletetask/${taskId}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
@@ -119,7 +123,7 @@ export default function Home() {
     const task = tasks.find((t) => t.id === taskId);
     if (!task) return;
 
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     fetch(`${API_URL}/api/auth/toggletask/${taskId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
@@ -153,7 +157,7 @@ export default function Home() {
       return;
     }
 
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     fetch(`${API_URL}/api/auth/updatetask`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },

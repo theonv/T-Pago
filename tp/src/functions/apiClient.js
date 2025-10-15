@@ -1,4 +1,13 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/auth';
+// ============================================
+// API CLIENT - VERSÃO COM DEBUG
+// ============================================
+console.log('🚀 [ApiClient] Carregado!');
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL 
+  ? `${process.env.NEXT_PUBLIC_API_URL}/api/auth`
+  : 'http://localhost:3001/api/auth';
+
+console.log('🌐 [ApiClient] URL Base configurada:', API_BASE_URL);
 
 class ApiClient {
   constructor() {
@@ -28,6 +37,14 @@ class ApiClient {
 
   async request(endpoint, options = {}) {
     const token = this.getToken();
+    console.log('🔍 [ApiClient Debug]');
+    console.log('  URL Base:', API_BASE_URL);
+    console.log('  Endpoint:', endpoint);
+    console.log('  URL Completa:', `${API_BASE_URL}${endpoint}`);
+    console.log('  Token existe?', !!token);
+    if (token) {
+      console.log('  Token (primeiros 20 chars):', token.substring(0, 20) + '...');
+    }
     
     const headers = {
       'Content-Type': 'application/json',
@@ -36,17 +53,24 @@ class ApiClient {
 
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
+      console.log('  Header Authorization:', 'Bearer ' + token.substring(0, 20) + '...');
+    } else {
+      console.warn('  ⚠️ ATENÇÃO: Nenhum token encontrado!');
     }
 
     try {
+      console.log('  Enviando requisição...');
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         ...options,
         headers,
       });
 
+      console.log('  Status da resposta:', response.status);
       const data = await response.json();
+      console.log('  Dados recebidos:', data);
 
       if (response.status === 401 && data.error === 'Token expirado') {
+        console.log('  ❌ Token expirado - limpando e redirecionando');
         this.clearToken();
         if (typeof window !== 'undefined') {
           window.location.href = '/';
@@ -55,24 +79,33 @@ class ApiClient {
       }
 
       if (!response.ok) {
+        console.error('  ❌ Erro na resposta:', data);
         throw new Error(data.message || data.error || 'Erro na requisição');
       }
 
+      console.log('  ✅ Requisição bem-sucedida');
       return data;
     } catch (error) {
-      console.error('Erro na requisição:', error);
+      console.error('  ❌ Erro na requisição:', error);
       throw error;
     }
   }
 
   async login(email, senha) {
+    console.log('🔐 [Login] Iniciando login...');
     const data = await this.request('/login', {
       method: 'POST',
       body: JSON.stringify({ email, senha }),
     });
 
+    console.log('🔐 [Login] Resposta recebida:', data);
     if (data.token) {
+      console.log('🔐 [Login] Token recebido, salvando...');
       this.setToken(data.token);
+      console.log('🔐 [Login] Token salvo com sucesso!');
+      console.log('🔐 [Login] Verificando localStorage:', localStorage.getItem('token') ? 'OK' : 'FALHOU');
+    } else {
+      console.warn('🔐 [Login] ⚠️ Nenhum token na resposta!');
     }
 
     return data;
@@ -205,7 +238,11 @@ class ApiClient {
 }
 
 // Exporta uma instância única do cliente
+console.log('📦 [ApiClient] Criando instância...');
 const apiClient = new ApiClient();
+console.log('✅ [ApiClient] Instância criada com sucesso!');
+console.log('🔍 [ApiClient] Testando getToken():', apiClient.getToken() ? 'Token encontrado' : 'Sem token');
+
 export default apiClient;
 
 // ============================================================================
