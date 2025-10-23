@@ -143,20 +143,23 @@ export const idParamSchema = z.object({
 export const validateBody = (schema) => {
     return (req, res, next) => {
         try {
+            console.log('Validando body:', req.body);
             const validatedData = schema.parse(req.body);
             req.body = validatedData;
             next();
         } catch (error) {
             if (error instanceof z.ZodError) {
+                console.log('Erro de validação Zod:', error.errors);
                 return res.status(400).json({
                     error: 'Dados inválidos',
                     message: 'Os dados fornecidos não são válidos',
-                    details: error.errors.map(err => ({
+                    details: error.errors?.map(err => ({
                         campo: err.path.join('.'),
                         mensagem: err.message
-                    }))
+                    })) || []
                 });
             }
+            console.error('Erro na validação do body:', error);
             return res.status(500).json({
                 error: 'Erro na validação',
                 message: 'Erro ao processar os dados'
@@ -176,12 +179,13 @@ export const validateParams = (schema) => {
                 return res.status(400).json({
                     error: 'Parâmetros inválidos',
                     message: 'Os parâmetros fornecidos não são válidos',
-                    details: error.errors.map(err => ({
+                    details: error.errors?.map(err => ({
                         campo: err.path.join('.'),
                         mensagem: err.message
-                    }))
+                    })) || []
                 });
             }
+            console.error('Erro na validação dos parâmetros:', error);
             return res.status(500).json({
                 error: 'Erro na validação',
                 message: 'Erro ao processar os parâmetros'
@@ -201,12 +205,13 @@ export const validateQuery = (schema) => {
                 return res.status(400).json({
                     error: 'Query inválida',
                     message: 'Os parâmetros de query fornecidos não são válidos',
-                    details: error.errors.map(err => ({
+                    details: error.errors?.map(err => ({
                         campo: err.path.join('.'),
                         mensagem: err.message
-                    }))
+                    })) || []
                 });
             }
+            console.error('Erro na validação da query:', error);
             return res.status(500).json({
                 error: 'Erro na validação',
                 message: 'Erro ao processar a query'
