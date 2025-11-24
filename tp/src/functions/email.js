@@ -49,13 +49,12 @@ export async function e_mail(event) {
 
   try {
     console.log('Enviando email de redefinição para:', email);
-    
     const response = await fetch(`${API_URL}/api/auth/sendEmail`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ to: email }),
+      body: JSON.stringify({ email: email }),
     });
 
     const data = await response.json();

@@ -352,6 +352,7 @@ export const resetPassword = async (req, res) => {
 
 export const sendEmail = async (req, res) => {
   try {
+    console.log("Requisição para envio de email recebida:", req.body);
     const { email } = req.body;
 
     // Verifica se o usuário existe
@@ -360,7 +361,7 @@ export const sendEmail = async (req, res) => {
       return res.status(404).json({ message: 'Usuário não encontrado' });
     }
 
-    // Gera um token de reset válido por 1 hora
+    console.log("Usuário encontrado para recuperação de senha:", user.email);
     const resetToken = jwt.sign(
       { email: user.email },
       process.env.JWT_SECRET,
@@ -371,16 +372,16 @@ export const sendEmail = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASS
       }
     });
 
     // URL de reset (ajuste conforme seu frontend)
-    const resetUrl = `${process.env.FRONTEND_URL}/forgotpwd/reset?token=${resetToken}`;
+    const resetUrl = `${process.env.FRONTEND_URL}/forgotpwd/dispemail/reset?token=${resetToken}`;
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: process.env.GMAIL_USER,
       to: email,
       subject: 'Recuperação de Senha - Tá Pago',
       html: `

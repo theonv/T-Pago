@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export function middleware(request) {
-  const publicPaths = ['/', '/register', '/forgotpwd'];
+  const publicPaths = ['/', '/register', '/forgotpwd','/forgotpwd/dispemail'];
 
   const token = request.cookies.get('auth_token')?.value;
   const { pathname } = request.nextUrl;
