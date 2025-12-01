@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useEffect, useState } from "react";
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
+import apiClient from '@/functions/apiClient';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -13,8 +14,23 @@ export default function EditarPerfil() {
     const { user } = useUser();
     const [emails, setEmails] = useState([]);
     const [showPassword, setShowPassword] = useState(false); // <- estado de visibilidade da senha
+    const [avatarUrl, setAvatarUrl] = useState(null);
+    const [backgroundUrl, setBackgroundUrl] = useState(null);
 
-    const handleFileChange = (e, type) => {
+    useEffect(() => {
+        const fetchImages = async () => {
+            try {
+                const data = await apiClient.getUserImages();
+                if (data.avatar) setAvatarUrl(data.avatar);
+                if (data.background) setBackgroundUrl(data.background);
+            } catch (error) {
+                console.error("Erro ao buscar imagens:", error);
+            }
+        };
+        fetchImages();
+    }, []);
+
+    const handleFileChange = async (e, type) => {
         const file = e.target.files[0];
         if (!file) return;
 
@@ -33,35 +49,68 @@ export default function EditarPerfil() {
             return;
         }
 
-        const msg = type === 'background' ? "Imagem de fundo carregada!" : "Avatar carregado!";
-        toast.success(msg);
+        const formData = new FormData();
+        formData.append(type === 'background' ? 'background' : 'avatar', file);
+
+        try {
+            let response;
+            if (type === 'background') {
+                response = await apiClient.uploadBackground(formData);
+                setBackgroundUrl(response.path);
+            } else {
+                response = await apiClient.uploadAvatar(formData);
+                setAvatarUrl(response.path);
+            }
+            
+            const msg = type === 'background' ? "Imagem de fundo atualizada!" : "Avatar atualizado!";
+            toast.success(msg);
+        } catch (error) {
+            console.error("Erro no upload:", error);
+            toast.error("Erro ao atualizar imagem.");
+        }
     };
 
     return (
         <>
-            <main className="flex flex-col md:flex-row justify-center items-center min-h-[80vh] w-full px-4">
-                <div className="flex flex-col md:flex-row w-full max-w-5xl gap-8 items-center justify-between">
+            <main 
+                className="flex flex-col md:flex-row justify-center items-center min-h-[80vh] w-full px-4 transition-all duration-500"
+                style={{
+                    backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : 'none',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat'
+                }}
+            >
+                <div className={`flex flex-col md:flex-row w-full max-w-5xl gap-8 items-center justify-between p-8 rounded-3xl ${backgroundUrl ? 'bg-white/80 backdrop-blur-sm shadow-2xl' : ''}`}>
 
                     {/* Coluna da Esquerda: Uploads de Imagem */}
                     <div className="flex flex-col gap-10 w-full md:basis-1/2">
                         
                         {/* Avatar Upload */}
                         <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-6">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="120"
-                                height="120"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="#5768FF"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <circle cx="12" cy="12" r="10" />
-                                <circle cx="12" cy="10" r="3" />
-                                <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
-                            </svg>
+                            {avatarUrl ? (
+                                <img 
+                                    src={avatarUrl} 
+                                    alt="Avatar" 
+                                    className="w-[120px] h-[120px] rounded-full object-cover border-2 border-[#5768FF]"
+                                />
+                            ) : (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="120"
+                                    height="120"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#5768FF"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <circle cx="12" cy="12" r="10" />
+                                    <circle cx="12" cy="10" r="3" />
+                                    <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
+                                </svg>
+                            )}
 
                             <div className="flex flex-col gap-2 items-center sm:items-start">
                                 <span className="font-bold text-[#5768FF]">Logo do Usuário</span>
@@ -86,21 +135,29 @@ export default function EditarPerfil() {
 
                         {/* Background Upload */}
                         <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-6">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="120"
-                                height="80" 
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="#5768FF"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                <circle cx="8.5" cy="8.5" r="1.5" />
-                                <polyline points="21 15 16 10 5 21" />
-                            </svg>
+                            {backgroundUrl ? (
+                                <img 
+                                    src={backgroundUrl} 
+                                    alt="Background" 
+                                    className="w-[120px] h-[80px] rounded-md object-cover border-2 border-[#5768FF]"
+                                />
+                            ) : (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="120"
+                                    height="80" 
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="#5768FF"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>
+                            )}
 
                             <div className="flex flex-col gap-2 items-center sm:items-start">
                                 <span className="font-bold text-[#5768FF]">Imagem de Plano</span>

@@ -8,6 +8,7 @@ import router from './routes/routercontroller.js';
 import User from './models/usuario.js';
 import Task from './models/task.js';
 import List from './models/lists.js';
+import Imagem from './models/imagem.js';
 
 dotenv.config();
 
@@ -26,10 +27,13 @@ setTimeout(async () => {
         console.log('Conexão com o banco de dados estabelecida com sucesso.');
         await List.drop();
         await Task.drop();
+        await Imagem.drop();
         await User.drop();
         // Ordem: User -> Task -> List
         await User.sync({ force: true });
         console.log('Tabela de usuários sincronizada.');
+        await Imagem.sync({ force: true });
+        console.log('Tabela de imagens sincronizada.');
         await Task.sync({ force: true });
         console.log('Tabela de tarefas sincronizada.');
         await List.sync({ force: true });

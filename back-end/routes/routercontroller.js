@@ -21,6 +21,15 @@ import {
   updateemail, sendEmail, toggletask, refreshToken,
   resetPassword,modsenha
 } from '../functions/funcoes.js'
+import upload from '../config/multerConfig.js';
+import { 
+    uploadAvatar, 
+    uploadBackground, 
+    uploadGalleryImage, 
+    updateAvatar, 
+    updateBackground,
+    getUserImages
+} from '../functions/imageFunctions.js';
 
 const passwordResetMiddleware = (req, res, next) => {
   if (req.path === '/sendEmail') {
@@ -68,5 +77,15 @@ router.put('/updatelist', validateBody(updateListSchema), updatelist)
 router.post('/additem', additem)
 router.post('/toggleitem', toggleitem)
 router.delete('/removeitem', removeitem)
+
+// Rotas de Imagem
+router.post('/upload/avatar', upload.single('avatar'), uploadAvatar);
+router.post('/upload/background', upload.single('background'), uploadBackground);
+router.post('/upload/gallery', upload.single('image'), uploadGalleryImage);
+
+router.put('/update/avatar', upload.single('avatar'), updateAvatar);
+router.put('/update/background', upload.single('background'), updateBackground);
+
+router.get('/user/images', getUserImages);
 
 export default router;

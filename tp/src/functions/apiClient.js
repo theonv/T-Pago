@@ -47,9 +47,12 @@ class ApiClient {
     }
     
     const headers = {
-      'Content-Type': 'application/json',
       ...options.headers,
     };
+
+    if (!(options.body instanceof FormData)) {
+        headers['Content-Type'] = 'application/json';
+    }
 
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
@@ -233,6 +236,26 @@ class ApiClient {
     return await this.request('/resetPassword', {
       method: 'POST',
       body: JSON.stringify({ resetToken, newPassword }),
+    });
+  }
+
+  async getUserImages() {
+    return await this.request('/user/images', {
+      method: 'GET',
+    });
+  }
+
+  async uploadAvatar(formData) {
+    return await this.request('/update/avatar', {
+      method: 'PUT',
+      body: formData,
+    });
+  }
+
+  async uploadBackground(formData) {
+    return await this.request('/update/background', {
+      method: 'PUT',
+      body: formData,
     });
   }
 }
