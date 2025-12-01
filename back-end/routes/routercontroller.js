@@ -19,7 +19,7 @@ import {
   login, cru, gettasks, deleteTask, updatetask,
   createlist, getlists, deletelist, updatelist,
   updateemail, sendEmail, toggletask, refreshToken,
-  resetPassword
+  resetPassword,modsenha
 } from '../functions/funcoes.js'
 
 const passwordResetMiddleware = (req, res, next) => {
@@ -47,6 +47,7 @@ router.post('/cru', validateBody(registerSchema), cru)
 
 router.post('/sendEmail', sendEmail)  
 router.post('/resetPassword', passwordResetMiddleware, resetPassword)  
+router.put('/modsenha', modsenha) //sem camisinha e mais gostoso
 
 router.use(authMiddleware)  
 

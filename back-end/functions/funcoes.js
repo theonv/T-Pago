@@ -320,7 +320,7 @@ export const toggleitem = async (req, res) => {
   }
 };
 
-export const resetPassword = async (req, res) => {
+export const resetPassword = async (req, res) => { //coisa antiga so não apago pq da trabalho
   try {
     const { resetToken, newPassword } = req.body;
     
@@ -349,7 +349,55 @@ export const resetPassword = async (req, res) => {
     res.status(500).json({ message: 'Erro ao resetar senha', error: error.message });
   }
 };
+export const modsenha = async (req, res) => {
+  try {
+    const { email, novaSenha } = req.body;
+    console.log("email do indivudo", email);
 
+    const hashedPassword = await bcrypt.hash(novaSenha, 10);
+
+    const updatedUser = await User.update(
+      { senha: hashedPassword },
+      { where: { email: email } }
+    );
+
+    if (updatedUser[0] > 0) {
+      // Configura o transportador de email (reutilizando a config do sendEmail)
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_PASS
+        }
+      });
+
+      const mailOptions = {
+        from: process.env.GMAIL_USER,
+        to: email,
+        subject: 'Senha Alterada com Sucesso - Tá Pago',
+        html: `
+          <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+            <h1 style="color: #4CAF50;">Senha Alterada!</h1>
+            <p>Olá,</p>
+            <p>A senha da sua conta no <strong>Tá Pago</strong> foi alterada com sucesso.</p>
+            <p>Se você não realizou esta alteração, entre em contato conosco imediatamente.</p>
+            <br>
+            <p>Atenciosamente,<br>Equipe Tá Pago</p>
+          </div>
+        `
+      };
+
+      // Envia o email de confirmação sem bloquear a resposta
+      transporter.sendMail(mailOptions).catch(err => console.error('Erro ao enviar email de confirmação:', err));
+
+      res.status(200).json({ message: 'Senha atualizada com sucesso e email de confirmação enviado.' });
+    } else {
+      res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar senha', error: error.message });
+  }
+};
 export const sendEmail = async (req, res) => {
   try {
     console.log("Requisição para envio de email recebida:", req.body);

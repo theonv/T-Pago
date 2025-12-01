@@ -24,7 +24,9 @@ setTimeout(async () => {
     try {
         await sequelize.authenticate();
         console.log('Conexão com o banco de dados estabelecida com sucesso.');
-        
+        await List.drop();
+        await Task.drop();
+        await User.drop();
         // Ordem: User -> Task -> List
         await User.sync({ force: true });
         console.log('Tabela de usuários sincronizada.');

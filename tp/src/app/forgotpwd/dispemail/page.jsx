@@ -1,100 +1,140 @@
 'use client';
-import { useState } from 'react';
-import Image from 'next/image'
 
-export default function resetpassword() {
-  const [senha, setSenha] = useState('');
-  const [confirmaSenha, setConfirmaSenha] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie'; // Certifique-se de ter js-cookie instalado
+import Link from 'next/link';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-  function handleSubmit(e) {
+export default function RedefinirSenha() {
+  const [novaSenha, setNovaSenha] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [mensagem, setMensagem] = useState({ texto: '', tipo: '' });
+  const router = useRouter();
+
+  useEffect(() => {
+    // Pega o email do cookie definido pelo middleware
+    const emailCookie = Cookies.get('reset_email');
+    
+    if (emailCookie) {
+      setEmail(emailCookie);
+      console.log('Email recuperado do cookie:', emailCookie);
+    } else {
+      setMensagem({ texto: 'Sessão expirada ou inválida. Tente solicitar o link novamente.', tipo: 'erro' });
+    }
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setMensagem({ texto: '', tipo: '' });
 
-    if (!senha || !confirmaSenha) {
-      setError('Por favor, preencha todos os campos.');
+    if (!email) {
+      setMensagem({ texto: 'Email não identificado. Reinicie o processo.', tipo: 'erro' });
       return;
     }
 
-    if (senha !== confirmaSenha) {
-      setError('As senhas não coincidem.');
+    if (novaSenha.length < 6) {
+      setMensagem({ texto: 'A senha deve ter no mínimo 6 caracteres.', tipo: 'erro' });
       return;
     }
 
+    if (novaSenha !== confirmarSenha) {
+      setMensagem({ texto: 'As senhas não coincidem.', tipo: 'erro' });
+      return;
+    }
 
-    setSuccess('Senha alterada com sucesso!');
-    setSenha('');
-    setConfirmaSenha('');
-  }
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}/api/auth/modsenha`, {
+        method: 'PUT', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          novaSenha: novaSenha
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMensagem({ texto: 'Senha alterada com sucesso! Redirecionando...', tipo: 'sucesso' });
+        // Limpa o cookie de reset
+        Cookies.remove('reset_email');
+        
+        setTimeout(() => {
+          router.push('/');
+        }, 3000);
+      } else {
+        setMensagem({ texto: data.message || 'Erro ao alterar senha.', tipo: 'erro' });
+      }
+    } catch (error) {
+      console.error('Erro:', error);
+      setMensagem({ texto: 'Erro de conexão com o servidor.', tipo: 'erro' });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-[420px] border-2 border-foreground rounded-[10px] px-6 py-10 flex flex-col items-center font-['Roboto']">
-        <header>
-          <h1 className="text-center text-3xl sm:text-[36px] font-bold">
-            CRIAR <span className="text-[var(--corSecundaria)]">NOVA SENHA</span>
-          </h1>
-        </header>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Redefinir Senha</h2>
+        
+        {email && <p className="text-sm text-gray-600 mb-4 text-center">Definindo nova senha para: <strong>{email}</strong></p>}
 
-        <section className="flex justify-center my-5">
-          <Image
-            src="/img/Logo.png"
-            alt="Logo Tá Pago"
-            width={100}
-            height={100}
-            className="mb-4 rounded-full shadow-lg"
-          />
-        </section>
-
-        <form id="formResetPassword" onSubmit={handleSubmit} className="w-full mt-8">
-          <div className="w-full max-w-[90%] mx-auto space-y-6">
-            <div className="h-[50px]">
-              <input
-                type="password"
-                id="senha"
-                name="senha"
-                placeholder="Nova senha"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
-                required
-                minLength={6}
-                className="w-full h-full bg-transparent border-2 border-foreground rounded-full text-[16px] text-[var(--corSecundaria)] px-5 placeholder:text-[#0059ff8f] focus:outline-none"
-              />
-            </div>
-
-            <div className="h-[50px]">
-              <input
-                type="password"
-                id="confirmaSenha"
-                name="confirmaSenha"
-                placeholder="Confirmar nova senha"
-                value={confirmaSenha}
-                onChange={(e) => setConfirmaSenha(e.target.value)}
-                required
-                minLength={6}
-                className="w-full h-full bg-transparent border-2 border-foreground rounded-full text-[16px] text-[var(--corSecundaria)] px-5 placeholder:text-[#0059ff8f] focus:outline-none"
-              />
-            </div>
-
-            {error && (
-              <p className="text-red-600 text-sm text-center">{error}</p>
-            )}
-
-            {success && (
-              <p className="text-green-600 text-sm text-center">{success}</p>
-            )}
-
-            <button
-              type="submit"
-              className="w-full py-3 border border-[var(--corSecundaria)] rounded-full text-[16px] text-white bg-[#0059ff] hover:bg-[#0400ff] transition duration-300 ease-in-out transform hover:scale-105"
-            >
-              Alterar senha
-            </button>
+        {mensagem.texto && (
+          <div className={`p-3 mb-4 rounded ${mensagem.tipo === 'sucesso' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+            {mensagem.texto}
           </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2">Nova Senha</label>
+            <input
+              type="password"
+              value={novaSenha}
+              onChange={(e) => setNovaSenha(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-black"
+              placeholder="Mínimo 6 caracteres"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-2">Confirmar Nova Senha</label>
+            <input
+              type="password"
+              value={confirmarSenha}
+              onChange={(e) => setConfirmarSenha(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-black"
+              placeholder="Repita a senha"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading || !email}
+            className={`w-full py-2 px-4 rounded text-white font-bold transition-colors ${
+              loading || !email ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+            }`}
+          >
+            {loading ? 'Alterando...' : 'Alterar Senha'}
+          </button>
         </form>
+        
+        <div className="mt-4 text-center">
+            <Link href="/" className="text-sm text-blue-500 hover:underline">
+                Voltar para o Login
+            </Link>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

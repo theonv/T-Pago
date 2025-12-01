@@ -14,28 +14,115 @@ export default function EditarPerfil() {
     const [emails, setEmails] = useState([]);
     const [showPassword, setShowPassword] = useState(false); // <- estado de visibilidade da senha
 
+    const handleFileChange = (e, type) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
+        const maxSize = 5 * 1024 * 1024; // 5MB
+
+        if (!validTypes.includes(file.type)) {
+            toast.error("Formato inválido! Use JPG, JPEG, PNG ou GIF.");
+            e.target.value = ''; 
+            return;
+        }
+
+        if (file.size > maxSize) {
+            toast.error("O arquivo excede o limite de 5MB.");
+            e.target.value = ''; 
+            return;
+        }
+
+        const msg = type === 'background' ? "Imagem de fundo carregada!" : "Avatar carregado!";
+        toast.success(msg);
+    };
+
     return (
         <>
             <main className="flex flex-col md:flex-row justify-center items-center min-h-[80vh] w-full px-4">
                 <div className="flex flex-col md:flex-row w-full max-w-5xl gap-8 items-center justify-between">
 
-                    {/* Ícone do usuário */}
-                    <div className="flex justify-center md:justify-start md:basis-1/2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="180"
-                            height="180"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#5768FF"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <circle cx="12" cy="12" r="10" />
-                            <circle cx="12" cy="10" r="3" />
-                            <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
-                        </svg>
+                    {/* Coluna da Esquerda: Uploads de Imagem */}
+                    <div className="flex flex-col gap-10 w-full md:basis-1/2">
+                        
+                        {/* Avatar Upload */}
+                        <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-6">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="120"
+                                height="120"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#5768FF"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="10" />
+                                <circle cx="12" cy="10" r="3" />
+                                <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
+                            </svg>
+
+                            <div className="flex flex-col gap-2 items-center sm:items-start">
+                                <span className="font-bold text-[#5768FF]">Logo do Usuário</span>
+                                <label 
+                                    htmlFor="avatar-upload" 
+                                    className="cursor-pointer bg-[#5768FF] text-white px-6 py-2 rounded-[15px] shadow-md hover:bg-[#4555d6] transition-colors font-bold text-sm"
+                                >
+                                    Escolher Logo
+                                </label>
+                                <input 
+                                    id="avatar-upload"
+                                    type="file" 
+                                    accept=".jpg, .jpeg, .png, .gif"
+                                    className="hidden"
+                                    onChange={(e) => handleFileChange(e, 'avatar')}
+                                />
+                                <span className="text-xs text-gray-500 font-medium">
+                                    Max: 5MB
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Background Upload */}
+                        <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-6">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="120"
+                                height="80" 
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#5768FF"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                <circle cx="8.5" cy="8.5" r="1.5" />
+                                <polyline points="21 15 16 10 5 21" />
+                            </svg>
+
+                            <div className="flex flex-col gap-2 items-center sm:items-start">
+                                <span className="font-bold text-[#5768FF]">Imagem de Plano</span>
+                                <label 
+                                    htmlFor="bg-upload" 
+                                    className="cursor-pointer bg-[#5768FF] text-white px-6 py-2 rounded-[15px] shadow-md hover:bg-[#4555d6] transition-colors font-bold text-sm"
+                                >
+                                    Escolher Fundo
+                                </label>
+                                <input 
+                                    id="bg-upload"
+                                    type="file" 
+                                    accept=".jpg, .jpeg, .png, .gif"
+                                    className="hidden"
+                                    onChange={(e) => handleFileChange(e, 'background')}
+                                />
+                                <span className="text-xs text-gray-500 font-medium">
+                                    Max: 5MB
+                                </span>
+                            </div>
+                        </div>
+
                     </div>
 
                     {/* Informações do usuário */}
