@@ -377,8 +377,7 @@ export const sendEmail = async (req, res) => {
       }
     });
 
-    // URL de reset (ajuste conforme seu frontend)
-    const resetUrl = `${process.env.FRONTEND_URL}/forgotpwd/dispemail/reset?token=${resetToken}`;
+    const resetUrl = `${process.env.FRONTEND_URL}/forgotpwd/dispemail?token=${resetToken}`;
 
     const mailOptions = {
       from: process.env.GMAIL_USER,

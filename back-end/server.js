@@ -13,29 +13,32 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-  origin: true, // Aceita qualquer origem
+  origin: true,
   credentials: true
 }));
 app.use(json());
 app.use('/api/auth', router);
 app.use(morgan('dev'));
 
-// Realiza a conexão com o banco de dados e sincroniza as tabelas na ordem correta
 setTimeout(async () => {
     try {
         await sequelize.authenticate();
         console.log('Conexão com o banco de dados estabelecida com sucesso.');
+        
         // Ordem: User -> Task -> List
-        await User.sync({ alter: true });
-        console.log('Tabela de usuários criada ou já existe.');
-        await Task.sync({ alter: true });
-        console.log('Tabela de tarefas criada ou já existe.');
-        await List.sync({ alter: true });
-        console.log('Tabela de listas criada ou já existe.');
+        await User.sync({ force: true });
+        console.log('Tabela de usuários sincronizada.');
+        await Task.sync({ force: true });
+        console.log('Tabela de tarefas sincronizada.');
+        await List.sync({ force: true });
+        console.log('Tabela de listas sincronizada.');
+        
+        console.log('✅ Todas as tabelas sincronizadas com sucesso!');
     } catch (err) {
-        console.error('Erro ao sincronizar tabelas ou conectar ao banco de dados:', err);
+        console.error('❌ Erro ao sincronizar tabelas ou conectar ao banco de dados:', err);
     }
 }, 2000);
+
 app.get('/', (req, res) => {
     res.send('Servidor Express rodando!');
 });

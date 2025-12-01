@@ -23,7 +23,6 @@ export default function resetpassword() {
       return;
     }
 
-    // Adicionar a lógica aqui para poder atualizar a nova senha no backend
 
     setSuccess('Senha alterada com sucesso!');
     setSenha('');
@@ -43,9 +42,9 @@ export default function resetpassword() {
           <Image
             src="/img/Logo.png"
             alt="Logo Tá Pago"
-            width={400}
-            height={400}
-            className="w-full max-w-[120px] sm:max-w-[150px] h-auto"
+            width={100}
+            height={100}
+            className="mb-4 rounded-full shadow-lg"
           />
         </section>
 
