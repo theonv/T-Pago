@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import apiClient from '@/functions/apiClient';
+import Header from '@/components/header/page';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -72,6 +73,7 @@ export default function EditarPerfil() {
 
     return (
         <>
+            <Header />
             <main 
                 className="flex flex-col md:flex-row justify-center items-center min-h-[80vh] w-full px-4 transition-all duration-500"
                 style={{
