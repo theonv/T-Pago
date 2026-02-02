@@ -80,6 +80,9 @@ export const createTaskSchema = z.object({
 });
 
 export const updateTaskSchema = z.object({
+    id: z.number()
+        .int('ID deve ser um número inteiro')
+        .positive('ID deve ser positivo'),
     nome: z.string()
         .min(1, 'Nome não pode estar vazio')
         .max(100, 'Nome deve ter no máximo 100 caracteres')
@@ -120,6 +123,9 @@ export const createListSchema = z.object({
 });
 
 export const updateListSchema = z.object({
+    id: z.number()
+        .int('ID deve ser um número inteiro')
+        .positive('ID deve ser positivo'),
     nome: z.string()
         .min(1, 'Nome não pode estar vazio')
         .max(40, 'Nome deve ter no máximo 40 caracteres')

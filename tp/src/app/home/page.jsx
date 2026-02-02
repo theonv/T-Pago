@@ -158,6 +158,7 @@ export default function Home() {
     }
 
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    console.log('saveEdit: token =', token);
     fetch(`${API_URL}/api/auth/updatetask`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },

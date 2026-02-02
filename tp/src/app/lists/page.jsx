@@ -24,9 +24,10 @@ export default function Listas() {
   // Carregar listas do usuário
   useEffect(() => {
     if (!user) return;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     fetch(`${API_URL}/api/auth/getlists`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify({ FK_USUARIO_id: user.id }),
     })
       .then(response => {
@@ -50,10 +51,12 @@ export default function Listas() {
   // Adiciona nova lista
   const handleCreateList = () => {
     if (inputValue.trim()) {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
       fetch(`${API_URL}/api/auth/createlist`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
         },
         body: JSON.stringify({
           nome: inputValue.trim(),
@@ -81,9 +84,10 @@ export default function Listas() {
   const handleDeleteList = (listId) => {
     if (!confirm('Tem certeza que deseja excluir esta lista?')) return;
 
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     fetch(`${API_URL}/api/auth/deletelist/${listId}`, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify({ id: listId }),
     })
       .then(response => {
@@ -100,9 +104,10 @@ export default function Listas() {
   const handleEditList = (listId, newName) => {
     if (!newName || !newName.trim() || newName === lists.find(l => l.id === listId).conteudo) return;
 
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     fetch(`${API_URL}/api/auth/updatelist`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify({ nome: newName.trim(), id: listId }),
     })
       .then(response => {
@@ -125,9 +130,10 @@ const handleAddItem = (listId) => {
     return;
   }
 
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
   fetch(`${API_URL}/api/auth/additem`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
     body: JSON.stringify({
       nomeItem: newItemText.trim(),
       listaRecebe: listId
@@ -170,9 +176,10 @@ const handleAddItem = (listId) => {
 
   // Remover item de uma lista
   const handleRemoveItem = (listId, itemId) => {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     fetch(`${API_URL}/api/auth/removeitem/${itemId}`, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
     })
       .then(response => {
         if (!response.ok) throw new Error('Erro ao remover item');

@@ -25,18 +25,14 @@ setTimeout(async () => {
     try {
         await sequelize.authenticate();
         console.log('Conexão com o banco de dados estabelecida com sucesso.');
-        await List.drop();
-        await Task.drop();
-        await Imagem.drop();
-        await User.drop();
-        // Ordem: User -> Task -> List
-        await User.sync({ force: true });
+        // Sincronização das tabelas (remover force: true para produção)
+        await User.sync();
         console.log('Tabela de usuários sincronizada.');
-        await Imagem.sync({ force: true });
+        await Imagem.sync();
         console.log('Tabela de imagens sincronizada.');
-        await Task.sync({ force: true });
+        await Task.sync();
         console.log('Tabela de tarefas sincronizada.');
-        await List.sync({ force: true });
+        await List.sync();
         console.log('Tabela de listas sincronizada.');
         
         console.log('✅ Todas as tabelas sincronizadas com sucesso!');
