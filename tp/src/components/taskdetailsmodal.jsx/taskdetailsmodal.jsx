@@ -17,12 +17,6 @@ export function TaskDetailsModal({ selectedTask, setSelectedTask, IconClose }) {
         <h2 className="text-2xl font-bold mb-4 text-blue-700 select-none">
           Detalhes da Tarefa
         </h2>
-        <p className="mb-2">
-          <strong>Criada em:</strong>{' '}
-          {selectedTask.createdAt
-            ? new Date(selectedTask.createdAt).toLocaleString()
-            : 'Data não disponível'}
-        </p>
         <p className="mb-4">
           <strong>Status:</strong>{' '}
           <span

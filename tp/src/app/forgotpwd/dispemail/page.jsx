@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'; // Certifique-se de ter js-cookie instalado
 import Link from 'next/link';
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+
 export default function RedefinirSenha() {
   const [novaSenha, setNovaSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');

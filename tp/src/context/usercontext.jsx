@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
             
             // Se não tiver no Cookie, tenta no localStorage
             if (!token && typeof window !== 'undefined') {
-                token = localStorage.getItem('token');
+                token = alocalStorage.getItem('token');
                 console.log('🔄 [UserContext] Token do localStorage:', token ? 'Encontrado' : 'Não encontrado');
             } else {
                 console.log('🔄 [UserContext] Token do Cookie:', token ? 'Encontrado' : 'Não encontrado');
